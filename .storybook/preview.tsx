@@ -1,14 +1,15 @@
 import React from 'react';
 import type { Preview } from '@storybook/nextjs-vite';
-import { ThemeProvider } from '../design/ThemeProvider'; // <- bring in your tokenized theme
+import { MantineProvider } from '@mantine/core';
+import { theme } from '../styles/theme';
 import '@mantine/core/styles.layer.css';
 
 const preview: Preview = {
   decorators: [
     (Story) => (
-      <ThemeProvider>
+      <MantineProvider theme={theme} defaultColorScheme="light" cssVariablesSelector=":root">
         <Story />
-      </ThemeProvider>
+      </MantineProvider>
     ),
   ],
   parameters: {

@@ -10,8 +10,7 @@ import '@mantine/dropzone/styles.css';
 import "./globals.css";
 import 'remixicon/fonts/remixicon.css';
 
-import { MantineProvider } from "@mantine/core";
-import { theme } from "@/styles/theme";
+import { RootProviders } from "@/components/RootProviders";
 
 export const metadata: Metadata = {
   title: "Cursor Mantine App",
@@ -26,9 +25,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <MantineProvider theme={theme} defaultColorScheme="light" cssVariablesSelector=":root">
+        <RootProviders>
           {children}
-        </MantineProvider>
+        </RootProviders>
       </body>
     </html>
   );
