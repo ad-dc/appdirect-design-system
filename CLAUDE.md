@@ -40,6 +40,29 @@ Inline previews rendered by Claude Code in chat (artifact blocks, React previews
 - For any data table / grid / list use `Table` from DS (not raw `@mantine/core`)
 - For page headers use `PageContentHeader` from DS
 
+## Fonts
+
+Inter and Roboto Mono are loaded as **variable web fonts** via [`@fontsource-variable/inter`](https://www.npmjs.com/package/@fontsource-variable/inter) and `@fontsource-variable/roboto-mono`. They are imported at the top of:
+
+- [`app/layout.tsx`](./app/layout.tsx) — for the runtime app
+- [`.storybook/preview.tsx`](./.storybook/preview.tsx) — so stories render with the same fonts
+
+**Do not rely on system-installed Inter.** The CSS variable `--font-inter` (defined in [`app/globals.css`](./app/globals.css)) lists `"Inter Variable"` first (the family name registered by `@fontsource-variable/inter`), then `"Inter"` and platform fallbacks. If the variable font load is removed or fails, prototypes will silently fall back to system sans-serif on machines without Inter installed.
+
+If you add a new HTML entrypoint (e.g. a separate Vite playground), import the same two `@fontsource-variable/*` packages and `app/globals.css` so font behavior stays consistent.
+
+## Design tokens (current state)
+
+`@appdirect/design-tokens` is **not** a dependency of this repo right now. The package is mid-flight (`0.2.0-next.3` pre-release) and previously required a sibling-checkout `file:` link plus an `install-links` workaround for Turbopack — which made the template impossible to clone-and-run for outside prototypers.
+
+Until the package ships a stable Artifactory release:
+
+- App theming runs from [`styles/theme.ts`](./styles/theme.ts) (open-color palette + a11y blue override + per-variant Button color map).
+- The Storybook preview uses the same `theme` from `styles/theme.ts` rather than `design/createTheme.ts`'s `appTheme`, so stories mirror the real app.
+- Per-variant Button colors are inlined in `styles/theme.ts` as `BUTTON_VARIANT_COLORS`. This is a **snapshot** of `@appdirect/design-tokens@0.2.0-next.3`'s mantine adapter for Button only; treat it as authoritative until the package re-wires.
+
+When the package stabilizes, the re-wire is small: delete `BUTTON_VARIANT_COLORS` + the `components.Button.vars` callback in `styles/theme.ts`, drop the active-state rules from `components/DesignSystem/Buttons/Button.module.css`, and re-add the four CSS imports (`@appdirect/design-tokens/css/foundations.css` + `@appdirect/design-tokens/css/mantine.css`) to both `app/layout.tsx` and `.storybook/preview.tsx`.
+
 ## See also
 
 - `README.md` — project overview + commands
