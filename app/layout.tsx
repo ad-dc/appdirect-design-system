@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 
-// Mantine CSS imports (load first)
+// Web fonts (load first so @font-face is registered before any selectors use them)
+import '@fontsource-variable/inter';
+import '@fontsource-variable/roboto-mono';
+
+// Mantine CSS imports
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
@@ -10,8 +14,7 @@ import '@mantine/dropzone/styles.css';
 import "./globals.css";
 import 'remixicon/fonts/remixicon.css';
 
-import { MantineProvider } from "@mantine/core";
-import { theme } from "@/styles/theme";
+import { RootProviders } from "@/components/RootProviders";
 
 export const metadata: Metadata = {
   title: "Cursor Mantine App",
@@ -26,9 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <MantineProvider theme={theme} defaultColorScheme="light" cssVariablesSelector=":root">
+        <RootProviders>
           {children}
-        </MantineProvider>
+        </RootProviders>
       </body>
     </html>
   );
