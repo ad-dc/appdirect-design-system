@@ -18,6 +18,8 @@
     "figma:unpublish": "figma connect unpublish --skip-update-check --config figma.config.json -t \"$(grep -E '^FIGMA_ACCESS_TOKEN=' .env.local | cut -d= -f2-)\""
   },
   "dependencies": {
+    "@fontsource-variable/inter": "^5.2.8",
+    "@fontsource-variable/roboto-mono": "^5.2.8",
     "@mantine/core": "^9.0.1",
     "@mantine/dates": "^9.0.1",
     "@mantine/dropzone": "^9.0.1",

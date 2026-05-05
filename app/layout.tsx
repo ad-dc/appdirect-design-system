@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 
-// Mantine CSS imports (load first)
+// Web fonts (load first so @font-face is registered before any selectors use them)
+import '@fontsource-variable/inter';
+import '@fontsource-variable/roboto-mono';
+
+// Mantine CSS imports
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
