@@ -8,7 +8,7 @@ Next.js 16 runtime shell with an AppDirect design system (**Mantine v9**, React 
 
 ```bash
 git clone <repo-url>
-cd cursor-mantine-app
+cd appdirect-design-system
 npm install
 npm run dev
 ```
