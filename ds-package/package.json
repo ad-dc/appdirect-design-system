@@ -46,7 +46,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ad-dc/cursor-mantine-app.git"
+    "url": "git+https://github.com/ad-dc/appdirect-design-system.git"
   },
   "license": "UNLICENSED"
 }

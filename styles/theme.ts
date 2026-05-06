@@ -53,7 +53,7 @@ const THEME_CONSTANTS = {
  * Per-variant Button colors (light theme).
  *
  * Snapshot of the AppDirect design-tokens mantine adapter — kept inline here
- * so that `cursor-mantine-app` does not depend on the in-flight
+ * so that `appdirect-design-system` does not depend on the in-flight
  * `@appdirect/design-tokens` package. When that package ships a stable
  * Artifactory release, this map can be deleted in favor of importing the
  * adapter CSS again.

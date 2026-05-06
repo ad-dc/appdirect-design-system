@@ -1,5 +1,5 @@
 // 🎯 Generated from Figma Code Connect - SUCCESS Badge XL
-// Original import: import Badge from "https://github.com/ad-dc/cursor-mantine-app/blob/main/components/DesignSystem/DataDisplay/Badge.tsx"
+// Original import: import Badge from "https://github.com/ad-dc/appdirect-design-system/blob/main/components/DesignSystem/DataDisplay/Badge.tsx"
 // Converted to local import:
 import { Badge } from '@/components/DesignSystem/DataDisplay/Badge';
 

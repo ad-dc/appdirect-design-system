@@ -1,4 +1,4 @@
-# CLAUDE.md — cursor-mantine-app
+# CLAUDE.md — appdirect-design-system
 
 Repo-specific guidance for Claude Code sessions working on this project.
 Supplements `~/.claude/CLAUDE.md` (user global).
