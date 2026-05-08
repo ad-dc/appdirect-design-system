@@ -53,15 +53,19 @@ If you add a new HTML entrypoint (e.g. a separate Vite playground), import the s
 
 ## Design tokens (current state)
 
-`@appdirect/design-tokens` is **not** a dependency of this repo right now. The package is mid-flight (`0.2.0-next.3` pre-release) and previously required a sibling-checkout `file:` link plus an `install-links` workaround for Turbopack — which made the template impossible to clone-and-run for outside prototypers.
+`@appdirect/design-tokens` is **not** a dependency of this repo, and **won't be re-wired in the near term**. This is a deliberate choice, not a blocker waiting on the package.
 
-Until the package ships a stable Artifactory release:
+**Why deferred:** this repo is a prototyping environment and a GitHub template — downstream prototypes (e.g. `ad-cbp`) are spawned from it via "Use this template" and stay in sync via cherry-picks. Forcing it to track the live `@appdirect/design-tokens` package while production consumers (BU apps like Firstbase / Builtfirst, real platform UI consumers) are still being onboarded creates premature coupling and template-clone churn. **Adoption follows production consumers, not leads them.**
+
+Until production consumers are flowing on the published package:
 
 - App theming runs from [`styles/theme.ts`](./styles/theme.ts) (open-color palette + a11y blue override + per-variant Button color map).
 - The Storybook preview uses the same `theme` from `styles/theme.ts` rather than `design/createTheme.ts`'s `appTheme`, so stories mirror the real app.
-- Per-variant Button colors are inlined in `styles/theme.ts` as `BUTTON_VARIANT_COLORS`. This is a **snapshot** of `@appdirect/design-tokens@0.2.0-next.3`'s mantine adapter for Button only; treat it as authoritative until the package re-wires.
+- Per-variant Button colors are inlined in `styles/theme.ts` as `BUTTON_VARIANT_COLORS`. This is a **snapshot** of an early `@appdirect/design-tokens` mantine adapter for Button only; treat it as authoritative for this repo. Drift between the snapshot and the published package is expected and acceptable in the interim.
 
-When the package stabilizes, the re-wire is small: delete `BUTTON_VARIANT_COLORS` + the `components.Button.vars` callback in `styles/theme.ts`, drop the active-state rules from `components/DesignSystem/Buttons/Button.module.css`, and re-add the four CSS imports (`@appdirect/design-tokens/css/foundations.css` + `@appdirect/design-tokens/css/mantine.css`) to both `app/layout.tsx` and `.storybook/preview.tsx`.
+When the time comes (likely tokens-package v1.x, after Phase 10.5 of the migration plan), the re-wire is small: delete `BUTTON_VARIANT_COLORS` + the `components.Button.vars` callback in `styles/theme.ts`, drop the active-state rules from `components/DesignSystem/Buttons/Button.module.css`, and re-add the four CSS imports (`@appdirect/design-tokens/css/foundations.css` + `@appdirect/design-tokens/css/mantine.css`) to both `app/layout.tsx` and `.storybook/preview.tsx`.
+
+**Trigger for re-wire:** production consumers (BU apps + platform UI) are confirmed running on the published package without issues. NOT just "the package shipped."
 
 ## See also
 
