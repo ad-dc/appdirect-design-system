@@ -3,27 +3,3 @@
 .addsButton--link:hover {
   text-decoration: underline;
 }
-
-/* Active-state background colors per variant.
-   Mantine does not expose an active-bg CSS variable, so we apply these via
-   the .addsButton--<variant> classes that Button.tsx already attaches.
-   Base, hover, fg, and border colors are driven by `vars` in styles/theme.ts. */
-.addsButton--primary:active:not(:disabled):not([data-disabled]) {
-  background-color: #1971c2;
-}
-
-.addsButton--secondary:active:not(:disabled):not([data-disabled]) {
-  background-color: #0c8599;
-}
-
-.addsButton--default:active:not(:disabled):not([data-disabled]) {
-  background-color: #e9ecef;
-}
-
-.addsButton--outline:active:not(:disabled):not([data-disabled]) {
-  background-color: rgba(50, 111, 222, 0.12);
-}
-
-.addsButton--danger:active:not(:disabled):not([data-disabled]) {
-  background-color: #e03131;
-}
