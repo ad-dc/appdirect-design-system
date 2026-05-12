@@ -30,8 +30,8 @@ const CustomToolbarAlertBannerContent = ({
       gap="sm"
       align="center"
       style={{
-        background: 'var(--mantine-color-blue-6)',
-        color: 'var(--mantine-color-white)',
+        background: 'var(--ad-color-brand-primary)',
+        color: 'var(--ad-white)',
         borderRadius: 0,
         minHeight: 'var(--mantine-spacing-xl)',
       }}

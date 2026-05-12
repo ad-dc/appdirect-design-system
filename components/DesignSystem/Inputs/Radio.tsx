@@ -65,7 +65,7 @@ export const Radio = forwardRef<HTMLInputElement, DSRadioProps>(
       if (props.required) {
         return (
           <>
-            {label} <span style={{ color: 'var(--mantine-color-red-6)' }}>*</span>
+            {label} <span style={{ color: 'var(--ad-color-status-error)' }}>*</span>
           </>
         );
       }

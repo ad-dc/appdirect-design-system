@@ -207,7 +207,7 @@ export function DashboardWidget({
                 style={{
                   cursor: link.disabled ? 'not-allowed' : 'pointer',
                   opacity: link.disabled ? 0.5 : 1,
-                  color: link.disabled ? 'var(--mantine-color-gray-5)' : 'var(--mantine-color-blue-6)',
+                  color: link.disabled ? 'var(--ad-color-text-dimmed)' : 'var(--ad-color-brand-primary)',
                   
                   
                   transition: 'color 0.2s ease',
@@ -271,7 +271,7 @@ export function DashboardWidget({
         bottom: 0,
         left: 0,
         right: 0,
-        backgroundColor: 'var(--mantine-color-white)',
+        backgroundColor: 'var(--ad-color-bg-default)',
       }}>
         {renderFooterLinks()}
       </div>

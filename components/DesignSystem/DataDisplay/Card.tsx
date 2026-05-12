@@ -97,7 +97,7 @@ CardSection.displayName = 'Card.Section';
  * @example
  * // Card with custom styling
  * <Card 
- *   style={{ backgroundColor: 'var(--mantine-color-blue-0)' }}
+ *   style={{ backgroundColor: 'var(--ad-color-brand-light)' }}
  * >
  *   <h3>Custom Styled Card</h3>
  *   <p>With custom background color.</p>

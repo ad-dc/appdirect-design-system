@@ -52,12 +52,12 @@ export const CloseButton = forwardRef<HTMLButtonElement, DSCloseButtonProps>(
     
     // Define the color styling (let Mantine handle hover backgrounds)
     const iconColor = disabled 
-      ? 'var(--mantine-color-gray-4)'
+      ? 'var(--ad-color-state-disabled-text)'
       : color === 'blue' 
-        ? 'var(--mantine-color-blue-6)'
+        ? 'var(--ad-color-brand-primary)'
         : color === 'gray'
-          ? 'var(--mantine-color-gray-6)'
-        : 'var(--mantine-color-black)';
+          ? 'var(--ad-color-text-dimmed)'
+        : 'var(--ad-color-text-default)';
 
     return (
       <MantineCloseButton

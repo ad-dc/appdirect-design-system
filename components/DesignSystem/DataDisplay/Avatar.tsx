@@ -148,12 +148,12 @@ export const Avatar = forwardRef<HTMLDivElement, DSAvatarProps>(
         return React.isValidElement(icon) 
           ? React.cloneElement(icon as React.ReactElement, { 
               size: iconSize,
-              color: 'var(--mantine-color-black)',
+              color: 'var(--ad-color-text-default)',
             })
           : icon;
       }
       
-      return <RiUser3Fill size={iconSize} color="var(--mantine-color-black)" />;
+      return <RiUser3Fill size={iconSize} color="var(--ad-color-text-default)" />;
     };
 
     // Render initials content

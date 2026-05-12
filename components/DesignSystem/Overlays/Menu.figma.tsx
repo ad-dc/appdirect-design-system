@@ -59,7 +59,7 @@ figma.connect(
       <MenuItem
         leftSection={props.leftSection}
         rightSection={props.rightSection}
-        bg="var(--mantine-color-blue-light)"
+        bg="var(--ad-color-brand-light)"
       >
         {props.children}
       </MenuItem>

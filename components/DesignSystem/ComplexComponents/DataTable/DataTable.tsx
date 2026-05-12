@@ -515,7 +515,7 @@ export function DataTable<T extends MRT_RowData>({
     /** Header row styling */
     mantineTableHeadRowProps: {
       style: {
-        borderBottom: '2px solid var(--mantine-color-gray-3)',
+        borderBottom: '2px solid var(--ad-color-border-subtle)',
       },
     },
     /** Body cell styling */
@@ -530,15 +530,15 @@ export function DataTable<T extends MRT_RowData>({
     },
     /** Table container styling */
     mantineTableContainerProps: {
-      style: {
-        backgroundColor: 'var(--mantine-color-white)',
+        style: {
+        backgroundColor: 'var(--ad-color-bg-default)',
       },
       ...mantineTableContainerProps, // Allow prop overrides
     },
     /** Paper wrapper styling */
     mantinePaperProps: {
       style: {
-        backgroundColor: 'var(--mantine-color-white)',
+        backgroundColor: 'var(--ad-color-bg-default)',
       },
       ...mantinePaperProps, // Allow prop overrides
     },
