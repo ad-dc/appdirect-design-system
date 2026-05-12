@@ -248,26 +248,29 @@ export function PageContentHeader({
     </Box>
   );
   
-  const renderDescription = () => (
-    <Box p={spacing}>
-      <Stack gap="xs">
-        {descriptionTitle && (
-          <Title order={5}>
-            {descriptionTitle}
-          </Title>
-        )}
-        {allowLinks ? (
-          <Text size="sm" c="dimmed" style={{ lineHeight: 1.6 }}>
-            <div dangerouslySetInnerHTML={{ __html: description || '' }} />
-          </Text>
-        ) : (
-          <Text size="sm" c="dimmed" style={{ lineHeight: 1.6 }}>
-            {description}
-          </Text>
-        )}
-      </Stack>
-    </Box>
-  );
+  const renderDescription = () => {
+    if (!description && !descriptionTitle) return null;
+    return (
+      <Box p={spacing}>
+        <Stack gap="xs">
+          {descriptionTitle && (
+            <Title order={5}>
+              {descriptionTitle}
+            </Title>
+          )}
+          {allowLinks ? (
+            <Text size="sm" c="dimmed" style={{ lineHeight: 1.6 }}>
+              <div dangerouslySetInnerHTML={{ __html: description || '' }} />
+            </Text>
+          ) : (
+            <Text size="sm" c="dimmed" style={{ lineHeight: 1.6 }}>
+              {description}
+            </Text>
+          )}
+        </Stack>
+      </Box>
+    );
+  };
   
   const renderDescriptionBlock = () => {
     if (!descriptionBlockText) return null;
@@ -352,8 +355,10 @@ export function PageContentHeader({
   
   // ==================== MAIN RENDER ==========================
   
+  const contentSection_ = renderContentSection();
+
   return (
-    <Card {...cardProps}>
+    <Card pb={contentSection_ ? 0 : undefined} {...cardProps}>
       {/* Header Section */}
       <Stack gap={spacing}>
         <Box>
@@ -368,9 +373,11 @@ export function PageContentHeader({
       </Stack>
       
       {/* Content Section - uses Card.Section to bleed to edges */}
-      <Card.Section withBorder mt="md">
-        {renderContentSection()}
-      </Card.Section>
+      {contentSection_ && (
+        <Card.Section withBorder mt="md">
+          {contentSection_}
+        </Card.Section>
+      )}
     </Card>
   );
 } 

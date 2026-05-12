@@ -65,6 +65,27 @@ a {
 }
 
 /* =================================================================
+   DESIGN TOKEN OVERRIDES
+   These correct known issues in the @appdirect/design-tokens mantine.css
+   adapter and can be removed once the upstream package is fixed.
+   ================================================================= */
+
+/*
+ * mantine.css sets border-width + border-style on ALL Card.Section elements
+ * but omits border-color, causing it to default to currentColor (black).
+ * Scope the border to [data-with-border] only and supply the correct color.
+ */
+.mantine-Card-section:not([data-with-border]) {
+  border-width: 0;
+  border-style: none;
+}
+.mantine-Card-section[data-with-border] {
+  border-color: var(--ad-color-border-subtle, var(--mantine-color-gray-3));
+  border-left-width: 0;
+  border-right-width: 0;
+}
+
+/* =================================================================
    TABLE ACTIONS COLUMN STYLING
    ================================================================= */
 
