@@ -190,7 +190,7 @@ export function KeyInsight({
       ta="center" 
       p={config.padding}
       style={{ 
-        borderRight: showBorder ? '1px solid var(--mantine-color-gray-4)' : undefined 
+        borderRight: showBorder ? '1px solid var(--ad-color-border-subtle)' : undefined 
       }}
     >
       <Title 
