@@ -6,6 +6,8 @@ import '@fontsource-variable/roboto-mono';
 
 // Mantine CSS imports
 import '@mantine/core/styles.css';
+import '@appdirect/design-tokens/css/foundations.css';
+import '@appdirect/design-tokens/css/mantine.css';
 import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/dropzone/styles.css';
