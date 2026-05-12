@@ -145,22 +145,22 @@ const ACTION_BUTTON_STYLES = {
   alignItems: 'center',
   justifyContent: 'center',
   borderRadius: 'var(--mantine-radius-sm)',
-  border: '1px solid var(--mantine-color-gray-4)',
-  background: 'var(--mantine-color-white)',
+  border: '1px solid var(--ad-color-border-default)',
+  background: 'var(--ad-white)',
 } as const;
 
 const ACTION_ICON_STYLES = {
   width: rem(30),
   height: rem(30),
   borderRadius: 'var(--mantine-radius-sm)',
-  border: '1px solid var(--mantine-color-gray-4)',
+  border: '1px solid var(--ad-color-border-default)',
 } as const;
 
 /**
  * Icon styling for consistent appearance
  */
 const ICON_STYLES = {
-  color: 'var(--mantine-color-black)',
+  color: 'var(--ad-color-text-default)',
 };
 
 /**
@@ -340,10 +340,10 @@ const FilterIconButton: React.FC<FilterIconButtonProps> = ({
           height: rem(30),
           borderRadius: 'var(--mantine-radius-sm)',
           border: areFiltersShown 
-            ? '1px solid var(--mantine-color-blue-6)' 
-            : '1px solid var(--mantine-color-gray-4)',
-          background: 'var(--mantine-color-white)',
-          color: 'var(--mantine-color-black)',
+            ? '1px solid var(--ad-color-brand-primary)' 
+            : '1px solid var(--ad-color-border-default)',
+          background: 'var(--ad-white)',
+          color: 'var(--ad-color-text-default)',
         }}
       >
         {icon}
@@ -364,9 +364,9 @@ const FilterIconButton: React.FC<FilterIconButtonProps> = ({
         height: rem(30),
         borderRadius: 'var(--mantine-radius-sm)',
         border: areFiltersShown 
-          ? '1px solid var(--mantine-color-blue-6)' 
-          : '1px solid var(--mantine-color-gray-4)',
-        background: 'var(--mantine-color-white)',
+          ? '1px solid var(--ad-color-brand-primary)' 
+          : '1px solid var(--ad-color-border-default)',
+        background: 'var(--ad-white)',
       }}
     >
       {text}
@@ -695,7 +695,7 @@ const CustomTopToolbar = <T extends MRT_RowData>({
         p="md"
         gap="xshalf"
         style={{
-          borderBottom: "1px solid var(--mantine-color-gray-3)",
+          borderBottom: "1px solid var(--ad-color-border-subtle)",
         }}
       >
         {/* Top row: Search and action buttons */}
@@ -776,8 +776,8 @@ const CustomTopToolbar = <T extends MRT_RowData>({
         numberofselectedrows={numberOfSelectedRows}
         style={{
           borderRadius: 0,
-          color: 'var(--mantine-color-white)',
-          borderTop: '1px solid var(--mantine-color-blue-6)',
+          color: 'var(--ad-white)',
+          borderTop: '1px solid var(--ad-color-brand-primary)',
           padding: 'var(--mantine-spacing-xs)',
         }}
       />

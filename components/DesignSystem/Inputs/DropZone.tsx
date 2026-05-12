@@ -42,21 +42,21 @@ export const DropZone = forwardRef<HTMLDivElement, DropZoneProps>(
           <Dropzone.Accept>
             <IconUpload 
               size={32} 
-              color="var(--mantine-color-blue-6)" 
+              color="var(--ad-color-brand-primary)" 
               stroke={1.5} 
             />
           </Dropzone.Accept>
           <Dropzone.Reject>
             <IconX 
               size={32} 
-              color="var(--mantine-color-red-6)" 
+              color="var(--ad-color-status-error)" 
               stroke={1.5} 
             />
           </Dropzone.Reject>
           <Dropzone.Idle>
             <IconUpload 
               size={32} 
-              color="var(--mantine-color-dimmed)" 
+              color="var(--ad-color-text-dimmed)" 
               stroke={1.5} 
             />
           </Dropzone.Idle>
