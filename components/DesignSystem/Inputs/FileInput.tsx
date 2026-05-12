@@ -95,7 +95,7 @@ export const FileInput = forwardRef<HTMLButtonElement, DSFileInputProps>(
       if (showOptional && !props.required) {
         return (
           <>
-            {label} <span style={{ fontWeight: 'normal', color: 'var(--mantine-color-gray-6)' }}>(Optional)</span>
+            {label} <span style={{ fontWeight: 'normal', color: 'var(--ad-color-text-dimmed)' }}>(Optional)</span>
           </>
         );
       }

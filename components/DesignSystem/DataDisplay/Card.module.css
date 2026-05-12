@@ -8,7 +8,7 @@
 .interactive:hover {
   transform: translateY(-2px);
   box-shadow: var(--mantine-shadow-md);
-  border-color: var(--mantine-color-gray-4);
+  border-color: var(--ad-color-border-default);
 }
 
 .interactive:active {
@@ -17,7 +17,7 @@
 }
 
 .interactive:focus-visible {
-  outline: 2px solid var(--mantine-color-blue-5);
+  outline: 2px solid var(--ad-color-brand-primary);
   outline-offset: 2px;
 }
 

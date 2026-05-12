@@ -105,7 +105,7 @@ const ICON_STYLES = {
   height: rem(58),
   minWidth: rem(58),
   minHeight: rem(58),
-  borderColor: 'var(--mantine-color-black)',
+  borderColor: 'var(--ad-color-border-strong)',
 } as const;
 
 // ========================== COMPONENT ==========================
@@ -320,12 +320,12 @@ export function PageContentHeader({
           fullWidth
           size="sm"
           style={{
-            border: drawerOpened ? '1px solid var(--mantine-color-gray-4)' : 'none',
+            border: drawerOpened ? '1px solid var(--ad-color-border-default)' : 'none',
             borderRadius: 0,
             backgroundColor: drawerOpened 
-              ? 'var(--mantine-color-blue-0)' // Light blue from Alert component
-              : 'var(--mantine-color-gray-0)', // Neutral light grey
-            color: 'var(--mantine-color-dark-9)',
+              ? 'var(--ad-color-brand-light)'
+              : 'var(--ad-color-bg-subtle)',
+            color: 'var(--ad-color-text-default)',
             transition: 'background-color 0.2s ease',
           }}
         >

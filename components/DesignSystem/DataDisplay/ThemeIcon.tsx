@@ -47,7 +47,7 @@ export const ThemeIcon = forwardRef<HTMLDivElement, DSThemeIconProps>(
                 : 'default';
 
     // For blue/default semantic variants, prefer explicit icon color
-    const iconStyle = resolvedColor === 'blue' ? { color: 'var(--mantine-color-blue-6)', ...style } : style;
+    const iconStyle = resolvedColor === 'blue' ? { color: 'var(--ad-color-brand-primary)', ...style } : style;
 
     return (
       <MantineThemeIcon

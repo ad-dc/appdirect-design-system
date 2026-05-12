@@ -76,8 +76,8 @@ export const Pill = forwardRef<HTMLDivElement, DSPillProps>(
     const config = sizeConfig[size];
     
     const colors = {
-      backgroundColor: 'var(--mantine-color-gray-1)',
-      color: 'var(--mantine-color-gray-7)',
+      backgroundColor: 'var(--ad-color-bg-subtle)',
+      color: 'var(--ad-color-text-dimmed)',
       border: 'none',
     };
 

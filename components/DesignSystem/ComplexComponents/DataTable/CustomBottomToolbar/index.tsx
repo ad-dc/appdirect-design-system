@@ -19,9 +19,9 @@ const PAGE_SIZE_OPTIONS = [
 
 const TOOLBAR_STYLES = {
   container: {
-    borderTop: "1px solid var(--mantine-color-gray-3)",
+    borderTop: "1px solid var(--ad-color-border-subtle)",
     padding: `${rem(5)} ${rem(12)}`,
-    backgroundColor: "var(--mantine-color-gray-1)",
+    backgroundColor: "var(--ad-color-bg-subtle)",
   },
   select: {
     width: "80px",
@@ -29,7 +29,7 @@ const TOOLBAR_STYLES = {
   selectInput: {
     backgroundColor: "transparent",
     border: "none",
-    color: "var(--mantine-color-dark-9)",
+    color: "var(--ad-color-text-default)",
     fontSize: "var(--mantine-font-size-xs)",
   },
 } as const;

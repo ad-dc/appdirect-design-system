@@ -25,18 +25,18 @@ const FilterChip = ({ label, onClick }: FilterChipProps): JSX.Element => {
           cursor: 'pointer',
           '&[dataChecked="true"]': {
             backgroundColor: 'transparent',
-            border: '1px solid var(--mantine-color-gray-4)',
-            color: 'var(--mantine-color-gray-7)',
+            border: '1px solid var(--ad-color-border-default)',
+            color: 'var(--ad-color-text-dimmed)',
           },
           '&:hover': {
-            backgroundColor: 'var(--mantine-color-gray-0)',
+            backgroundColor: 'var(--ad-color-bg-subtle)',
           },
         },
         label: {
           cursor: 'pointer',
         },
         iconWrapper: {
-          color: 'var(--mantine-color-gray-6)',
+          color: 'var(--ad-color-text-dimmed)',
         },
       }}
     >
