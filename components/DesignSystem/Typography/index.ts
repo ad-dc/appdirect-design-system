@@ -16,6 +16,5 @@ export type { DSTextProps } from './Text';
 export { Title } from './Title';
 export type { DSTitleProps } from './Title';
 
-// Future typography component exports will go here:
-// export { Text } from './Text';
-// export { Title } from './Title'; 
+export { Anchor } from './Anchor';
+export type { DSAnchorProps } from './Anchor';

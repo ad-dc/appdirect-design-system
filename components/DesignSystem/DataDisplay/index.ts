@@ -37,5 +37,8 @@ export type { DSListProps } from './List';
 export { Table } from './Table';
 export type { DSTableProps } from './Table';
 
-// Future data display component exports will go here:
-// export { ADDSKbd } from './Kbd'; 
+export { Skeleton } from './Skeleton';
+export type { DSSkeletonProps } from './Skeleton';
+
+export { LoadingOverlay } from './LoadingOverlay';
+export type { DSLoadingOverlayProps } from './LoadingOverlay';

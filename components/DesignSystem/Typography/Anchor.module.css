@@ -1,0 +1,8 @@
+.anchor {
+  text-decoration: none;
+}
+
+.anchor:hover,
+.anchor:focus-visible {
+  text-decoration: underline;
+}

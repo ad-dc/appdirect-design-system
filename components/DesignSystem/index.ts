@@ -17,11 +17,11 @@
 // Import components for category exports
 import { TextInput, TextArea, NumberInput, ColorInput, Slider, Switch, SegmentedControl, Checkbox, Radio, RadioGroup, DropZone, FileInput } from './Inputs';
 import { Button, ActionIcon, CloseButton } from './Buttons';
-import { Alert, Avatar, Badge, Card, CardSection, Chip, Pill, Indicator, Progress, ThemeIcon, List, Table } from './DataDisplay';
+import { Alert, Avatar, Badge, Card, CardSection, Chip, Pill, Indicator, Progress, ThemeIcon, List, Table, Skeleton, LoadingOverlay } from './DataDisplay';
 import { SearchableSelect, AutocompleteClearable, Multiselect, Select, Combobox } from './Combobox';
 import { Breadcrumb, BackBreadcrumb, NavLink, Stepper, Tabs } from './Navigation';
 import { Drawer, Menu, Modal, ConfirmationModal, Popover, ConfirmationPopover, Tooltip } from './Overlays';
-import { Kbd, Code, Text, Title } from './Typography';
+import { Kbd, Code, Text, Title, Anchor } from './Typography';
 import { Divider, Paper } from './Misc';
 import { Stack, Group, Inline, Box, SimpleGrid, Grid, Flex, Container, Center } from './Layout';
 import { AppShellLayout, HeaderBar, SidebarNav, SidebarNavLink, SingleColumnLayout, TertiaryColumnLayout } from './Shell';
@@ -53,12 +53,12 @@ export { Drawer, Menu, Modal, ConfirmationModal, Popover, ConfirmationPopover, T
 export type { DSDrawerProps, DSMenuProps, MenuItem, MenuSection, DSModalProps, ConfirmationModalProps, DSPopoverProps, PopoverAction, ConfirmationPopoverProps, DSTooltipProps } from './Overlays';
 
 // ========================== DATA DISPLAY ==========================
-export { Alert, Avatar, Badge, Card, CardSection, Chip, Pill, Indicator, Progress, ThemeIcon, List, Table } from './DataDisplay';
-export type { DSAlertProps, DSAvatarProps, AvatarVariant, AvatarSize, DSBadgeProps, DSCardProps, DSCardSectionProps, DSChipProps, DSPillProps, DSIndicatorProps, DSProgressProps, DSThemeIconProps, ThemeIconSize, ThemeIconColor, DSListProps, DSTableProps } from './DataDisplay';
+export { Alert, Avatar, Badge, Card, CardSection, Chip, Pill, Indicator, Progress, ThemeIcon, List, Table, Skeleton, LoadingOverlay } from './DataDisplay';
+export type { DSAlertProps, DSAvatarProps, AvatarVariant, AvatarSize, DSBadgeProps, DSCardProps, DSCardSectionProps, DSChipProps, DSPillProps, DSIndicatorProps, DSProgressProps, DSThemeIconProps, ThemeIconSize, ThemeIconColor, DSListProps, DSTableProps, DSSkeletonProps, DSLoadingOverlayProps } from './DataDisplay';
 
 // ========================== TYPOGRAPHY ==========================
-export { Kbd, Code, Text, Title } from './Typography';
-export type { DSKbdProps, DSCodeProps, DSTextProps, DSTitleProps } from './Typography';
+export { Kbd, Code, Text, Title, Anchor } from './Typography';
+export type { DSKbdProps, DSCodeProps, DSTextProps, DSTitleProps, DSAnchorProps } from './Typography';
 
 // ========================== MISC ==========================
 export { Divider, Paper } from './Misc';
@@ -160,6 +160,8 @@ export const DataDisplay = {
   ThemeIcon,
   List,
   Table,
+  Skeleton,
+  LoadingOverlay,
 };
 
 export const Typography = {
@@ -167,6 +169,7 @@ export const Typography = {
   Code,
   Text,
   Title,
+  Anchor,
 };
 
 export const Misc = {
