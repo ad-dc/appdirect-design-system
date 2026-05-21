@@ -330,6 +330,47 @@ export const ConfirmationPopovers: Story = {
   },
 };
 
+export const TypedConfirmation: Story = {
+  render: () => (
+    <Inline gap="lg">
+      <ConfirmationPopover
+        trigger={<Button variant="outline">Restore record</Button>}
+        title="Confirm Restore"
+        confirmLabel="Confirm Restore"
+        confirmationKeyword="RESTORE"
+        onConfirm={() => console.log('Restored')}
+        onCancel={() => console.log('Cancelled restore')}
+      >
+        <Text size="sm">
+          You&apos;re about to restore <strong>Connectivity</strong> from <strong>Acme Corporation Inc.</strong>
+        </Text>
+      </ConfirmationPopover>
+
+      <ConfirmationPopover
+        trigger={<Button variant="outline">Override variant</Button>}
+        title="Acknowledge change"
+        confirmLabel="I acknowledge"
+        confirmationKeyword="ACK"
+        confirmVariant="primary"
+        onConfirm={() => console.log('Acknowledged')}
+      >
+        <Text size="sm">
+          When the caller passes <code>confirmVariant=&quot;primary&quot;</code> the typed input still
+          gates the CTA, but the button stays primary instead of defaulting to <code>danger</code>.
+        </Text>
+      </ConfirmationPopover>
+    </Inline>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Typed-confirmation variant: requires the user to type the exact keyword before the confirm CTA enables. Defaults to a `danger` variant unless the caller overrides `confirmVariant`.',
+      },
+    },
+  },
+};
+
 export const DifferentTriggers: Story = {
   render: () => (
     <Stack gap="lg" w={500}>

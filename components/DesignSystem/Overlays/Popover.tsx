@@ -1,9 +1,10 @@
 'use client';
 
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { Popover as MantinePopover, PopoverProps as MantinePopoverProps, Stack,Text } from '@mantine/core';
 import { Inline } from '@/components/DesignSystem';
 import { Button } from '../Buttons';
+import { TextInput } from '../Inputs';
 
 /**
  * Popover Action Button interface (same as Modal for consistency)
@@ -269,31 +270,65 @@ export interface ConfirmationPopoverProps extends Omit<DSPopoverProps, 'actions'
   confirmLoading?: boolean;
   /** Optional tertiary actions (right-aligned) */
   tertiaryActions?: PopoverAction[];
+  /**
+   * When set, a required text input is rendered between the popover body and the action buttons.
+   * The confirm CTA stays disabled until the user types this exact keyword (case-sensitive, trimmed).
+   * Also defaults `confirmVariant` to `'danger'` when the caller did not pass an explicit variant,
+   * so the typed-confirmation pattern visually matches destructive action expectations.
+   */
+  confirmationKeyword?: string;
 }
+
+const TYPED_INPUT_TEST_ID = 'confirmation-popover-typed-input';
 
 export const ConfirmationPopover = forwardRef<HTMLDivElement, ConfirmationPopoverProps>(
   (
     {
       confirmLabel = 'Confirm',
       cancelLabel = 'Cancel',
-      confirmVariant = 'primary',
+      confirmVariant,
       onConfirm,
       onCancel,
       confirmLoading = false,
       tertiaryActions = [],
+      confirmationKeyword,
+      opened,
       onClose,
+      children,
       ...props
     },
     ref
   ) => {
+    const requiresTypedConfirmation = typeof confirmationKeyword === 'string' && confirmationKeyword.length > 0;
+    const resolvedConfirmVariant: 'primary' | 'danger' =
+      confirmVariant ?? (requiresTypedConfirmation ? 'danger' : 'primary');
+
+    const [inputValue, setInputValue] = useState('');
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+      if (!requiresTypedConfirmation) return;
+      if (opened === false) {
+        setInputValue('');
+      }
+      if (opened === true) {
+        // Focus the typed-confirmation input on open (not the confirm CTA).
+        requestAnimationFrame(() => inputRef.current?.focus());
+      }
+    }, [opened, requiresTypedConfirmation]);
+
+    const isConfirmDisabled =
+      requiresTypedConfirmation && inputValue.trim() !== (confirmationKeyword ?? '').trim();
+
     const actions: PopoverAction[] = [
       {
         id: 'confirm',
         label: confirmLabel,
-        variant: confirmVariant,
+        variant: resolvedConfirmVariant,
         onClick: onConfirm,
         loading: confirmLoading,
-        closeOnClick: !confirmLoading,
+        disabled: isConfirmDisabled,
+        closeOnClick: !confirmLoading && !isConfirmDisabled,
       },
       {
         id: 'cancel',
@@ -304,14 +339,34 @@ export const ConfirmationPopover = forwardRef<HTMLDivElement, ConfirmationPopove
       },
     ];
 
+    const popoverChildren = requiresTypedConfirmation ? (
+      <Stack gap="sm">
+        {children}
+        <TextInput
+          ref={inputRef}
+          label={`Type ${confirmationKeyword} to proceed.`}
+          required
+          aria-required="true"
+          value={inputValue}
+          onChange={(event) => setInputValue(event.currentTarget.value)}
+          data-testid={TYPED_INPUT_TEST_ID}
+        />
+      </Stack>
+    ) : (
+      children
+    );
+
     return (
       <Popover
         ref={ref}
         actions={actions}
         tertiaryActions={tertiaryActions}
+        opened={opened}
         onClose={onClose}
         {...props}
-      />
+      >
+        {popoverChildren}
+      </Popover>
     );
   }
 );
