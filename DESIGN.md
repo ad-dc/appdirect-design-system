@@ -302,9 +302,9 @@ For flat hierarchy (tabs, navigation, dividers) we prefer **borders and color co
 
 ## Shapes
 
-A 5-step radius scale (xs 2px, sm 4px, md 8px, lg 16px, xl 32px) plus `none` and `full`. The system-wide default is `sm` (4px) — applied to buttons, inputs, cards, and menus. Larger radii (`md`, `lg`, `xl`) are reserved for special surfaces (modals, drawers, pop-out cards) where a softer edge reinforces the elevated context.
+A 5-step radius scale (xs 2px, sm 4px, md 8px, lg 16px, xl 32px) plus `none` and `full`. The system-wide default is `sm` (4px) — applied to all components: buttons, inputs, cards, badges, modals, drawers, menus. Do not use larger radii unless there is an explicit design reason to deviate.
 
-**Rule:** do not mix `full` (9999px, pill shape) with sharp corners in the same view. Most elements — buttons, inputs, cards, **badges** — are `sm`. Elevated surfaces are `md` or `lg`. Reserve `full` for genuinely circular elements (avatars, loading spinners, indicator dots).
+**Rule:** Reserve `full` (9999px) for genuinely circular elements (avatars). Do not use it for buttons, badges, or chips — those are `sm`.
 
 ## Components
 
@@ -505,8 +505,8 @@ The `components` section in the front matter defines per-variant tokens for the 
 - **Don't** use status colors for decoration or emphasis in body text
 - **Do** use `label-md` (Inter Semi-Bold 14px) for button labels, tab labels, and form field labels
 - **Don't** use more than two type families on a screen (Inter for UI, Roboto Mono for data — that's it)
-- **Do** use `rounded.sm` (4px) for buttons, inputs, cards, and badges; `rounded.full` for avatars and circular indicators; reserve `rounded.md`+ for elevated surfaces (modals, drawers)
-- **Don't** mix `rounded.full` (pill) with sharp corners in the same view
+- **Do** use `rounded.sm` (4px) for all components — buttons, inputs, cards, badges, modals, drawers; `rounded.full` only for avatars
+- **Don't** use `rounded.md` or larger unless explicitly required by design; don't use `rounded.full` for buttons or badges
 - **Do** rely on spacing tokens (xs–xl) for all padding, gap, margin
 - **Don't** use raw pixel values or ad-hoc spacing
 - **Do** maintain WCAG AA contrast ratios (4.5:1 normal text, 3:1 large text) — the A11y blue (#326FDE) was chosen precisely to meet this on white
