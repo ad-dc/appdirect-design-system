@@ -604,6 +604,14 @@ This order is already configured in `app/layout.tsx` and `.storybook/preview.tsx
 
 ---
 
+## Token notes
+
+Per-token annotations that don't fit naturally into the prose sections above. The YAML front matter is generated and carries no comments — anything that needs to be remembered about a specific token belongs here.
+
+- **`components.tooltip` padding** — intentionally omitted from the YAML. The DS Tooltip wrapper uses off-scale custom padding (5px 8px) to match Figma; this is a deliberate exception to the spacing scale.
+
+---
+
 ## Pending work
 
 1. **AppDirect Navy tokenization** — `#011B58` is hardcoded in `AppShellLayout.tsx`; will become `--ad-color-brand-navy` (or similar) once the brand color group is added to `@appdirect/design-tokens`

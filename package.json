@@ -13,6 +13,8 @@
     "build-storybook": "storybook build",
     "create-page": "node tools/create-page.js",
     "export-pages": "node tools/export-page.js",
+    "sync-design-docs": "node scripts/sync-design-docs.mjs",
+    "test:scripts": "node --test scripts/*.test.mjs",
     "figma:parse": "figma connect parse --skip-update-check --config figma.config.json --dir components/DesignSystem --exit-on-unreadable-files -t \"$(grep -E '^FIGMA_ACCESS_TOKEN=' .env.local | cut -d= -f2-)\"",
     "figma:publish": "figma connect publish --skip-update-check --config figma.config.json -t \"$(grep -E '^FIGMA_ACCESS_TOKEN=' .env.local | cut -d= -f2-)\"",
     "figma:unpublish": "figma connect unpublish --skip-update-check --config figma.config.json -t \"$(grep -E '^FIGMA_ACCESS_TOKEN=' .env.local | cut -d= -f2-)\""

@@ -11,7 +11,7 @@ export interface DSPaperProps extends Omit<MantinePaperProps, 'padding'> {
 }
 
 export const Paper = forwardRef<HTMLDivElement, DSPaperProps>(
-  ({ variant, children, p = 'sm', shadow, withBorder, ...props }, ref) => {
+  ({ variant, children, p, shadow, withBorder, ...props }, ref) => {
     const getVariantProps = () => {
       switch (variant) {
         case 'shadow':

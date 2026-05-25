@@ -950,7 +950,7 @@ Steps 1 and 2 are always visible. Steps 3-10 are toggled via boolean properties.
 
 #### Notes
 
-- Fixed padding: `sm`
+- Padding follows Mantine Core — pass any Mantine system prop (`p`, `px`, `py`, etc.) to control it; not exposed via Figma
 - The DS wrapper accepts Mantine-style `shadow` / `withBorder`; legacy `variant` remains as a compatibility alias in code only
 
 ---
