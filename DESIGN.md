@@ -405,12 +405,19 @@ All inputs default to `radius="sm"` and `size="sm"` matching the button default.
 
 ### Icons
 
-Two icon libraries are available. **Remix Icons is primary** — use it for all product UI icons. Tabler is supplementary and should only be used for icons not available in Remix.
+Three icon sets are in use. Each has a distinct purpose — do not substitute one for another.
 
-| Library | Import | Use |
+| Set | Package | Purpose |
 |---|---|---|
-| `@remixicon/react` | `import { RiArrowDownSLine } from '@remixicon/react'` | Primary — all product UI icons |
-| `@tabler/icons-react` | `import { IconX } from '@tabler/icons-react'` | Supplementary only |
+| **Tabler** | `@tabler/icons-react` | Mantine component UI only — pre-baked affordances (Select chevron, Accordion toggle, etc.) |
+| **Remix** | `@remixicon/react` | Primary set for all product UI design decisions |
+| **ad-svg-icons** | `git@github.com:AppDirect/ad-svg-icons.git` | Legacy proprietary icons for specific AppDirect concepts |
+
+**Tabler** — use exclusively for icons that are built into Mantine component internals (e.g. the double-triangle on a Select, a chevron in an Accordion or Button). These have no design selection requirement — Mantine uses them automatically. Do not use Tabler for any icon that a designer has chosen.
+
+**Remix** (`@remixicon/react`) — the primary and growing set. When a new icon is needed for any designed UI element, look here first. The collection is actively expanded based on use-case. Browse at [remixicon.com](https://remixicon.com).
+
+**ad-svg-icons** — legacy proprietary collection containing icons built for specific AppDirect software concepts (Quotes, Opportunities, Leads) or cases where the Remix equivalent was aesthetically inappropriate (e.g. credit card, bell). Use only when a required icon exists here and has no suitable Remix equivalent.
 
 **Icon sizing** — always use the `--ad-icon-size-*` scale, not arbitrary pixel values:
 
