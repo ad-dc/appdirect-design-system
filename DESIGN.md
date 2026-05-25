@@ -614,4 +614,4 @@ This order is already configured in `app/layout.tsx` and `.storybook/preview.tsx
 6. **Component token expansion** — remaining components in `@appdirect/design-tokens/tokens/components/*.json` (30+ files) not yet reflected in the `components:` YAML block
 7. **Prose pass** — brand/DS leads should revise Overview + Do's-and-Don'ts sections for voice and rationale
 8. **Harvest Figma component docs** — each Figma component has a `utilities/doc-section` with usage guidance; extract and merge into Components subsections
-9. **Wire into tokens pipeline** — long-term, generate the YAML front matter from `@appdirect/design-tokens` at build time so this file stays in sync automatically
+9. **Wire into tokens pipeline** — `@appdirect/design-tokens` will emit a `dist/design-spec.yaml` adapter; a `sync-design-docs` script in this repo will replace the YAML front matter automatically on `npm install`. Backlog item added to `appdirect-design-tokens/CLAUDE.md`.
