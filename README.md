@@ -6,12 +6,23 @@ Next.js 16 runtime shell with an AppDirect design system (**Mantine v9**, React 
 
 ### 1. Set up
 
+> **Prerequisites:** You must be connected to the AppDirect VPN. The `@appdirect/design-tokens` package is hosted on the internal Artifactory registry — `npm install` will fail without VPN access.
+
 ```bash
 git clone <repo-url>
 cd appdirect-design-system
 npm install
 npm run dev
 ```
+
+The `.npmrc` in this repo scopes `@appdirect` packages to the Artifactory registry automatically. No manual registry configuration is needed beyond VPN access.
+
+If you see a 404 or auth error on `@appdirect/design-tokens` during install, verify:
+1. You are connected to the VPN
+2. You are logged in to the Artifactory npm registry:
+   ```bash
+   npm login --registry https://artifactory.appdirect.tools/artifactory/api/npm/npm-repo
+   ```
 
 Visit `http://localhost:3000/prototype` to see the prototype index page.
 
