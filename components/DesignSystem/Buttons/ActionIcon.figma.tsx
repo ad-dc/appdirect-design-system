@@ -8,7 +8,7 @@ figma.connect(
   {
     props: {
       size: figma.enum('size', { xs: 'xs', sm: 'sm', md: 'md', lg: 'lg', xl: 'xl' }),
-      variant: figma.enum('variant', { default: 'default', link: 'link' }),
+      variant: figma.enum('variant', { default: 'default', outline: 'outline', link: 'link' }),
     },
     example: (props) => (
       <ActionIcon variant={props.variant} size={props.size}>

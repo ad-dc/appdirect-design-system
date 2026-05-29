@@ -15,6 +15,11 @@ const meta: Meta<typeof ActionIcon> = {
   },
   tags: ['autodocs', 'code-connected'],
   argTypes: {
+    variant: {
+      control: 'select',
+      options: ['default', 'outline', 'link'],
+      description: 'Visual style variant',
+    },
     size: {
       control: 'select',
       options: ['xs', 'sm', 'md', 'lg', 'xl'],
@@ -38,6 +43,25 @@ export const Default: Story = {
   args: {
     children: <RiEditLine size={16} />,
   },
+};
+
+export const Variants: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+      <div style={{ textAlign: 'center' }}>
+        <ActionIcon variant="default"><RiEditLine size={16} /></ActionIcon>
+        <div style={{ fontSize: '12px', marginTop: '4px' }}>Default</div>
+      </div>
+      <div style={{ textAlign: 'center' }}>
+        <ActionIcon variant="outline"><RiEditLine size={16} /></ActionIcon>
+        <div style={{ fontSize: '12px', marginTop: '4px' }}>Outline</div>
+      </div>
+      <div style={{ textAlign: 'center' }}>
+        <ActionIcon variant="link"><RiEditLine size={16} /></ActionIcon>
+        <div style={{ fontSize: '12px', marginTop: '4px' }}>Link</div>
+      </div>
+    </div>
+  ),
 };
 
 export const Sizes: Story = {

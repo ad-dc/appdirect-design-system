@@ -315,8 +315,16 @@ The AppDirect DS layer wraps Mantine 9 components under `components/DesignSystem
 | Component | Key props | Notes |
 |---|---|---|
 | `Button` | `variant`, `size`, `loading`, `disabled`, `leftSection`, `rightSection` | Default `variant="default"`, default `size="sm"`, always `radius="sm"` |
-| `ActionIcon` | `size`, `variant` | Icon-only button |
+| `ActionIcon` | `size`, `variant` | Icon-only button; default `size="md"`, always `radius="sm"` |
 | `CloseButton` | `size` | Preconfigured dismiss button |
+
+**ActionIcon variants:** `default` · `outline` · `link`
+
+- `default` — light blue tinted background; use for primary icon actions in toolbars and inline controls
+- `outline` — white surface with gray border and on-surface icon color; matches Button `default` surface styling for icon-only actions
+- `link` — no background, primary-colored icon; inline or low-prominence actions
+
+**ActionIcon sizes:** `xs` · `sm` · `md` (default) · `lg` · `xl`
 
 **Button variants:** `primary` · `secondary` · `default` · `outline` · `danger` · `link` · `secret` · `disabled`
 

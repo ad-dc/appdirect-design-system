@@ -111,13 +111,21 @@ Style-based variants used across components:
 
 | Prop | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
+| `variant` | `'default' \| 'outline' \| 'link'` | No | `'default'` | Visual style variant |
 | `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | No | `'md'` | Icon button size |
 | `disabled` | `boolean` | No | `false` | Disabled state |
 | `children` | `ReactNode` | Yes | - | Icon element |
 
+#### Variant Mappings
+
+| DS Variant | Mantine Variant | Color | Description |
+|------------|-----------------|-------|-------------|
+| `default` | `light` | `blue` | Light blue tinted background |
+| `outline` | `default` | `gray` | White surface with gray border — matches Button `default` surface |
+| `link` | `subtle` | `blue` | Transparent, text/icon only |
+
 #### Notes
 
-- Supports `default` and `link` variant mappings
 - Fixed border radius of `sm`
 
 ---
@@ -1137,7 +1145,7 @@ Code Connect maps the **DS** `DropZone` in `Inputs/DropZone.tsx` (not raw Mantin
 | Component | Category | Key Props | Default Size | Default Variant |
 |-----------|----------|-----------|--------------|-----------------|
 | Button | Buttons | variant, size, loading, disabled | sm | default |
-| ActionIcon | Buttons | size, disabled | md | - |
+| ActionIcon | Buttons | variant, size, disabled | md | default |
 | CloseButton | Buttons | size, color, disabled | md | - |
 | Badge | DataDisplay | color, variant, size | md | filled |
 | Chip | DataDisplay | variant, checked, size | - | default |
