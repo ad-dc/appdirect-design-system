@@ -1,0 +1,72 @@
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --font-inter: "Inter Variable", "Inter", "Aptos", "Segoe UI", sans-serif;
+  --font-roboto-mono: "Roboto Mono Variable", "Roboto Mono", "SFMono-Regular", "Consolas", monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-inter), sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  font-family: var(--font-inter), sans-serif !important;
+}
+
+.mantine-Text-root,
+.mantine-Button-root,
+.mantine-InputBase-root,
+.mantine-Combobox-root,
+.mantine-DatePicker-root,
+.mantine-Title-root {
+  font-family: var(--font-inter), sans-serif !important;
+}
+
+.mantine-Code-root,
+.mantine-Kbd-root {
+  font-family: var(--font-roboto-mono), monospace !important;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+
+.mantine-Card-section:not([data-with-border]) {
+  border-width: 0;
+  border-style: none;
+}
+.mantine-Card-section[data-with-border] {
+  border-color: var(--ad-color-border-subtle, var(--mantine-color-gray-3));
+  border-left-width: 0;
+  border-right-width: 0;
+}

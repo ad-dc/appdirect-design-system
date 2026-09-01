@@ -1,0 +1,71 @@
+---
+description: Rules for creating and editing prototype pages
+globs: app/prototype/**/*
+alwaysApply: false
+---
+
+# Prototyping Rules
+
+## Page Creation
+
+When creating a new prototype page:
+
+1. Use `npm run create-page` or manually create under `app/prototype/<slug>/page.tsx`
+2. Update `prototype-manifest.json` with the new page entry
+3. Choose a template: `app-shell` (header + nav) or `content-only` (header only)
+4. Choose a content layout: `single-column` or `tertiary` (main + aside)
+
+## Component Imports
+
+```tsx
+import { Button, Card, Stack, TextInput } from '@appdirect/ds-prototype-kit';
+```
+
+Never import from `@mantine/core` in prototype pages. Domain widgets come from `@/components/cbp`.
+
+## Page Structure
+
+```tsx
+'use client';
+
+import { AppShellLayout, SingleColumnLayout } from '@appdirect/ds-prototype-kit';
+
+export default function PageName() {
+  return (
+    <AppShellLayout navItems={navItems} title="App Name">
+      <SingleColumnLayout>
+        {/* Page content */}
+      </SingleColumnLayout>
+    </AppShellLayout>
+  );
+}
+```
+
+## Template Selection
+
+- **app-shell**: `AppShellLayout` with `navItems`
+- **content-only**: `AppShellLayout` with `hideNav`
+
+## Content Layouts
+
+- **SingleColumnLayout**: full-width content in a `Stack`
+- **TertiaryColumnLayout**: main + aside (8/4 grid split)
+
+## Navigation
+
+```tsx
+const navItems: NavItem[] = [
+  { label: 'Customers', icon: 'ri-team-line', href: '/prototype/customers', active: true },
+  { label: 'Settings', icon: 'ri-settings-3-line', href: '/prototype/settings' },
+];
+```
+
+## Breadcrumbs
+
+```tsx
+<Breadcrumb items={[{ label: 'Prototypes', href: '/prototype' }, { label: 'Page Title' }]} />
+```
+
+## Styling
+
+Use Mantine system props only (`bg`, `c`, `p`, `m`, `gap`, `radius`, etc.).

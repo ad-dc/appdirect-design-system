@@ -2,7 +2,25 @@
 
 Next.js 16 runtime shell with an AppDirect design system (**Mantine v9**, React 19.2+), page templates for rapid prototyping, Storybook workspace, and Figma Code Connect integration.
 
-## Quick Start: Prototyping
+This repo is the **design-system source**. Designer prototype repos are generated from `templates/designer-prototype` and depend on the kit tarball published as a [GitHub Release](https://github.com/ad-dc/appdirect-design-system/releases). Do not use GitHub “Use this template” on this repository — that copies DS source into every prototype.
+
+## Create a designer prototype repo
+
+From this checkout (maintainers):
+
+```bash
+npm run create-prototype -- --name proto-alex
+npm run create-prototype -- --name proto-alex --title "Alex prototypes" --github --collaborator alex
+```
+
+- Copies `templates/designer-prototype` to `../<name>` (or `--out`)
+- Pins `@appdirect/ds-prototype-kit` to the latest GitHub Release `.tgz` (override with `--kit-tag` or `--kit-url`)
+- Does **not** copy `components/DesignSystem`, Storybook, or Code Connect
+- `--github` creates a private `ad-dc/<name>` repo and can grant write with `--collaborator`
+
+The designer then `npm install` and `npm run dev`. Shared UI comes from the kit; product widgets go in `components/cbp/`. Kit updates are a tarball URL bump, not a git merge.
+
+## Quick Start: Prototyping (this repo)
 
 ### 1. Set up
 
@@ -91,8 +109,9 @@ npm run typecheck      # TypeScript check
 ### Prototyping
 
 ```bash
-npm run create-page    # Scaffold a new prototype page
-npm run export-pages   # Export pages for production use
+npm run create-page         # Scaffold a new prototype page in this repo
+npm run create-prototype    # Create a per-designer prototype repo from the thin template
+npm run export-pages        # Export pages for production use
 ```
 
 ### Figma Code Connect
@@ -163,9 +182,13 @@ components/
     FIGMA_PROPS_REGISTRY.md   # Component prop reference
 
 tools/
-  create-page.js              # Page scaffold CLI
+  create-page.js              # Page scaffold CLI (this repo)
+  create-prototype-repo.js    # Per-designer prototype repo generator
   export-page.js              # Page export CLI
   page-templates/             # Template files for scaffolding
+
+templates/
+  designer-prototype/         # Thin Next.js starter (kit tarball, no DS source)
 
 ds-package/                   # Publishable npm package (@appdirect/ds-prototype-kit)
 prototype-manifest.json       # Registry of all prototype pages
@@ -180,11 +203,11 @@ Prototype pages are designed to be portable to `micro-ui-ts` and other React app
 - **Page content** (components inside the template) is framework-agnostic React
 - **Shell components** (AppShellLayout, HeaderBar, SidebarNav) are prototype-only and discarded during export
 - **Routing** is not ported; the export generates a `CONNECTIONS.md` describing page relationships for developers to wire up in the target framework
-- **DS components** can be used via the `@appdirect/ds-prototype-kit` npm package or copied directly
+- **DS components** in designer repos come from the `@appdirect/ds-prototype-kit` GitHub Release tarball
 
-## Using as a Template
+## Designer templates
 
-This repo can be used as a [GitHub template repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository). Click "Use this template" to create a new prototype project with all tooling pre-configured.
+Use `npm run create-prototype`, not GitHub “Use this template” on this repo. The generated app imports `@appdirect/ds-prototype-kit` and keeps domain components in `components/cbp/`.
 
 ## Environment
 

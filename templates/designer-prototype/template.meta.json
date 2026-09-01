@@ -1,0 +1,5 @@
+{
+  "description": "Source files for per-designer prototype repos. Do not run this folder in place — use npm run create-prototype from the design-system repo.",
+  "kitRepo": "ad-dc/appdirect-design-system",
+  "kitPackage": "@appdirect/ds-prototype-kit"
+}

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Stack } from '@mantine/core';
-import { Inline } from '@/components/DesignSystem';
+import { Inline } from '../Layout/Inline';
 import { DropZone } from './DropZone';
 import { useState } from 'react';
 import { Title } from '../Typography/Title';

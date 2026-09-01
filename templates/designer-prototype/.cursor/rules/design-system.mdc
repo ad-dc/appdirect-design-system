@@ -1,0 +1,39 @@
+---
+description: Design system component and coding standards for designer prototype repos
+alwaysApply: true
+---
+
+# Prototype Design System Rules
+
+## Tech Stack
+
+- **Next.js** App Router
+- **Mantine v9** for UI and styling
+- **TypeScript**
+
+## Styling
+
+- Style only with Mantine system props (`bg`, `c`, `w`, `h`, `p`, `px`, `py`, `m`, `mx`, `my`, `radius`, `shadow`, etc.)
+- Do **not** use Tailwind CSS, CSS modules, or inline `style` props
+
+## Design System Components
+
+**Always import shared DS components from the kit**, never from `@mantine/core` and never from a local `components/DesignSystem` copy.
+
+```tsx
+import { Button, TextInput, Alert, Stack } from '@appdirect/ds-prototype-kit';
+```
+
+Product-specific widgets belong in `@/components/cbp`. Do not vendor or edit kit source in this repo.
+
+## Data Tables
+
+Use `Table` from `@appdirect/ds-prototype-kit`.
+
+## Page Headers
+
+Use `PageContentHeader` from `@appdirect/ds-prototype-kit`.
+
+## Kit updates
+
+Bump `@appdirect/ds-prototype-kit` in `package.json` to a newer GitHub Release tarball URL when a new kit version ships. Do not cherry-pick from `appdirect-design-system`.

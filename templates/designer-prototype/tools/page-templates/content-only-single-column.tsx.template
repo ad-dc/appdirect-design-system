@@ -1,0 +1,33 @@
+'use client';
+
+import {
+  AppShellLayout,
+  SingleColumnLayout,
+  PageContentHeader,
+  Card,
+  Breadcrumb,
+  Stack,
+  Text,
+} from '@appdirect/ds-prototype-kit';
+
+export default function {{PAGE_COMPONENT}}() {
+  return (
+    <AppShellLayout title="{{PROTOTYPE_TITLE}}" hideNav>
+      <SingleColumnLayout>
+        <Breadcrumb items={[{ label: 'Prototypes', href: '/prototype' }, { label: '{{PAGE_TITLE}}' }]} />
+
+        <PageContentHeader
+          title="{{PAGE_TITLE}}"
+          subhead="{{PAGE_DESCRIPTION}}"
+          badge="Prototype"
+        />
+
+        <Card>
+          <Stack gap="sm">
+            <Text>Replace this with your page content.</Text>
+          </Stack>
+        </Card>
+      </SingleColumnLayout>
+    </AppShellLayout>
+  );
+}

@@ -1,0 +1,79 @@
+---
+description: Automated mapping from Figma auto-layout properties to DS layout primitives.
+globs:
+alwaysApply: false
+---
+
+# Figma Layout Primitive Mapping
+
+When translating Figma designs to code using `get_design_context`, map layout containers to kit primitives from the generated code's layout properties. Do not require designers to name layers after primitives.
+
+Import layout from `@appdirect/ds-prototype-kit`.
+
+## Decision Algorithm
+
+### 1. Vertical stack (`flex-direction: column`)
+
+```tsx
+import { Stack } from '@appdirect/ds-prototype-kit';
+<Stack gap="md">{children}</Stack>
+```
+
+### 2. Horizontal row (`flex-direction: row`)
+
+```tsx
+import { Inline } from '@appdirect/ds-prototype-kit';
+<Inline gap="sm">{children}</Inline>
+```
+
+### 3. Grid
+
+```tsx
+import { Grid } from '@appdirect/ds-prototype-kit';
+<Grid cols={{ base: 1, md: 2, lg: 3 }} spacing="lg">{children}</Grid>
+```
+
+### 4. Padding-only container
+
+```tsx
+import { Box } from '@appdirect/ds-prototype-kit';
+<Box p="md" bg="gray.1">{children}</Box>
+```
+
+### 5. Centered content
+
+```tsx
+import { Center } from '@appdirect/ds-prototype-kit';
+<Center h={200}>{children}</Center>
+```
+
+### 6. Page-level container
+
+```tsx
+import { Container } from '@appdirect/ds-prototype-kit';
+<Container size="md">{children}</Container>
+```
+
+### 7. Advanced flex
+
+```tsx
+import { Flex } from '@appdirect/ds-prototype-kit';
+<Flex direction={{ base: 'column', sm: 'row' }} gap="md">{children}</Flex>
+```
+
+### 8. Fallback
+
+Use `Box` with Mantine system props.
+
+## Spacing
+
+| Figma | Token |
+|-------|-------|
+| 4px | `"xs"` |
+| 8px | `"sm"` |
+| 16px | `"md"` |
+| 24px | `"lg"` |
+| 32px | `"xl"` |
+| 48px | `"xxl"` |
+
+If a layer is explicitly named `Stack`, `Grid`, or `Inline`, honor that name.

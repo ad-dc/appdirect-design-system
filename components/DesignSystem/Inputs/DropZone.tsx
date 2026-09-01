@@ -2,7 +2,7 @@
 
 import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { Text, rem } from '@mantine/core';
-import { Inline } from '@/components/DesignSystem';
+import { Inline } from '../Layout/Inline';
 import { IconUpload, IconX, IconPhoto } from '@tabler/icons-react';
 import { forwardRef } from 'react';
 

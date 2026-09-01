@@ -1,0 +1,49 @@
+'use client';
+
+import {
+  AppShellLayout,
+  type NavItem,
+  TertiaryColumnLayout,
+  PageContentHeader,
+  Card,
+  Breadcrumb,
+  Stack,
+  Text,
+  Button,
+} from '@appdirect/ds-prototype-kit';
+
+const navItems: NavItem[] = [
+  { label: '{{PAGE_TITLE}}', icon: '{{PAGE_ICON}}', href: '/prototype/{{PAGE_SLUG}}', active: true },
+];
+
+export default function {{PAGE_COMPONENT}}() {
+  return (
+    <AppShellLayout navItems={navItems} title="{{PROTOTYPE_TITLE}}">
+      <Breadcrumb items={[{ label: 'Prototypes', href: '/prototype' }, { label: '{{PAGE_TITLE}}' }]} />
+
+      <PageContentHeader
+        title="{{PAGE_TITLE}}"
+        subhead="{{PAGE_DESCRIPTION}}"
+        badge="Prototype"
+      />
+
+      <TertiaryColumnLayout
+        main={
+          <Card>
+            <Stack gap="sm">
+              <Text>Replace this with your main content.</Text>
+            </Stack>
+          </Card>
+        }
+        aside={
+          <Card>
+            <Stack gap="sm">
+              <Text>Replace this with your aside content.</Text>
+              <Button variant="primary" fullWidth>Action</Button>
+            </Stack>
+          </Card>
+        }
+      />
+    </AppShellLayout>
+  );
+}
