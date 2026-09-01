@@ -1,10 +1,18 @@
 # __PROTOTYPE_NAME__
 
-Designer prototype workspace. Shared UI comes from [`@appdirect/ds-prototype-kit`](https://github.com/ad-dc/appdirect-design-system/releases) (GitHub Release tarball). This repo does not contain design-system source.
+AppDirect prototype workspace. Shared UI comes from [`@appdirect/ds-prototype-kit`](https://github.com/ad-dc/appdirect-design-system/releases). This repo does not contain design-system source.
+
+**Start your own copy:** [Use this template](https://github.com/ad-dc/appdirect-prototype-template/generate) or:
+
+```bash
+gh repo create my-prototype --template ad-dc/appdirect-prototype-template --private --clone
+```
+
+In Cursor, `/prototype-workspace` adds pages; `/start-prototype` creates another repo.
 
 ## Setup
 
-VPN is required for `@appdirect/design-tokens` (Artifactory). The kit itself installs from GitHub.
+The kit installs from a GitHub Release tarball on `ad-dc/appdirect-design-system`. Public npm covers Mantine, Next.js, and fonts. No Artifactory or VPN.
 
 ```bash
 npm install
@@ -12,12 +20,6 @@ npm run dev
 ```
 
 Open [http://localhost:3000/prototype](http://localhost:3000/prototype).
-
-If `npm install` fails on `@appdirect/design-tokens`:
-
-```bash
-npm login --registry https://artifactory.appdirect.tools/artifactory/api/npm/npm-repo
-```
 
 ## Create a page
 

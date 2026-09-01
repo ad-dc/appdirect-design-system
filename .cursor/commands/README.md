@@ -1,8 +1,22 @@
 # Project Commands
 
-This repo includes project-local Cursor slash commands for the Figma Code Connect workflow.
+This repo includes project-local Cursor slash commands.
 
-## Available commands
+## Prototyping
+
+### `/start-prototype`
+
+Self-serve: create **your own** GitHub repo from `ad-dc/appdirect-prototype-template`. For designers, engineers, and PMs. Follows `.cursor/skills/start-prototype/SKILL.md`.
+
+### `/publish-prototype-template`
+
+Maintainer: refresh the shared GitHub template so self-serve clones stay current. Follows `.cursor/skills/publish-prototype-template/SKILL.md`.
+
+### `/create-prototype`
+
+Optional local scaffold from this checkout. Prefer `/start-prototype`.
+
+## Figma Code Connect
 
 ### `/code-connect-props`
 

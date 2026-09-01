@@ -112,6 +112,20 @@ function copyDirSync(src, dest, relativeBase = '') {
   }
 }
 
+const VENDOR_CSS_DIR = path.join(ROOT, 'vendor', 'css');
+
+function copyTokenCss() {
+  const dest = path.join(DIST_DIR, 'css');
+  fs.mkdirSync(dest, { recursive: true });
+  for (const file of ['foundations.css', 'mantine.css']) {
+    const from = path.join(VENDOR_CSS_DIR, file);
+    if (!fs.existsSync(from)) {
+      throw new Error(`Missing vendored token CSS: ${from}`);
+    }
+    fs.copyFileSync(from, path.join(dest, file));
+  }
+}
+
 function removeEmptyDirs(dir) {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   for (const entry of entries) {
@@ -132,6 +146,7 @@ function main() {
   }
 
   copyDirSync(SOURCE_DIR, DIST_DIR);
+  copyTokenCss();
 
   // Clean up empty directories left by skipped files
   removeEmptyDirs(DIST_DIR);
@@ -150,6 +165,7 @@ function main() {
   countFiles(DIST_DIR);
 
   console.log(`  Copied ${fileCount} files to dist/`);
+  console.log('  Included: vendor/css/foundations.css, mantine.css');
   console.log('  Excluded: DataTable (external hook dependencies)');
   console.log('  Done.\n');
 }

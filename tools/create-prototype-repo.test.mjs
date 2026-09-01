@@ -90,7 +90,7 @@ test('main copies template, pins kit, and strips placeholders', () => {
     const pkg = JSON.parse(readFileSync(path.join(out, 'package.json'), 'utf8'));
     assert.equal(pkg.name, 'proto-alex');
     assert.equal(pkg.dependencies['@appdirect/ds-prototype-kit'], KIT_URL);
-    assert.equal(pkg.dependencies['@appdirect/design-tokens'], '^0.0.6');
+    assert.equal(pkg.dependencies['@appdirect/design-tokens'], undefined);
 
     const manifest = JSON.parse(readFileSync(path.join(out, 'prototype-manifest.json'), 'utf8'));
     assert.equal(manifest.prototypeName, 'Alex Prototypes');
@@ -98,6 +98,13 @@ test('main copies template, pins kit, and strips placeholders', () => {
 
     const nextConfig = readFileSync(path.join(out, 'next.config.ts'), 'utf8');
     assert.match(nextConfig, /transpilePackages: \['@appdirect\/ds-prototype-kit'\]/);
+    assert.match(nextConfig, /@appdirect\/ds-prototype-kit\/css\/foundations\.css/);
+    assert.doesNotMatch(nextConfig, /@appdirect\/design-tokens/);
+
+    const layout = readFileSync(path.join(out, 'app/layout.tsx'), 'utf8');
+    assert.match(layout, /@appdirect\/ds-prototype-kit\/css\/foundations\.css/);
+    assert.match(layout, /@appdirect\/ds-prototype-kit\/css\/mantine\.css/);
+    assert.doesNotMatch(layout, /@appdirect\/design-tokens/);
 
     const indexPage = readFileSync(path.join(out, 'app/prototype/page.tsx'), 'utf8');
     assert.match(indexPage, /from '@appdirect\/ds-prototype-kit'/);
@@ -114,8 +121,11 @@ test('main copies template, pins kit, and strips placeholders', () => {
     assert.doesNotMatch(readme, /__PROTOTYPE_NAME__/);
 
     assert.equal(existsSync(path.join(out, 'template.meta.json')), false);
+    assert.equal(existsSync(path.join(out, '.npmrc')), false);
     assert.equal(existsSync(path.join(out, 'components/DesignSystem')), false);
     assert.equal(existsSync(path.join(out, 'components/cbp/index.ts')), true);
+    assert.equal(existsSync(path.join(out, '.cursor/skills/prototype-workspace/SKILL.md')), true);
+    assert.equal(existsSync(path.join(out, '.cursor/skills/start-prototype/SKILL.md')), true);
     assert.equal(existsSync(path.join(out, 'public/assets/AppDirect-Mark_White.svg')), true);
   } finally {
     rmSync(dir, { recursive: true, force: true });

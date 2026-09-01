@@ -1,6 +1,6 @@
 {
   "name": "@appdirect/ds-prototype-kit",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "AppDirect Design System components for prototyping. Wraps Mantine v9 with standardized props, variants, and tokens.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -17,7 +17,9 @@
     "./types": {
       "types": "./dist/types.d.ts",
       "import": "./dist/types.js"
-    }
+    },
+    "./css/foundations.css": "./dist/css/foundations.css",
+    "./css/mantine.css": "./dist/css/mantine.css"
   },
   "files": [
     "dist",

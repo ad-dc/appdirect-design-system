@@ -1,24 +1,62 @@
 # AppDirect Prototype Kit
 
-Next.js 16 runtime shell with an AppDirect design system (**Mantine v9**, React 19.2+), page templates for rapid prototyping, Storybook workspace, and Figma Code Connect integration.
+Next.js 16 runtime shell with an AppDirect design system (**Mantine v9**, React 19.2+), Storybook, and Figma Code Connect.
 
-This repo is the **design-system source**. Designer prototype repos are generated from `templates/designer-prototype` and depend on the kit tarball published as a [GitHub Release](https://github.com/ad-dc/appdirect-design-system/releases). Do not use GitHub “Use this template” on this repository — that copies DS source into every prototype.
+This repository is the **design-system source of truth**. You do not need write access here to prototype.
 
-## Create a designer prototype repo
+## Start a prototype (self-serve)
 
-From this checkout (maintainers):
+Designers, engineers, and PMs create **their own** GitHub repo from a thin template. The template is `ad-dc/appdirect-prototype-template`. It pins [`@appdirect/ds-prototype-kit`](https://github.com/ad-dc/appdirect-design-system/releases) (GitHub Release tarball) and does **not** contain DS source.
+
+### GitHub UI
+
+1. Open [ad-dc/appdirect-prototype-template](https://github.com/ad-dc/appdirect-prototype-template)
+2. Click **Use this template** → **Create a new repository**
+3. Create it under **your GitHub account** (or `ad-dc` if you can create org repos)
+4. Clone, then:
 
 ```bash
-npm run create-prototype -- --name proto-alex
-npm run create-prototype -- --name proto-alex --title "Alex prototypes" --github --collaborator alex
+npm install
+npm run dev
 ```
 
-- Copies `templates/designer-prototype` to `../<name>` (or `--out`)
-- Pins `@appdirect/ds-prototype-kit` to the latest GitHub Release `.tgz` (override with `--kit-tag` or `--kit-url`)
-- Does **not** copy `components/DesignSystem`, Storybook, or Code Connect
-- `--github` creates a private `ad-dc/<name>` repo and can grant write with `--collaborator`
+### Terminal or Cursor agent (`/start-prototype`)
 
-The designer then `npm install` and `npm run dev`. Shared UI comes from the kit; product widgets go in `components/cbp/`. Kit updates are a tarball URL bump, not a git merge.
+```bash
+gh repo create my-prototype --template ad-dc/appdirect-prototype-template --private --clone
+cd my-prototype
+npm install
+npm run dev
+```
+
+The kit tarball and token CSS come from GitHub Releases on this repo. Public npm covers Mantine, Next.js, and fonts. Prototype `npm install` does **not** use Artifactory or VPN.
+
+Open [http://localhost:3000/prototype](http://localhost:3000/prototype).
+
+Do **not** fork or “Use this template” on **this** repo (`appdirect-design-system`). That copies DS source and forces cherry-picks.
+
+### In the prototype repo
+
+- Pages: `npm run create-page -- --name "Settings" --template app-shell --layout single-column`
+- Shared UI: `import { Button, Stack, Card } from '@appdirect/ds-prototype-kit'`
+- Product widgets: `components/cbp/`
+- Cursor: `/prototype-workspace` (ships in the template)
+- Kit update: bump the tarball URL in `package.json` to the [latest release](https://github.com/ad-dc/appdirect-design-system/releases)
+
+You do not need a maintainer to open a repo for you.
+
+## Maintainer: keep the template current
+
+When `templates/designer-prototype/` changes or a new kit tarball is released:
+
+```bash
+npm run publish-prototype-template -- --dry-run
+npm run publish-prototype-template
+```
+
+That updates `ad-dc/appdirect-prototype-template` (GitHub template). Cursor: `/publish-prototype-template`.
+
+Optional local copy from this checkout (same files, no GitHub template): `npm run create-prototype -- --name my-prototype`.
 
 ## Quick Start: Prototyping (this repo)
 
@@ -126,9 +164,10 @@ npm run figma:unpublish
 
 ```bash
 cd ds-package
-npm run build          # Build @appdirect/ds-prototype-kit
-npm run tarball        # Create appdirect-ds-prototype-kit-<version>.tgz (offline install)
-npm publish            # Publish to configured npm registry (e.g. org registry)
+npm run tarball        # appdirect-ds-prototype-kit-<version>.tgz
+gh release create vX.Y.Z appdirect-ds-prototype-kit-X.Y.Z.tgz --title "vX.Y.Z"
+cd ..
+npm run publish-prototype-template   # pin that tarball on the self-serve GitHub template
 ```
 
 ---
@@ -181,14 +220,20 @@ components/
     Misc/                     # Divider, Paper
     FIGMA_PROPS_REGISTRY.md   # Component prop reference
 
+.cursor/
+  skills/start-prototype/     # Self-serve: gh repo create --template
+  skills/publish-prototype-template/
+  commands/start-prototype.md
+
 tools/
-  create-page.js              # Page scaffold CLI (this repo)
-  create-prototype-repo.js    # Per-designer prototype repo generator
-  export-page.js              # Page export CLI
-  page-templates/             # Template files for scaffolding
+  create-page.js
+  create-prototype-repo.js    # Optional local scaffold
+  publish-prototype-template.js  # Push thin starter to ad-dc/appdirect-prototype-template
+  export-page.js
+  page-templates/
 
 templates/
-  designer-prototype/         # Thin Next.js starter (kit tarball, no DS source)
+  designer-prototype/         # Thin Next.js starter (source of the GitHub template)
 
 ds-package/                   # Publishable npm package (@appdirect/ds-prototype-kit)
 prototype-manifest.json       # Registry of all prototype pages
@@ -204,10 +249,6 @@ Prototype pages are designed to be portable to `micro-ui-ts` and other React app
 - **Shell components** (AppShellLayout, HeaderBar, SidebarNav) are prototype-only and discarded during export
 - **Routing** is not ported; the export generates a `CONNECTIONS.md` describing page relationships for developers to wire up in the target framework
 - **DS components** in designer repos come from the `@appdirect/ds-prototype-kit` GitHub Release tarball
-
-## Designer templates
-
-Use `npm run create-prototype`, not GitHub “Use this template” on this repo. The generated app imports `@appdirect/ds-prototype-kit` and keeps domain components in `components/cbp/`.
 
 ## Environment
 

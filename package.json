@@ -13,6 +13,7 @@
     "build-storybook": "storybook build",
     "create-page": "node tools/create-page.js",
     "create-prototype": "node tools/create-prototype-repo.js",
+    "publish-prototype-template": "node tools/publish-prototype-template.js",
     "export-pages": "node tools/export-page.js",
     "sync-design-docs": "node scripts/sync-design-docs.mjs",
     "test:scripts": "node --test scripts/*.test.mjs tools/*.test.mjs",

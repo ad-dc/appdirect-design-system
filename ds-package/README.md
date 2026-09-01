@@ -4,8 +4,10 @@ AppDirect Design System components for prototyping. Thin wrappers around Mantine
 
 ## Installation
 
+Install from the GitHub Release tarball on `ad-dc/appdirect-design-system` (not Artifactory):
+
 ```bash
-npm install @appdirect/ds-prototype-kit
+npm install https://github.com/ad-dc/appdirect-design-system/releases/download/v0.2.1/appdirect-ds-prototype-kit-0.2.1.tgz
 ```
 
 ### Peer Dependencies
@@ -20,6 +22,15 @@ Align with **Mantine 9**:
 ### Upgrading from 0.1.x
 
 **0.2.0+** targets **Mantine 9** and **React 19.2+**—upgrade your app’s Mantine and React peers before bumping the kit. **0.1.x** is the previous release line for apps not yet on Mantine 9; new work should use **0.2.0+**.
+
+## CSS tokens
+
+The kit includes `--ad-*` variables. Prototype apps should **not** install `@appdirect/design-tokens` from Artifactory.
+
+```tsx
+import '@appdirect/ds-prototype-kit/css/foundations.css';
+import '@appdirect/ds-prototype-kit/css/mantine.css';
+```
 
 ## Usage
 
@@ -76,7 +87,7 @@ npm run tarball
 This runs `build`, then writes **`appdirect-ds-prototype-kit-<version>.tgz`** in `ds-package/` (same contents as publish). Install elsewhere with:
 
 ```bash
-npm install /path/to/appdirect-ds-prototype-kit-0.2.0.tgz
+npm install /path/to/appdirect-ds-prototype-kit-0.2.1.tgz
 ```
 
 Tarballs are listed in `.gitignore`; keep them out of Git.

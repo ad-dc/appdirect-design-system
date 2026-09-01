@@ -4,10 +4,10 @@ const nextConfig: NextConfig = {
   transpilePackages: ['@appdirect/ds-prototype-kit'],
   turbopack: {
     resolveAlias: {
-      '@appdirect/design-tokens/css/foundations.css':
-        './node_modules/@appdirect/design-tokens/dist/css/foundations.css',
-      '@appdirect/design-tokens/css/mantine.css':
-        './node_modules/@appdirect/design-tokens/dist/css/mantine.css',
+      '@appdirect/ds-prototype-kit/css/foundations.css':
+        './node_modules/@appdirect/ds-prototype-kit/dist/css/foundations.css',
+      '@appdirect/ds-prototype-kit/css/mantine.css':
+        './node_modules/@appdirect/ds-prototype-kit/dist/css/mantine.css',
     },
   },
 };
