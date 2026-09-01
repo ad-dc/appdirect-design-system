@@ -98,6 +98,7 @@ test('main copies template, pins kit, and strips placeholders', () => {
 
     const nextConfig = readFileSync(path.join(out, 'next.config.ts'), 'utf8');
     assert.match(nextConfig, /transpilePackages: \['@appdirect\/ds-prototype-kit'\]/);
+    assert.match(nextConfig, /dist\/index\.ts/);
     assert.match(nextConfig, /@appdirect\/ds-prototype-kit\/css\/foundations\.css/);
     assert.doesNotMatch(nextConfig, /@appdirect\/design-tokens/);
 
