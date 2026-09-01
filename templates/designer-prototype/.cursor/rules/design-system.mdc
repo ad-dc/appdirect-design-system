@@ -28,7 +28,7 @@ Product-specific widgets belong in `@/components/cbp`. Do not vendor or edit kit
 
 ## Data Tables
 
-Use `Table` from `@appdirect/ds-prototype-kit`.
+Use `DataTable` from `@appdirect/ds-prototype-kit` for sortable, filterable, paginated data. Use `Table` only for simple static markup.
 
 ## Page Headers
 

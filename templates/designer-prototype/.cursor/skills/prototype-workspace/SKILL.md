@@ -17,7 +17,7 @@ This repo is a **thin Next.js shell**. It does not contain design-system source.
 import { Button, Card, Stack, TextInput } from '@appdirect/ds-prototype-kit';
 ```
 
-Never import from `@mantine/core` in pages. Never add or edit `components/DesignSystem/`. Domain-specific widgets belong in `components/cbp/`.
+Never import from `@mantine/core` in pages. Never add or edit `components/DesignSystem/`. Domain-specific widgets belong in `components/cbp/`. Use `DataTable` for sortable/filterable/paginated data; `Table` is only simple markup.
 
 ## New page
 

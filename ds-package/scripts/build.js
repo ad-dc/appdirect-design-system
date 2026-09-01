@@ -3,8 +3,9 @@
 /**
  * Build script for @appdirect/ds-prototype-kit
  *
- * Copies DS component source files to dist/, excluding stories, tests,
- * figma-specific files, and components with unresolvable external dependencies.
+ * Copies DS component source files to dist/, including DataTable and the
+ * table hooks it uses from hooks/. Excludes stories, tests, figma-specific
+ * files, and demo-only examples.
  *
  * The package is distributed as TypeScript source that consumers compile
  * with their own build tooling (Next.js, Vite, Rspack).
@@ -16,6 +17,7 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const PROJECT_ROOT = path.resolve(ROOT, '..');
 const SOURCE_DIR = path.join(PROJECT_ROOT, 'components', 'DesignSystem');
+const HOOKS_DIR = path.join(PROJECT_ROOT, 'hooks');
 const DIST_DIR = path.join(ROOT, 'dist');
 
 const SKIP_PATTERNS = [
@@ -29,10 +31,10 @@ const SKIP_PATTERNS = [
   /Welcome\.stories\.mdx$/,
 ];
 
-// Files that import from outside the DS directory (hooks/, etc.)
-// and can't be resolved in the package
+// Demo-only files that are not part of the published API
 const SKIP_FILES_WITH_EXTERNAL_REFS = [
-  /ComplexComponents\/DataTable\//,
+  /ComplexComponents\/DataTable\/Example\.tsx$/,
+  /ComplexComponents\/DataTable\/FilterSystemExample\.tsx$/,
 ];
 
 function shouldSkip(filename) {
@@ -55,16 +57,8 @@ function getRelativeToRoot(relativeFilePath) {
 }
 
 /**
- * Strip lines that reference excluded modules (DataTable, etc.)
- * from the barrel index.ts so it doesn't try to import missing files.
+ * Rewrite DS and repo-root hook imports so they resolve inside dist/.
  */
-function stripExcludedExports(content) {
-  return content
-    .split('\n')
-    .filter((line) => !line.includes('DataTable') || line.startsWith('//'))
-    .join('\n');
-}
-
 function rewriteImports(content, relativeFilePath) {
   const toRoot = getRelativeToRoot(relativeFilePath);
 
@@ -80,6 +74,12 @@ function rewriteImports(content, relativeFilePath) {
   content = content.replace(
     /from\s+['"]@\/components\/DesignSystem\/([^'"]+)['"]/g,
     (match, subpath) => `from '${toRoot}${subpath}'`
+  );
+
+  // DataTable lives next to repo-root hooks/; rewrite to dist/hooks
+  content = content.replace(
+    /from\s+['"](?:\.\.\/)+hooks\/([^'"]+)['"]/g,
+    (match, subpath) => `from '${toRoot}hooks/${subpath}'`
   );
 
   return content;
@@ -101,10 +101,6 @@ function copyDirSync(src, dest, relativeBase = '') {
 
       if (entry.name.endsWith('.tsx') || entry.name.endsWith('.ts')) {
         content = rewriteImports(content, relativePath);
-        // Strip excluded module references from the barrel
-        if (entry.name === 'index.ts' && relativeBase === '') {
-          content = stripExcludedExports(content);
-        }
       }
 
       fs.writeFileSync(destPath, content, 'utf-8');
@@ -113,6 +109,22 @@ function copyDirSync(src, dest, relativeBase = '') {
 }
 
 const VENDOR_CSS_DIR = path.join(ROOT, 'vendor', 'css');
+
+function copyTableHooks() {
+  const dest = path.join(DIST_DIR, 'hooks');
+  fs.mkdirSync(dest, { recursive: true });
+  const files = ['useTableState.ts', 'useTableHandlers.ts', 'useTableRenderFunctions.tsx'];
+  for (const file of files) {
+    const from = path.join(HOOKS_DIR, file);
+    if (!fs.existsSync(from)) {
+      throw new Error(`Missing table hook: ${from}`);
+    }
+    const relativePath = path.join('hooks', file);
+    let content = fs.readFileSync(from, 'utf-8');
+    content = rewriteImports(content, relativePath);
+    fs.writeFileSync(path.join(dest, file), content, 'utf-8');
+  }
+}
 
 function copyTokenCss() {
   const dest = path.join(DIST_DIR, 'css');
@@ -146,6 +158,7 @@ function main() {
   }
 
   copyDirSync(SOURCE_DIR, DIST_DIR);
+  copyTableHooks();
   copyTokenCss();
 
   // Clean up empty directories left by skipped files
@@ -165,8 +178,7 @@ function main() {
   countFiles(DIST_DIR);
 
   console.log(`  Copied ${fileCount} files to dist/`);
-  console.log('  Included: vendor/css/foundations.css, mantine.css');
-  console.log('  Excluded: DataTable (external hook dependencies)');
+  console.log('  Included: DataTable, table hooks, vendor/css');
   console.log('  Done.\n');
 }
 

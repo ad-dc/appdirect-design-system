@@ -7,7 +7,7 @@ AppDirect Design System components for prototyping. Thin wrappers around Mantine
 Install from the GitHub Release tarball on `ad-dc/appdirect-design-system` (not Artifactory):
 
 ```bash
-npm install https://github.com/ad-dc/appdirect-design-system/releases/download/v0.2.2/appdirect-ds-prototype-kit-0.2.2.tgz
+npm install https://github.com/ad-dc/appdirect-design-system/releases/download/v0.2.3/appdirect-ds-prototype-kit-0.2.3.tgz
 ```
 
 ### Peer Dependencies
@@ -87,7 +87,7 @@ npm run tarball
 This runs `build`, then writes **`appdirect-ds-prototype-kit-<version>.tgz`** in `ds-package/` (same contents as publish). Install elsewhere with:
 
 ```bash
-npm install /path/to/appdirect-ds-prototype-kit-0.2.2.tgz
+npm install /path/to/appdirect-ds-prototype-kit-0.2.3.tgz
 ```
 
 Tarballs are listed in `.gitignore`; keep them out of Git.

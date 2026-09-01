@@ -7,7 +7,7 @@ import path from 'node:path';
 const kitEntry = './node_modules/@appdirect/ds-prototype-kit/dist/index.ts';
 
 const nextConfig: NextConfig = {
-  transpilePackages: ['@appdirect/ds-prototype-kit'],
+  transpilePackages: ['@appdirect/ds-prototype-kit', 'mantine-react-table-open'],
   turbopack: {
     resolveAlias: {
       '@appdirect/ds-prototype-kit': kitEntry,

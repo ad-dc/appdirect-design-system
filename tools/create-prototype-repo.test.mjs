@@ -91,13 +91,14 @@ test('main copies template, pins kit, and strips placeholders', () => {
     assert.equal(pkg.name, 'proto-alex');
     assert.equal(pkg.dependencies['@appdirect/ds-prototype-kit'], KIT_URL);
     assert.equal(pkg.dependencies['@appdirect/design-tokens'], undefined);
+    assert.equal(pkg.dependencies['mantine-react-table-open'], '^9.0.3');
 
     const manifest = JSON.parse(readFileSync(path.join(out, 'prototype-manifest.json'), 'utf8'));
     assert.equal(manifest.prototypeName, 'Alex Prototypes');
     assert.deepEqual(manifest.pages, []);
 
     const nextConfig = readFileSync(path.join(out, 'next.config.ts'), 'utf8');
-    assert.match(nextConfig, /transpilePackages: \['@appdirect\/ds-prototype-kit'\]/);
+    assert.match(nextConfig, /transpilePackages: \['@appdirect\/ds-prototype-kit', 'mantine-react-table-open'\]/);
     assert.match(nextConfig, /dist\/index\.ts/);
     assert.match(nextConfig, /@appdirect\/ds-prototype-kit\/css\/foundations\.css/);
     assert.doesNotMatch(nextConfig, /@appdirect\/design-tokens/);

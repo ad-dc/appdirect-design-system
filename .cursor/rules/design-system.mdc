@@ -68,7 +68,7 @@ Export through the category index and `components/DesignSystem/index.ts`.
 
 ## Data Tables
 
-Always use the custom `Table` from `@/components/DesignSystem` — never raw Mantine `Table` or third-party libraries.
+Always use DS table components — never raw Mantine `Table` or third-party libraries. Use `DataTable` for sortable, filterable, paginated data; use `Table` only for simple static markup.
 
 ## Page Headers
 
