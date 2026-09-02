@@ -181,6 +181,9 @@
   --ad-action-default-bg-active: #e9ecef;
   --ad-action-default-fg: #000000;
   --ad-action-default-border: #ced4da;
+  --ad-constants-white: #ffffff;
+  --ad-constants-black: #000000;
+  --ad-constants-transparent: rgba(0,0,0,0);
 }
 
 [data-theme="dark"] {
@@ -366,4 +369,7 @@
   --ad-action-default-bg-active: #424242;
   --ad-action-default-fg: #C9C9C9;
   --ad-action-default-border: #424242;
+  --ad-constants-white: #ffffff;
+  --ad-constants-black: #000000;
+  --ad-constants-transparent: rgba(0,0,0,0);
 }
