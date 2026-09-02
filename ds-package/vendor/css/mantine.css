@@ -1469,12 +1469,12 @@ fieldset:disabled .mantine-Slider-mark[data-filled] {
   --table-border-color: var(--ad-color-border-default);
 }
 .mantine-Table-thead {
-  background: var(--ad-color-bg-subtle);
+  background: var(--ad-color-bg-default);
   color: var(--ad-color-text-default);
 }
 .mantine-Table-thead th {
   font-weight: var(--ad-font-weights-bold);
-  border-bottom-color: var(--ad-color-border-strong);
+  border-bottom-color: var(--ad-color-border-default);
   border-bottom-width: var(--ad-border-width-thin);
   border-bottom-style: var(--ad-border-style-solid);
   padding-inline: var(--ad-spacing-xs);
