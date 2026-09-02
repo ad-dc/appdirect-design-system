@@ -187,7 +187,6 @@
 .mantine-Badge-root {
   font-family: var(--ad-font-family-body);
   font-weight: var(--ad-font-weights-bold);
-  font-size: var(--ad-font-sizes-xs);
   line-height: var(--ad-line-heights-xs);
   border-radius: var(--ad-radius-sm);
   padding-block: var(--ad-spacing-none);
@@ -196,22 +195,27 @@
 .mantine-Badge-root[data-size="xs"] {
   height: 16px;
   padding-inline: 6px;
+  font-size: 9px;
 }
 .mantine-Badge-root[data-size="sm"] {
   height: 18px;
   padding-inline: 8px;
+  font-size: 10px;
 }
 .mantine-Badge-root[data-size="md"] {
   height: 20px;
   padding-inline: 10px;
+  font-size: 11px;
 }
 .mantine-Badge-root[data-size="lg"] {
   height: 26px;
   padding-inline: 12px;
+  font-size: 13px;
 }
 .mantine-Badge-root[data-size="xl"] {
   height: 32px;
   padding-inline: 16px;
+  font-size: 16px;
 }
 .mantine-Badge-root[data-variant="filled"][data-color="info"] {
   background: var(--ad-color-status-info);
