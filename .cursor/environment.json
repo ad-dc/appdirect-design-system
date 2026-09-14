@@ -1,0 +1,20 @@
+{
+  "name": "AppDirect Design System",
+  "install": "bash .cursor/install.sh",
+  "terminals": [
+    {
+      "name": "next-dev",
+      "command": "npm run dev",
+      "description": "Next.js dev server (Turbopack) — http://localhost:3000 (prototype index at /prototype)"
+    },
+    {
+      "name": "storybook",
+      "command": "npm run storybook",
+      "description": "Storybook component explorer — http://localhost:6006"
+    }
+  ],
+  "ports": [
+    { "name": "Next.js dev server", "port": 3000 },
+    { "name": "Storybook", "port": 6006 }
+  ]
+}
