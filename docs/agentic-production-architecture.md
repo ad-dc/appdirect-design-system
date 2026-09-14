@@ -4,6 +4,8 @@
 
 **Scope:** treat `appdirect-design-system` (main repository) and `templates/designer-prototype` / `ad-dc/appdirect-prototype-template` (prototype fleet) as one system.
 
+**Out of scope:** CBP. It is a product prototype that has already been split off. It is not part of this fleet, not a design-system package, and not a named audit surface. The template still has a leftover folder called `components/cbp/`; that is naming residue from that split, not a convention the factory should encode. Audit local components generically (modules in a prototype that are not imported from the kit). Do not mention CBP in contracts, telemetry, skills, or metrics.
+
 ---
 
 ## 1. Smallest viable architecture
@@ -38,12 +40,12 @@ prototype-manifest.json + prototype-audit.json
 fleet rollup (maintainer script over known prototype repos)
         │
         ▼
-roadmap evidence (recurring CBP patterns, exception hotspots)
+roadmap evidence (recurring local patterns, exception hotspots)
 ```
 
 Cursor agents remain the **author** of prototype code. The factory is a **checker and reporter**, not a second product.
 
-A semantic LLM review is invoked only when the auditor cannot classify a finding: a custom `components/cbp` widget that looks like a missing DS primitive, or a page that uses supported components in a semantically wrong way. That review writes a structured exception, it does not invent a parallel contract.
+A semantic LLM review is invoked only when the auditor cannot classify a finding: a local component that looks like a missing DS primitive, or a page that uses supported components in a semantically wrong way. That review writes a structured exception, it does not invent a parallel contract.
 
 ---
 
@@ -68,8 +70,8 @@ A semantic LLM review is invoked only when the auditor cannot classify a finding
       CSS snapshot)                            │
                                                ▼
                                     individual prototype repos
-                                    import kit, put product UI in
-                                    components/cbp/, bump kit URL
+                                    import kit, add local product UI,
+                                    bump kit URL
 ```
 
 **Versioned packages today**
@@ -115,7 +117,7 @@ A semantic LLM review is invoked only when the auditor cannot classify a finding
              │                          individual prototype repos
              │                          package.json → kit
              │                          prototype-manifest.json → versions
-             │                          components/cbp/ → local exceptions
+             │                          local components → exceptions when declared
              │                          npm run ds:audit → prototype-audit.json
              │                                      │
              └──────────────────────────────────────┘
@@ -247,7 +249,7 @@ A skill is warranted when the steps are stable, easy to get wrong, and already h
 | `start-prototype` | Main + template | `gh repo create --template`; easy to fork the DS repo by mistake |
 | `publish-prototype-template` | Main only | Maintainer ritual; pins kit URL |
 | `create-prototype` | Main only | Optional local scaffold; skill already defers to `start-prototype` |
-| `prototype-workspace` | Template only | Daily page creation, kit bump, `components/cbp` |
+| `prototype-workspace` | Template only | Daily page creation, kit bump, local product UI |
 
 ### Promote commands → skills (main repo only)
 
@@ -282,7 +284,7 @@ Isolate work only when it (a) has a large or foreign context, (b) would pollute 
 | Bump kit | No | Skill |
 | Code Connect prop audit for one component | No | Existing `/code-connect-props` skill/command |
 | Code Connect publish + PR packaging | Maybe | Only if Figma CLI + git/PR steps keep overflowing the mapping thread. A skill is probably enough; the referenced `.cursor/agents/code-connect-pr.md` does not exist. |
-| Semantic review of a **flagged** `components/cbp` module | Yes, on demand | Needs contract text + similar prototypes + DESIGN.md; should not rewrite the page in the same turn |
+| Semantic review of a **flagged** local component | Yes, on demand | Needs contract text + similar prototypes + DESIGN.md; should not rewrite the page in the same turn |
 | Fleet rollup across many prototype repos | Yes, maintainer-only | Volume and credentials; output is a table, not code |
 
 **Default agent** in a prototype repo: implement the page, then run `ds-audit`. Stop. If the audit emits `needs_semantic_review`, the user (or orchestrator) may launch the exception reviewer. That reviewer cannot mark a gap as “approved DS change”; it can only propose an exception record.
@@ -472,11 +474,11 @@ Prefer tools the prototype already has: TypeScript, ESLint, AST grep, axe/Storyb
 
 | Contract field | Deterministic? | Mechanism |
 |---|---|---|
-| Identity / import path | Yes | `no-restricted-imports`; ban `@mantine/core` in `app/` and `components/cbp/` |
+| Identity / import path | Yes | `no-restricted-imports`; ban `@mantine/core` in prototype `app/` and local component files |
 | Supported props / enums | Yes | TypeScript on the wrapper; `ds-audit` flags `as any` / spread that escape the type |
 | Fixed defaults (`radius="sm"`) | Yes | Wrapper hardcodes them; consumer override via `radius` can be omitted from the public type (already done on `ActionIcon`) |
 | Deprecated props | Yes | TS `@deprecated` + ESLint `deprecation` or audit on `color=`, `variant="disabled"`, `Alert type=` |
-| Forbidden styling (`style=`, Tailwind classes, CSS modules in consumers) | Yes | ESLint; grep `style={{`; `.module.css` under `app/` and `components/cbp/` |
+| Forbidden styling (`style=`, Tailwind classes, CSS modules in consumers) | Yes | ESLint; grep `style={{`; `.module.css` under prototype `app/` and local components |
 | Raw hex / off-scale px in consumers | Yes | Restricted syntax; allowlist `var(--ad-*)` |
 | Token CSS loaded | Yes | `app/layout.tsx` must import kit foundations + mantine CSS |
 | Kit / template / tokens versions | Yes | Manifest vs `package.json` vs kit `compatibility` |
@@ -488,7 +490,7 @@ Prefer tools the prototype already has: TypeScript, ESLint, AST grep, axe/Storyb
 | Content guidance (label tone, one primary) | No | Semantic |
 | Semantic usage (this should have been `Alert` not `Card` + red `Text`) | No | Semantic |
 | Composition (“list page should be header + DataTable”) | Heuristic only | Semantic confirmation |
-| “Should this CBP widget become a DS component?” | No | Semantic + fleet recurrence |
+| “Should this local component become a DS component?” | No | Semantic + fleet recurrence |
 | Legitimate product exception | No | Human; auditor only records it |
 
 **Rule:** if a property is in `enforcement.deterministic` and an LLM is used to “also check it,” the LLM is waste. Use the linter.
@@ -535,6 +537,7 @@ This is current, in-repo evidence. A factory that cannot see these will not help
 
 - `STATUS.md` last updated 2026-09-01; kit is 0.2.6
 - Memory file `.cursor/memory/code-connect-figma-ds.md` references `.cursor/agents/code-connect-pr.md`, which is absent
+- Template and skills still tell agents to put product widgets in `components/cbp/`. CBP is a split-off prototype. That folder name is leftover and must not become the fleet’s custom-component convention or an audit dimension.
 
 These are exactly the classes fleet telemetry should distinguish: **doc/source mismatch** (fix the DS), **prototype misuse** (drift), **missing primitive** (gap).
 
@@ -564,7 +567,7 @@ Proposed `prototype-manifest.json`:
   "exceptions": [
     {
       "id": "local-pricing-matrix",
-      "path": "components/cbp/PricingMatrix.tsx",
+      "path": "components/PricingMatrix.tsx",
       "kind": "legitimate_local",
       "reason": "Product-specific pricing grid; not a shared admin pattern"
     }
@@ -607,7 +610,7 @@ One generated file per prototype: `prototype-audit.json`. Produced by `ds-audit`
   },
   "adoption": {
     "systemComponents": { "Button": 12, "PageContentHeader": 3, "DataTable": 0, "Stack": 19 },
-    "customComponents": { "count": 2, "paths": ["components/cbp/PricingMatrix.tsx", "components/cbp/UsageChart.tsx"] }
+    "customComponents": { "count": 2, "paths": ["components/PricingMatrix.tsx", "components/UsageChart.tsx"] }
   },
   "compliance": {
     "restrictedImports": 4,
@@ -624,7 +627,7 @@ One generated file per prototype: `prototype-audit.json`. Produced by `ds-audit`
     ]
   },
   "exceptions": [
-    { "id": "local-pricing-matrix", "kind": "legitimate_local", "path": "components/cbp/PricingMatrix.tsx" }
+    { "id": "local-pricing-matrix", "kind": "legitimate_local", "path": "components/PricingMatrix.tsx" }
   ]
 }
 ```
@@ -646,13 +649,13 @@ If the org cannot query template-generated repos, keep a manual `fleet.json` lis
 | Class | Definition | Detection |
 |---|---|---|
 | **Drift** | A supported DS pattern exists and the prototype reinvented it | Deterministic: banned import, deprecated API, handmade list while `DataTable` is in the kit, raw hex, extra `radius`. Low ambiguity. |
-| **Gap** | Several prototypes independently invent the **same** CBP widget or the same `unsupported` pattern because the kit cannot express the requirement | Fleet rollup: cluster `components/cbp/*` names + hashed AST shapes + repeated `unsupported` ids across repos. Semantic review confirms “same problem.” |
+| **Gap** | Several prototypes independently invent the **same** local component or the same `unsupported` pattern because the kit cannot express the requirement | Fleet rollup: cluster local component names + hashed AST shapes + repeated `unsupported` ids across repos. Semantic review confirms “same problem.” |
 | **Legitimate local exception** | One product needs a one-off; it should not enter the kit | Declared in manifest `exceptions` with a reason. Rollup shows **n=1** over time. |
 
 ### Clustering without an ML platform
 
-1. Normalize CBP filenames (`PricingTable`, `PriceTable`, `pricing-matrix`)
-2. Hash imports + DS components used inside each CBP file
+1. Normalize local component filenames (`PricingTable`, `PriceTable`, `pricing-matrix`)
+2. Hash imports + DS components used inside each local component file
 3. Group identical `unsupported` pattern ids
 4. Threshold: **n ≥ 3 prototypes** or **n ≥ 2 independent authors** → candidate gap
 5. Human DS review (or on-demand semantic subagent) writes a roadmap note in `STATUS.md` / DESIGN.md pending work
@@ -662,7 +665,7 @@ The in-tree customer list is the template for this decision:
 - If many prototypes render record lists as stacked `Inline` rows → **gap or docs failure** (DataTable too heavy; need a `SimpleList` primitive) or **drift** (agents were not told to use `Table` for static markup)
 - The contract for `Table` vs `DataTable` must state that **static dummy lists may use `Table`**, not `DataTable`. That single sentence prevents false drift.
 
-Do not auto-promote CBP widgets into the DS. Recurrence is **evidence**, not a merge.
+Do not auto-promote local components into the DS. Recurrence is **evidence**, not a merge.
 
 ---
 
@@ -678,8 +681,8 @@ Dimensional metrics only. No aggregate 0–100 “conformance score.” Aggregat
 | Kit lag (days behind latest) | Is update friction the problem? | `latestKitKnown` − pin date |
 | Tokens snapshot vs live tokens | Are prototypes visually behind main? | `tokensSnapshot` ≠ current `@appdirect/design-tokens` |
 | System component usage | What is actually adopted? | Counts per component |
-| Custom component count per prototype | Where is local UI exploding? | `components/cbp` file count |
-| Recurring CBP clusters | Where might the DS be inadequate? | Cluster size ≥ threshold |
+| Custom component count per prototype | Where is local UI exploding? | Local component files not imported from the kit |
+| Recurring local-pattern clusters | Where might the DS be inadequate? | Cluster size ≥ threshold |
 | Deprecated API hits | Which primitives generate exceptions? | `contractViolations` grouped by `component.rule` |
 | Restricted import hits | Raw Mantine / Tailwind drift | Count |
 | Token violations | Off-token color/spacing | Count |
@@ -713,7 +716,7 @@ Run a **fixed evaluation set**, not production vanity metrics.
 
 If audit counts fall while custom-component clusters stay flat, the factory is catching **drift**. If custom clusters grow around the same hash, the factory is revealing **gaps** — success, not failure. If both rise, agents are producing more code and ignoring the auditor: fix the always-on rules and CI gate, do not add more agents.
 
-**CI gate (prototype):** fail on restricted imports and typecheck; **warn** on composition heuristics and undeclared CBP. Failing the build on semantic guesses will train designers to disable the factory.
+**CI gate (prototype):** fail on restricted imports and typecheck; **warn** on composition heuristics and undeclared local components. Failing the build on semantic guesses will train designers to disable the factory.
 
 ---
 
@@ -750,7 +753,7 @@ Goal: decide whether the architecture **reduces incorrect UI** and **surfaces re
 
 **Gold checks (automated):**
 
-- No `@mantine/core` in `app/` or `components/cbp/`
+- No `@mantine/core` in prototype `app/` or local component files
 - Kit pin parses and matches manifest
 - Token CSS imported
 - No deprecated contract APIs
@@ -762,14 +765,14 @@ Goal: decide whether the architecture **reduces incorrect UI** and **surfaces re
 
 - One primary button per view
 - Status colors only on status components
-- CBP widgets are product-specific, not a second Button
+- Local components are product-specific, not a second Button
 - Spacing tokens match DESIGN.md, not the stale 4/8/16 mapping
 
 **Fleet checks:**
 
 - Median kit lag
 - Top 5 contract violation rules
-- CBP clusters ≥ 3
+- Local-pattern clusters ≥ 3
 - Ratio of declared exceptions to undeclared custom files (low ratio = people bypassing the system)
 
 **Stop-the-line for the architecture itself:** if after two evaluation cycles custom-component count and restricted imports do not move, do not add subagents. Fix contracts, CI, and the consumption rule. More agents will amplify the current contradictions (Inline vs Group, wrong spacing table, Badge variant vs color).
@@ -791,6 +794,7 @@ Without this, agents will “enforce” the wrong system.
 5. Split main-repo `design-system.mdc` so Code Connect and wrapper authoring are not always-on
 6. Expand `lint` beyond the handful of shell files, or admit that `ds-audit` is the real gate
 7. Refresh or snapshot-date `STATUS.md` / `CLAUDE.md` token-dependency text
+8. Rename the leftover `components/cbp/` slot in the template (and matching Cursor rules/skills) to a generic local-components folder. Do not carry CBP into audit, telemetry, or metrics.
 
 ### Step 1 — Manifest versions
 
@@ -802,7 +806,7 @@ Hand-write JSON for Button, Badge, Alert, PageContentHeader, DataTable, layout p
 
 ### Step 3 — `ds-audit` in the kit
 
-Read-only scanner: versions, restricted imports, deprecated APIs, token/style bans, component usage counts, CBP file list. Write `prototype-audit.json`. Wire `npm run ds:audit` in the template.
+Read-only scanner: versions, restricted imports, deprecated APIs, token/style bans, component usage counts, local component file list. Write `prototype-audit.json`. Wire `npm run ds:audit` in the template.
 
 No LLM. No network.
 
@@ -812,7 +816,7 @@ Prototype GitHub Action: typecheck + audit. Fail on imports; warn on heuristics.
 
 ### Step 5 — Fleet rollup
 
-Maintainer script + optional `fleet.json`. Produce a markdown table: kit versions, top violations, CBP clusters. Feed DESIGN.md pending work.
+Maintainer script + optional `fleet.json`. Produce a markdown table: kit versions, top violations, local-pattern clusters. Feed DESIGN.md pending work.
 
 ### Step 6 — Semantic reviewer (optional)
 
@@ -839,14 +843,14 @@ A designer prototype can:
 
 1. Pin a kit version in `package.json`
 2. Run `npm run ds:audit`
-3. See structural evidence: versions, banned imports, deprecated APIs, CBP files
+3. See structural evidence: versions, banned imports, deprecated APIs, local component files
 4. Declare a local exception in the manifest
 
 A DS maintainer can:
 
 1. Open a rollup of those audit files
 2. Answer “how current is the fleet?” and “which rule fires most?”
-3. See three similar CBP widgets as a **gap candidate**, not as noise
+3. See three similar local components as a **gap candidate**, not as noise
 
 An agent in a prototype repo:
 
