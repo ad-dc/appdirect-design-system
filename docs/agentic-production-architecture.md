@@ -527,8 +527,8 @@ This is current, in-repo evidence. A factory that cannot see these will not help
 | Button variant mapping | Wrapper pass-through vs `FIGMA_PROPS_REGISTRY.md` filled/blue table vs `types.ts` omitting `disabled` |
 | Badge API | Wrapper `variant` includes semantic colors; `types.ts` `DS_BADGE_VARIANTS` is `filled \| outline`; registry matches types, not wrapper |
 | Alert `warning` vs `pending` | `DESIGN.md`: `warning` for alerts, `pending` for badges. Wrapper `Alert` has `pending` and no `warning`. Deprecated `type` alias still exists |
-| Horizontal layout | `figma-layout-mapping.mdc` and `LAYOUT_GUIDE.md`: use `Inline`, never `Group`. `Inline.tsx`: “Prefer `Group` for new code.” `Group.tsx` is a first-class export |
-| Spacing scale | **One scale:** Mantine Core `xs–xl` (10 / 12 / 16 / 20 / 32) plus added `none` (0), `xxs` (4), `xxl` (48). Runtime layout (`Stack` et al.) passes `gap` through to Mantine; `theme.ts` does not override spacing. The 4 / 8 / 16 / 24 / 32 table in `figma-layout-mapping.mdc`, `LAYOUT_GUIDE.md`, and `config.ts` is a **stale pixel→token lookup**, not a competing DS scale. Agents using that table still mis-assign names (`4px` is `xxs`, not `xs`). `DESIGN.md` YAML documents `xxs` but omits `none` / `xxl`; vendored `--ad-spacing-*` has `none` / `xxs` and not `xxl`. |
+| Horizontal layout | **Aligned (2026-09-16):** `Inline` for new Figma/agent/prototype rows. `Group` is the Mantine-named alias. Mapping, `LAYOUT_GUIDE.md`, and wrapper comments agree. |
+| Spacing scale | **One scale, lookups aligned (2026-09-16):** Mantine Core `xs–xl` (10 / 12 / 16 / 20 / 32) plus `none` (0), `xxs` (4), `xxl` (48). `theme.ts` sets that map. Vendored `--ad-spacing-*` still has `none` / `xxs` and not `xxl` (tokens package gap). |
 | “No CSS modules / no inline styles” | Consumer rule. Producers: `Button.module.css`, `Card.module.css`, `Tooltip` hardcoded `#212529` and `padding: '5px 8px'` (documented exception in DESIGN.md) |
 | Raw Mantine inside DS | Shell, DataTable internals, stories, and utilities with no DS wrapper (`Collapse`, `rem` inside `PageContentHeader`). Complex components are **not** Mantine wrappers; they should compose DS primitives. Consumption rules still do not distinguish producer vs consumer. |
 | LAYOUT_GUIDE vs consumption | Guide still says use Mantine Core for “form controls / complex interactions” |
@@ -784,7 +784,7 @@ Goal: decide whether the architecture **reduces incorrect UI** and **surfaces re
 - One primary button per view
 - Status colors only on status components
 - Local components are product-specific, not a second Button
-- Spacing tokens match Mantine Core `xs–xl` plus added `none` / `xxs` / `xxl` (not the stale 4px-grid lookup in agent mapping docs)
+- Spacing tokens match Mantine Core `xs–xl` plus added `none` / `xxs` / `xxl`
 
 **Fleet checks:**
 
@@ -805,8 +805,8 @@ No big-bang. Each step is useful alone. The working checklist, done-when criteri
 
 Without this, agents will “enforce” the wrong system.
 
-1. Pick `Inline` vs `Group` (layout mapping currently says Inline; `Inline.tsx` says prefer Group)
-2. Treat spacing as Mantine Core `xs–xl` plus added `none` / `xxs` / `xxl`. Rewrite the pixel→token lookup in both `figma-layout-mapping.mdc` copies, `LAYOUT_GUIDE.md`, and `config.ts` so `4px` maps to `xxs` (not `xs`). Do not invent a second scale. Optionally list `none` and `xxl` in `DESIGN.md` YAML so docs match the token screenshot.
+1. Pick `Inline` vs `Group` (layout mapping currently says Inline; `Inline.tsx` says prefer Group). **Done (2026-09-16):** `Inline` for new code; `Group` is the alias.
+2. Treat spacing as Mantine Core `xs–xl` plus added `none` / `xxs` / `xxl`. **Done (2026-09-16):** lookups and `theme.ts` match. Vendored `--ad-spacing-*` still lacks `xxl`.
 3. Make `types.ts` actually used by `Button` / `Badge` / `Alert`, or delete the “single source of truth” claim
 4. Align `FIGMA_PROPS_REGISTRY.md` Button mapping with the wrapper
 5. Split main-repo `design-system.mdc` so Code Connect and wrapper authoring are not always-on
@@ -925,4 +925,4 @@ Friedman’s roundup stacks Vallaure, Curtis Specs, and Pandya as the same move.
 - Curtis Examples as Data: a pricing card is not a Button variant. `PageContentHeader` + list/detail recipes are **patterns beside** contracts, which is why `PageContentHeader` is a complex-component contract, not `extends MantineX`.
 - Harness Engineering (coding-agent course, not a DS): five subsystems (instructions, state, verification, scope, session). Maker ≠ checker. `/goal` without an independent `ds-audit` scales ungoverned generation. Campbell’s six UX layers are product-AI fluency, not kit packaging.
 
-**The V1 risk is not “we lack Friedman’s stack.”** It is too many unlabeled sources of truth (component source, `types.ts`, registry, `DESIGN.md`, stale 4px lookup). A contract file written on top of those contradictions would freeze them. A later factory would generate them at fleet scale.
+**The V1 risk is not “we lack Friedman’s stack.”** It is too many unlabeled sources of truth (component source, `types.ts`, registry, `DESIGN.md`). A contract file written on top of those contradictions would freeze them. A later factory would generate them at fleet scale.

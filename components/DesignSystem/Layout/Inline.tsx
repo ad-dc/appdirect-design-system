@@ -21,11 +21,11 @@ export interface DSInlineProps extends Omit<MantineGroupProps, 'gap'> {
 /**
  * AppDirect Design System Inline Component
  *
- * Legacy horizontal layout alias retained for backward compatibility.
- * Prefer `Group` for new code to align with Mantine naming conventions.
+ * Horizontal layout primitive for new Figma-mapped and prototype code
+ * (`flex-direction: row` → `Inline`). `Group` is the Mantine-named alias of this
+ * same primitive — do not mix both in new code.
  *
- * A layout primitive that arranges child elements horizontally with consistent spacing
- * using design system tokens. Built on top of Mantine's Group component.
+ * Arranges children horizontally with design-system spacing. Built on Mantine Group.
  * 
  * @example
  * ```tsx

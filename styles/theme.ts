@@ -64,4 +64,16 @@ export const theme: MantineThemeOverride = {
   defaultRadius: THEME_CONSTANTS.defaultRadius,
   fontFamily: THEME_CONSTANTS.fontFamily,
   fontFamilyMonospace: THEME_CONSTANTS.fontFamilyMonospace,
+
+  // One layout spacing scale: Mantine Core xs–xl plus none / xxs / xxl.
+  spacing: {
+    none: 0,
+    xxs: 4,
+    xs: 10,
+    sm: 12,
+    md: 16,
+    lg: 20,
+    xl: 32,
+    xxl: 48,
+  },
 };

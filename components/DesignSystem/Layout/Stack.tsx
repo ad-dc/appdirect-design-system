@@ -7,7 +7,7 @@ import { ComponentSize } from '../config';
 /**
  * Design System spacing scale mapped to rem values
  */
-export type SpacingScale = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+export type SpacingScale = 'none' | 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 
 /**
  * Enhanced Stack props extending Mantine's StackProps

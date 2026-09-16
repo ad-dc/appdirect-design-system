@@ -14,8 +14,8 @@ A snapshot of where the AppDirect Design System repo is right now. Update this f
 - **Component library:** ~70+ DS exports across 11 categories from `@/components/DesignSystem`. Mix of **Mantine wrappers** (Button, Badge, …) and **AppDirect complex components** (`PageContentHeader`, `DataTable`, …) that have no Mantine counterpart
 - **Kit:** `@appdirect/ds-prototype-kit` **0.2.6** (GitHub Release tarball)
 - **Branch / consumer model:** Self-serve GitHub template `ad-dc/appdirect-prototype-template` (kit tarball pin). This repo stays write-restricted. `npm run publish-prototype-template` refreshes the template.
-- **Spacing:** Mantine Core `xs–xl` (10/12/16/20/32) plus added `none` / `xxs` / `xxl`. Agent mapping docs still contain a stale 4px-grid lookup (not a second official scale)
-- **Factory:** recommendation + plan. Step 0.8 (archive leftover CBP slot → `components/local/`) landed. Contracts / `ds-audit` not started. See Active.
+- **Spacing:** Mantine Core `xs–xl` (10/12/16/20/32) plus added `none` / `xxs` / `xxl`. Agent lookups and `theme.ts` match that scale (`4px` → `xxs`).
+- **Factory:** recommendation + plan. Steps 0.1 (`Inline`), 0.2 (spacing lookups), 0.8 (CBP → `components/local/`) landed. Contracts / `ds-audit` not started. See Active.
 
 ---
 
@@ -44,12 +44,14 @@ A snapshot of where the AppDirect Design System repo is right now. Update this f
 - Working plan: [`docs/agentic-production-plan.md`](./docs/agentic-production-plan.md) — V1 = checker/reporter; later = authoring factory; Step 0 must land before contracts
 - Locked: CBP out of scope; `PageContentHeader` is an AppDirect complex component; do not install Southleft/Specs/Pandya as the contract runtime
 - Step 0.8: archived leftover template `components/cbp/` to `components/local/`. See [`docs/archive/cbp.md`](./docs/archive/cbp.md). `app/prototype` Revenue Ops demos left in place.
+- Step 0.1: `Inline` is the horizontal primitive for new Figma/agent/prototype code; `Group` is the Mantine-named alias
+- Step 0.2: spacing lookups (`figma-layout-mapping`, `LAYOUT_GUIDE`, `config.ts`) and `theme.ts` match Mantine Core + `none` / `xxs` / `xxl`
 
 ---
 
 ## Active
 
-- **Agentic production V1 (proposal).** Sequence: [`docs/agentic-production-plan.md`](./docs/agentic-production-plan.md). Step 0.8 done. Next when approved: Step 0.1 + 0.2 (pick `Inline` vs `Group`, rewrite spacing lookups). Contracts and `ds-audit` stay blocked until Step 0.
+- **Agentic production V1 (proposal).** Sequence: [`docs/agentic-production-plan.md`](./docs/agentic-production-plan.md). Steps 0.1, 0.2, 0.8 done. Next: Step 0.3 + 0.4 (`types.ts` vs wrappers, Figma registry vs `Button.tsx`). Contracts and `ds-audit` stay blocked until Step 0.
 - `CLAUDE.md` token-dependency paragraph is stale (still says `@appdirect/design-tokens` is not a dependency) — Step 0.7
 
 ---

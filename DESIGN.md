@@ -123,12 +123,14 @@ rounded:
   xl: 32px                      # --ad-radius-xl
   full: 9999px
 spacing:
-  xxs: 4px                      # --ad-spacing-xxs (sub-scale; use for tight internal component gaps)
+  none: 0px                     # --ad-spacing-none
+  xxs: 4px                      # --ad-spacing-xxs (tight internal gaps)
   xs: 10px                      # --ad-spacing-xs
   sm: 12px                      # --ad-spacing-sm
   md: 16px                      # --ad-spacing-md
   lg: 20px                      # --ad-spacing-lg
   xl: 32px                      # --ad-spacing-xl
+  xxl: 48px                     # layout/Mantine gap token; not yet --ad-spacing-xxl
 sizing:                         # Component minimum heights (buttons, inputs, controls)
   xs: 24px                      # --ad-sizing-xs
   sm: 30px                      # --ad-sizing-sm
@@ -279,7 +281,7 @@ Scale: 6 heading levels (h1–h6), 3 body sizes (lg/md/sm), 2 label sizes (md/sm
 
 ## Layout & Spacing
 
-The spacing scale is 5 levels (xs–xl, 10–32px) built on a ~4px-aligned grid. Use spacing tokens — never raw pixel values — for padding, gap, and margin. Common patterns:
+The spacing scale is Mantine Core `xs–xl` (10 / 12 / 16 / 20 / 32px) plus added `none` (0), `xxs` (4), and `xxl` (48). Use spacing tokens — never raw pixel values — for padding, gap, and margin. Common patterns:
 
 - Card interior padding: `md` (16px)
 - Section gaps: `lg` (20px)

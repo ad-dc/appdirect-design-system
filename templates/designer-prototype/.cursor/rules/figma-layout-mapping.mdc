@@ -69,11 +69,15 @@ Use `Box` with Mantine system props.
 
 | Figma | Token |
 |-------|-------|
-| 4px | `"xs"` |
-| 8px | `"sm"` |
+| 0px | `"none"` |
+| 4px | `"xxs"` |
+| 10px | `"xs"` |
+| 12px | `"sm"` |
 | 16px | `"md"` |
-| 24px | `"lg"` |
+| 20px | `"lg"` |
 | 32px | `"xl"` |
 | 48px | `"xxl"` |
+
+Mantine Core `xs–xl` plus `none` / `xxs` / `xxl`. No 8px or 24px token — use the nearest.
 
 If a layer is explicitly named `Stack`, `Grid`, or `Inline`, honor that name.

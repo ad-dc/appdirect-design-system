@@ -4,7 +4,7 @@ Working sequence for the factory loop. Rationale, contract sketches, and cited m
 
 **As of:** 2026-09-16  
 **Proposal PR:** https://github.com/ad-dc/appdirect-design-system/pull/68 (draft)  
-**Current phase:** recommendation complete. Step 0.8 (archive leftover CBP slot) landed. Contracts, `ds-audit`, agents, and telemetry are not started.
+**Current phase:** recommendation complete. Steps 0.1, 0.2, and 0.8 landed. Contracts, `ds-audit`, agents, and telemetry are not started.
 
 ---
 
@@ -12,7 +12,7 @@ Working sequence for the factory loop. Rationale, contract sketches, and cited m
 
 The main repo already ships a design system, kit tarball (`@appdirect/ds-prototype-kit` **0.2.6**), and a thin prototype template (`ad-dc/appdirect-prototype-template`). Cursor consumption rules/skills copy into new prototypes. `prototype-manifest.json` lists pages only (no system versions). Main-repo `lint` barely covers DS/prototype code.
 
-This PR started as **docs only**. Step 0.8 now also changes the thin template: leftover `components/cbp/` → `components/local/`. It does not change the kit, template CI, or the published GitHub template until a maintainer runs `npm run publish-prototype-template`.
+This PR started as **docs only**. It now also: archives leftover `components/cbp/` → `components/local/`; locks `Inline` as the horizontal primitive; rewrites spacing lookups to Mantine Core + `none` / `xxs` / `xxl`. It does not change the kit tarball or the published GitHub template until a maintainer runs `npm run publish-prototype-template`.
 
 | Layer | State |
 |---|---|
@@ -21,7 +21,7 @@ This PR started as **docs only**. Step 0.8 now also changes the thin template: l
 | Canonical correctness | **Decided:** DS component source. Not Figma, not `DESIGN.md`, not unused `types.ts` |
 | V1 factory | **Decided, not built:** checker and reporter |
 | Later factory | **Decided, gated:** authors/repairs pages against the same contracts |
-| Step 0 (repair contradictions) | **0.8 done.** 0.1–0.7 not started. Required before contracts, or remaining contradictions freeze as truth |
+| Step 0 (repair contradictions) | **0.1, 0.2, 0.8 done.** 0.3–0.7 not started. Required before contracts |
 | Steps 1–5 (manifest, contracts, audit, CI, fleet) | Blocked on Step 0 |
 | Steps 6–8 (semantic reviewer, authoring factory) | Blocked on V1 evidence that the checker is used |
 
@@ -34,26 +34,20 @@ This PR started as **docs only**. Step 0.8 now also changes the thin template: l
 | Package split | Kit-bundled in V1. Independent factory package only when authoring assets must move without a visual kit release |
 | Canonical correctness | DS **component source** (Mantine wrappers **and** AppDirect complex components) |
 | `PageContentHeader` | AppDirect complex component. No Mantine counterpart. Contract is anatomy / `contentSection` / composition, not `extends MantineX` |
-| Spacing | One scale: Mantine Core `xs–xl` (10/12/16/20/32) plus added `none` (0), `xxs` (4), `xxl` (48). The 4px-grid table in mapping docs is a stale **lookup**, not a second scale |
+| Spacing | One scale: Mantine Core `xs–xl` (10/12/16/20/32) plus added `none` (0), `xxs` (4), `xxl` (48). Lookups rewritten 2026-09-16 |
 | CBP | Out of scope. Split-off prototype. Leftover `components/cbp/` archived to `components/local/` (`docs/archive/cbp.md`) |
 | External products | Do not install Southleft `ds-contracts-poc`, Curtis Specs as SoT, or Pandya markdown+CSS-as-contract. Steal refuse-by-name + deterministic judge only |
 | Metrics | Dimensional. No 69/100 composite score |
 
 ### Still true in the repo (will freeze into contracts if Step 0 is skipped)
 
-- Horizontal layout: `figma-layout-mapping.mdc` / `LAYOUT_GUIDE.md` say use `Inline`, never `Group`. `Inline.tsx` says it is a legacy alias and to prefer `Group` for new code. **This is the one product pick still open.**
-- Spacing lookup: both `figma-layout-mapping.mdc` copies, `LAYOUT_GUIDE.md`, and `config.ts` still map `4px` → `xs`. Runtime token for 4px is `xxs`.
 - `types.ts` claims single source of truth and is almost unused; Button `disabled` variant disagrees with the wrapper.
 - `FIGMA_PROPS_REGISTRY.md` Button mapping disagrees with `Button.tsx`. Wrapper wins.
 - Alert: `DESIGN.md` `warning` vs wrapper `pending`.
 - `CLAUDE.md` still says `@appdirect/design-tokens` is not a dependency; `package.json` / `app/layout.tsx` import it.
 - Always-on `design-system.mdc` mixes consumption, wrapper authoring, and Code Connect.
 
-### One decision still needed
-
-**Layout primitive for new horizontal rows:** `Inline` (what Figma mapping and agent rules already teach) or `Group` (what `Inline.tsx` now recommends, matching Mantine). Until that is picked, Step 0.1 cannot land, and a layout contract cannot be written.
-
-Everything else in Step 0 is alignment work against already-locked rules (spacing names, wrapper-wins, docs honesty). Step 0.8 (CBP leftover) is done.
+Layout primitive and spacing lookups are aligned (0.1, 0.2). CBP leftover is archived (0.8).
 
 ---
 
@@ -67,8 +61,8 @@ Do not start contracts or `ds-audit` until Step 0 items that would be **encoded 
 
 Repair contradictions agents would otherwise enforce. No new packages.
 
-1. **Layout primitive:** pick `Inline` or `Group`. Align `Inline.tsx`, `Group.tsx`, `LAYOUT_GUIDE.md`, both `figma-layout-mapping.mdc` copies, and consumption rules.
-2. **Spacing lookup:** rewrite pixel→token tables to Mantine Core + `none` / `xxs` / `xxl` (`4px` → `xxs`). Optionally list `none` and `xxl` in `DESIGN.md` YAML.
+1. **Layout primitive:** **Done.** `Inline` for new Figma/agent/prototype rows. `Group` remains the Mantine-named alias.
+2. **Spacing lookup:** **Done.** Pixel→token tables match Mantine Core + `none` / `xxs` / `xxl` (`4px` → `xxs`). `DESIGN.md` YAML lists `none` and `xxl`. `theme.ts` resolves the extra keys.
 3. **Shared enums:** either `Button` / `Badge` / `Alert` import `types.ts`, or stop calling `types.ts` the source of truth.
 4. **Figma registry:** Button (and Badge if still wrong) mapping matches the wrapper. Wrapper wins.
 5. **Cursor rules split:** always-on = consumption only. Wrapper authoring glob excludes `ComplexComponents/`. Code Connect stays on `*.figma.tsx`.
@@ -140,13 +134,10 @@ Materialize Cursor assets from the kit, then generate/repair pages against contr
 
 ---
 
-## Suggested next (when implementation is approved)
+## Suggested next
 
-Start **Step 0.1 + 0.2** only:
+Step **0.3 + 0.4** (so contracts are not authored from the wrong Button mapping): `types.ts` either imported by wrappers or dropped as SoT; `FIGMA_PROPS_REGISTRY.md` Button (and Badge) matches the wrapper.
 
-1. Pick `Inline` or `Group` and align the mapping docs and wrapper comments.
-2. Rewrite pixel→token lookups (`4px` → `xxs`).
+0.5–0.7 remain: split Cursor rules, lint honesty, `CLAUDE.md` token-dependency text.
 
-Those are doc/rule fixes with no kit release required. Contracts wait until 0.3–0.4 so they are not authored from the wrong Button mapping.
-
-Step 0.8 is done. Refresh `ad-dc/appdirect-prototype-template` with `npm run publish-prototype-template` when a maintainer wants clones to pick up `components/local/`.
+Refresh `ad-dc/appdirect-prototype-template` with `npm run publish-prototype-template` when a maintainer wants clones to pick up `components/local/` and the corrected spacing lookup.
