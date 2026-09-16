@@ -17,7 +17,8 @@ V1 ships **evidence tooling** so that later factory work has something true to g
 The current system already has the right bones: a source-of-truth DS, a published kit tarball, a thin prototype template, Cursor rules/skills copied into that template, and `prototype-manifest.json`. What V1 adds is a **machine-readable definition of component correctness** owned by the design system, a **deterministic auditor** that prototypes can run locally, and a **small structural report** that can be collected across repos.
 
 ```
-DESIGN.md + DS wrapper source
+DESIGN.md (human) + DS component source
+        │  (Mantine wrappers + AppDirect complex components)
         │
         ▼
 component contracts (JSON, published with the kit)
@@ -230,6 +231,7 @@ The current `.cursor/rules/design-system.mdc` is always-on and mixes three audie
 | Code Connect instance-swap essay currently inside always-on `design-system.mdc` | Belongs on `*.figma.tsx` glob only |
 | `Inline.tsx` “prefer `Group` for new code” | Contradicts layout mapping and `LAYOUT_GUIDE.md`; resolve in source, then document once |
 | Wrapper authoring recipe applied to `ComplexComponents/` | `PageContentHeader` is not `forwardRef` + `extends MantineX`. Forcing that pattern would invent a fake Mantine base. |
+| Full `DESIGN.md` | Human spec. Agents should **read it when touching tokens/visuals**, not load it on every keystroke |
 
 ### Template vs main repo
 
@@ -711,6 +713,7 @@ Factory version adoption is **identical to kit version** in v1. Track it as a fi
 - Number of agent turns
 - “Percent of components used”
 - A weighted quality index
+- Southleft’s **69/100** screen score as a portable target. That number is five tasks, a closed catalog, and a **deterministic JSX judge** (`docs/10-honest-generation.md` in `southleft/ds-contracts-poc`). Without the same judge and a consistent catalog, copying the score is vanity.
 
 ### Does the factory improve quality?
 
@@ -854,7 +857,9 @@ These belong to later factory work or are out of scope:
 - Per-component LLM eval harness
 - Analytics warehouse
 - Standing multi-agent orchestrator
-- Auto-extraction of contracts from Figma
+- Auto-extraction of contracts from Figma (Curtis Specs as **source of truth**; later it may be a Figma **observation** against wrapper-owned contracts)
+- Installing `southleft/ds-contracts-poc` as the factory (incomplete v1; generates both React and Figma; ~10% brownfield coverage; would import Mantine Core APIs this kit exists to hide)
+- Pandya-style markdown `specs/` + prototype-owned `tokens.css` as the contract (JSON matches; markdown is understood; prototypes must not own hex/px CSS)
 - Requiring Artifactory in prototype repos
 - CBP as an audit, telemetry, or contract concern (split-off prototype; out of this system)
 
@@ -897,3 +902,27 @@ The same contracts and auditor remain. What changes is authorship:
 4. Prototypes still need almost no custom agent configuration
 
 The design system still owns correctness. The factory never becomes a second design system.
+
+---
+
+## 21. Cited work: three contract models, not one
+
+Friedman’s roundup stacks Vallaure, Curtis Specs, and Pandya as the same move. The primary sources are **three ownership models**. This proposal is a **fourth**, on purpose.
+
+| Model | Canonical artefact | Figma | Code | Fit here |
+|---|---|---|---|---|
+| **Southleft / Vallaure** | Third JSON/YAML file; both surfaces are printouts | Generated + three-way differ | Generated | Steal refuse-by-name, deterministic judge, “report GAP don’t fake.” Do **not** generate the kit from contracts in V1. Shipable truth is hand-written DS source. Their playground is not a complete v1 (`docs/CURRENT.md`, 2026-09-16). |
+| **Curtis Specs** | Neutral YAML; **Figma is usually the extract input** | Input (and optional generate) | Scaffolded from spec | Steal compact schema ideas (anatomy, default + deltas, invalid combos) and **examples beside contracts**. Do **not** extract Button variants from Figma: the registry already disagrees with `Button.tsx`. Later: Specs as a Figma drift detector against DS-owned contracts. |
+| **Pandya** | Markdown specs + closed `tokens.css` + CSS grep in CI | Not in the loop | App owns visual CSS | Steal “Definition of Done is a command” and session-start lookup. Do **not** put a token CSS layer inside prototypes; they consume kit `--ad-*` and Mantine system props. Markdown is guidance (`DESIGN.md`); it is not `enforcement.deterministic`. |
+| **This proposal** | DS component source (wrappers **and** AppDirect complex components such as `PageContentHeader`) | Code Connect subset, not parent | Hand-written; published as the kit | Contracts are tested against that source. Factory consumes them. V1 checks; later factory authors pages, not the DS. |
+
+**JSON vs markdown is a fork.** Vallaure: a contract must *match*; markdown must be *understood*. Understanding varies. `DESIGN.md` stays human. Contract JSON is the matchable artefact.
+
+**Steal at the right layer**
+
+- Pitre: lookups are not judgments; authority is the layer that can refuse. AI authors a spec once; machinery enforces it.
+- Southleft judge: illegal props, raw hex, style overrides, unknown tokens — no LLM. When the catalog has a real hole, **comment GAP** and widen the contract; do not invent `TableHeaderCell`.
+- Curtis Examples as Data: a pricing card is not a Button variant. `PageContentHeader` + list/detail recipes are **patterns beside** contracts, which is why `PageContentHeader` is a complex-component contract, not `extends MantineX`.
+- Harness Engineering (coding-agent course, not a DS): five subsystems (instructions, state, verification, scope, session). Maker ≠ checker. `/goal` without an independent `ds-audit` scales ungoverned generation. Campbell’s six UX layers are product-AI fluency, not kit packaging.
+
+**The V1 risk is not “we lack Friedman’s stack.”** It is too many unlabeled sources of truth (component source, `types.ts`, registry, `DESIGN.md`, stale 4px lookup, leftover `components/cbp/`). A contract file written on top of those contradictions would freeze them. A later factory would generate them at fleet scale.
