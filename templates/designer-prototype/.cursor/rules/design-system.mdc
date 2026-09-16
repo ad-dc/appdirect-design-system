@@ -24,7 +24,7 @@ alwaysApply: true
 import { Button, TextInput, Alert, Stack } from '@appdirect/ds-prototype-kit';
 ```
 
-Product-specific widgets belong in `@/components/cbp`. Do not vendor or edit kit source in this repo.
+Product-specific widgets belong in `@/components/local`. Do not vendor or edit kit source in this repo.
 
 ## Data Tables
 

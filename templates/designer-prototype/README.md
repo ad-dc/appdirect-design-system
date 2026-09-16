@@ -33,7 +33,7 @@ Import shared components from the kit:
 import { Card, Stack, Button, TextInput, Badge } from '@appdirect/ds-prototype-kit';
 ```
 
-Product-specific components go in `components/cbp/`.
+Product-specific components go in `components/local/`.
 
 ## Update the design system
 

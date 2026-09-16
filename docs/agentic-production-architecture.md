@@ -4,7 +4,7 @@
 
 **Scope:** treat `appdirect-design-system` (main repository) and `templates/designer-prototype` / `ad-dc/appdirect-prototype-template` (prototype fleet) as one system.
 
-**Out of scope:** CBP. It is a product prototype that has already been split off. It is not part of this fleet, not a design-system package, and not a named audit surface. The template still has a leftover folder called `components/cbp/`; that is naming residue from that split, not a convention the factory should encode. Audit local components generically (modules in a prototype that are not imported from the kit). Do not mention CBP in contracts, telemetry, skills, or metrics.
+**Out of scope:** CBP. It is a product prototype that has already been split off. It is not part of this fleet, not a design-system package, and not a named audit surface. The leftover template slot `components/cbp/` was archived to `components/local/` (see [`docs/archive/cbp.md`](./archive/cbp.md)). Audit local components generically (modules in a prototype that are not imported from the kit). Do not mention CBP in contracts, telemetry, skills, or metrics.
 
 ---
 
@@ -552,7 +552,7 @@ This is current, in-repo evidence. A factory that cannot see these will not help
 
 - `STATUS.md` is current as of 2026-09-16 (kit 0.2.6). `CLAUDE.md` still says `@appdirect/design-tokens` is not a dependency.
 - Memory file `.cursor/memory/code-connect-figma-ds.md` references `.cursor/agents/code-connect-pr.md`, which is absent
-- Template and skills still tell agents to put product widgets in `components/cbp/`. CBP is a split-off prototype. That folder name is leftover and must not become the fleet’s custom-component convention or an audit dimension.
+- Template leftover `components/cbp/` was archived to `components/local/` (2026-09-16). CBP is a split-off prototype. Do not treat that old folder name as the fleet’s custom-component convention or an audit dimension.
 
 These are exactly the classes fleet telemetry should distinguish: **doc/source mismatch** (fix the DS), **prototype misuse** (drift), **missing primitive** (gap).
 
@@ -812,7 +812,7 @@ Without this, agents will “enforce” the wrong system.
 5. Split main-repo `design-system.mdc` so Code Connect and wrapper authoring are not always-on
 6. Expand `lint` beyond the handful of shell files, or admit that `ds-audit` is the real gate
 7. Refresh `CLAUDE.md` token-dependency text so it matches `package.json`. Keep `STATUS.md` current.
-8. Rename the leftover `components/cbp/` slot in the template (and matching Cursor rules/skills) to a generic local-components folder. Do not carry CBP into audit, telemetry, or metrics.
+8. Rename the leftover `components/cbp/` slot in the template (and matching Cursor rules/skills) to a generic local-components folder. **Done (2026-09-16):** `components/local/`. Do not carry CBP into audit, telemetry, or metrics.
 
 ### Step 1 — Manifest versions
 
@@ -925,4 +925,4 @@ Friedman’s roundup stacks Vallaure, Curtis Specs, and Pandya as the same move.
 - Curtis Examples as Data: a pricing card is not a Button variant. `PageContentHeader` + list/detail recipes are **patterns beside** contracts, which is why `PageContentHeader` is a complex-component contract, not `extends MantineX`.
 - Harness Engineering (coding-agent course, not a DS): five subsystems (instructions, state, verification, scope, session). Maker ≠ checker. `/goal` without an independent `ds-audit` scales ungoverned generation. Campbell’s six UX layers are product-AI fluency, not kit packaging.
 
-**The V1 risk is not “we lack Friedman’s stack.”** It is too many unlabeled sources of truth (component source, `types.ts`, registry, `DESIGN.md`, stale 4px lookup, leftover `components/cbp/`). A contract file written on top of those contradictions would freeze them. A later factory would generate them at fleet scale.
+**The V1 risk is not “we lack Friedman’s stack.”** It is too many unlabeled sources of truth (component source, `types.ts`, registry, `DESIGN.md`, stale 4px lookup). A contract file written on top of those contradictions would freeze them. A later factory would generate them at fleet scale.

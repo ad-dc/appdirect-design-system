@@ -21,7 +21,7 @@ When creating a new prototype page:
 import { Button, Card, Stack, TextInput } from '@appdirect/ds-prototype-kit';
 ```
 
-Never import from `@mantine/core` in prototype pages. Domain widgets come from `@/components/cbp`.
+Never import from `@mantine/core` in prototype pages. Domain widgets come from `@/components/local`.
 
 ## Page Structure
 

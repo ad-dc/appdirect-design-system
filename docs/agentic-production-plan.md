@@ -4,7 +4,7 @@ Working sequence for the factory loop. Rationale, contract sketches, and cited m
 
 **As of:** 2026-09-16  
 **Proposal PR:** https://github.com/ad-dc/appdirect-design-system/pull/68 (draft)  
-**Current phase:** recommendation complete. Implementation not started. No contracts, `ds-audit`, agents, or telemetry shipped.
+**Current phase:** recommendation complete. Step 0.8 (archive leftover CBP slot) landed. Contracts, `ds-audit`, agents, and telemetry are not started.
 
 ---
 
@@ -12,7 +12,7 @@ Working sequence for the factory loop. Rationale, contract sketches, and cited m
 
 The main repo already ships a design system, kit tarball (`@appdirect/ds-prototype-kit` **0.2.6**), and a thin prototype template (`ad-dc/appdirect-prototype-template`). Cursor consumption rules/skills copy into new prototypes. `prototype-manifest.json` lists pages only (no system versions). Main-repo `lint` barely covers DS/prototype code.
 
-This PR is **docs only**. It does not change the kit, template CI, or Cursor assets that clones actually run.
+This PR started as **docs only**. Step 0.8 now also changes the thin template: leftover `components/cbp/` → `components/local/`. It does not change the kit, template CI, or the published GitHub template until a maintainer runs `npm run publish-prototype-template`.
 
 | Layer | State |
 |---|---|
@@ -21,7 +21,7 @@ This PR is **docs only**. It does not change the kit, template CI, or Cursor ass
 | Canonical correctness | **Decided:** DS component source. Not Figma, not `DESIGN.md`, not unused `types.ts` |
 | V1 factory | **Decided, not built:** checker and reporter |
 | Later factory | **Decided, gated:** authors/repairs pages against the same contracts |
-| Step 0 (repair contradictions) | **Not started.** Required before contracts, or contradictions freeze as truth |
+| Step 0 (repair contradictions) | **0.8 done.** 0.1–0.7 not started. Required before contracts, or remaining contradictions freeze as truth |
 | Steps 1–5 (manifest, contracts, audit, CI, fleet) | Blocked on Step 0 |
 | Steps 6–8 (semantic reviewer, authoring factory) | Blocked on V1 evidence that the checker is used |
 
@@ -35,7 +35,7 @@ This PR is **docs only**. It does not change the kit, template CI, or Cursor ass
 | Canonical correctness | DS **component source** (Mantine wrappers **and** AppDirect complex components) |
 | `PageContentHeader` | AppDirect complex component. No Mantine counterpart. Contract is anatomy / `contentSection` / composition, not `extends MantineX` |
 | Spacing | One scale: Mantine Core `xs–xl` (10/12/16/20/32) plus added `none` (0), `xxs` (4), `xxl` (48). The 4px-grid table in mapping docs is a stale **lookup**, not a second scale |
-| CBP | Out of scope. Split-off prototype. Leftover `components/cbp/` in the template is naming residue |
+| CBP | Out of scope. Split-off prototype. Leftover `components/cbp/` archived to `components/local/` (`docs/archive/cbp.md`) |
 | External products | Do not install Southleft `ds-contracts-poc`, Curtis Specs as SoT, or Pandya markdown+CSS-as-contract. Steal refuse-by-name + deterministic judge only |
 | Metrics | Dimensional. No 69/100 composite score |
 
@@ -47,14 +47,13 @@ This PR is **docs only**. It does not change the kit, template CI, or Cursor ass
 - `FIGMA_PROPS_REGISTRY.md` Button mapping disagrees with `Button.tsx`. Wrapper wins.
 - Alert: `DESIGN.md` `warning` vs wrapper `pending`.
 - `CLAUDE.md` still says `@appdirect/design-tokens` is not a dependency; `package.json` / `app/layout.tsx` import it.
-- Template, skills, and README still tell agents to put widgets in `components/cbp/`.
 - Always-on `design-system.mdc` mixes consumption, wrapper authoring, and Code Connect.
 
 ### One decision still needed
 
 **Layout primitive for new horizontal rows:** `Inline` (what Figma mapping and agent rules already teach) or `Group` (what `Inline.tsx` now recommends, matching Mantine). Until that is picked, Step 0.1 cannot land, and a layout contract cannot be written.
 
-Everything else in Step 0 is alignment work against already-locked rules (spacing names, wrapper-wins, CBP rename, docs honesty).
+Everything else in Step 0 is alignment work against already-locked rules (spacing names, wrapper-wins, docs honesty). Step 0.8 (CBP leftover) is done.
 
 ---
 
@@ -75,7 +74,7 @@ Repair contradictions agents would otherwise enforce. No new packages.
 5. **Cursor rules split:** always-on = consumption only. Wrapper authoring glob excludes `ComplexComponents/`. Code Connect stays on `*.figma.tsx`.
 6. **Lint honesty:** expand ESLint to prototype `app/` + DS, or document that `ds-audit` (Step 3) is the gate.
 7. **Docs drift:** `CLAUDE.md` token-dependency text matches `package.json`. Keep `STATUS.md` current.
-8. **Template leftover:** rename `components/cbp/` to a generic local-components folder; update skills/rules/README. Do not mention CBP.
+8. **Template leftover:** ~~rename `components/cbp/`~~ **Done.** Template slot is `components/local/`. Agent-facing copy does not mention CBP. Published GitHub template still has the old folder until `npm run publish-prototype-template`.
 
 **Done when:** an agent implementing a Figma frame would map spacing and horizontal layout to the same tokens/primitives the runtime uses, and would not be told to `extends Mantine` a `PageContentHeader`.
 
@@ -143,12 +142,11 @@ Materialize Cursor assets from the kit, then generate/repair pages against contr
 
 ## Suggested next (when implementation is approved)
 
-Start **Step 0.1 + 0.2 + 0.8** only:
+Start **Step 0.1 + 0.2** only:
 
 1. Pick `Inline` or `Group` and align the mapping docs and wrapper comments.
 2. Rewrite pixel→token lookups (`4px` → `xxs`).
-3. Rename leftover `components/cbp/` to a generic local-components folder.
 
 Those are doc/rule fixes with no kit release required. Contracts wait until 0.3–0.4 so they are not authored from the wrong Button mapping.
 
-**Not approved yet.** Do not start Step 0 until that is explicit.
+Step 0.8 is done. Refresh `ad-dc/appdirect-prototype-template` with `npm run publish-prototype-template` when a maintainer wants clones to pick up `components/local/`.

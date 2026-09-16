@@ -125,7 +125,7 @@ test('main copies template, pins kit, and strips placeholders', () => {
     assert.equal(existsSync(path.join(out, 'template.meta.json')), false);
     assert.equal(existsSync(path.join(out, '.npmrc')), false);
     assert.equal(existsSync(path.join(out, 'components/DesignSystem')), false);
-    assert.equal(existsSync(path.join(out, 'components/cbp/index.ts')), true);
+    assert.equal(existsSync(path.join(out, 'components/local/index.ts')), true);
     assert.equal(existsSync(path.join(out, '.cursor/skills/prototype-workspace/SKILL.md')), true);
     assert.equal(existsSync(path.join(out, '.cursor/skills/start-prototype/SKILL.md')), true);
     assert.equal(existsSync(path.join(out, 'public/assets/AppDirect-Mark_White.svg')), true);
