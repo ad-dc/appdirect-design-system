@@ -218,7 +218,7 @@ The current `.cursor/rules/design-system.mdc` is always-on and mixes three audie
 | Prototype page contract: `create-page`, manifest update, `AppShellLayout` + layout primitives, breadcrumbs, nav `active` | Both | glob `app/prototype/**` | Existing `prototyping.mdc` |
 | Figma layout → `Stack` / `Inline` / `Grid` / `Box` | Both | on demand (Figma implement) | `figma-layout-mapping.mdc` — keep; its **pixel→token** table is a stale 4px-grid lookup, not a second spacing scale (see drift) |
 | Code Connect serializer + stub connects | Main repo only | glob `**/*.figma.tsx` | Existing `figma-code-connect.mdc` |
-| Wrapper authoring pattern (`forwardRef`, barrel export, DS defaults) | Main repo only | glob `components/DesignSystem/**` | Extract from always-on `design-system.mdc`; designers must not see this |
+| Wrapper authoring pattern (`forwardRef`, `DS[Name]Props extends Mantine[Name]Props`, barrel export) | Main repo only | glob `components/DesignSystem/{Buttons,Inputs,Combobox,Navigation,Overlays,DataDisplay,Typography,Misc,Layout}/**` | Extract from always-on `design-system.mdc`. **Do not apply to `ComplexComponents/`.** `PageContentHeader` is not a missing Mantine wrapper. |
 
 ### Do not persist as Cursor rules
 
@@ -229,7 +229,7 @@ The current `.cursor/rules/design-system.mdc` is always-on and mixes three audie
 | `CLAUDE.md` Claude Code preview sandbox notes | Tool-hosting constraint, not a DS invariant |
 | Code Connect instance-swap essay currently inside always-on `design-system.mdc` | Belongs on `*.figma.tsx` glob only |
 | `Inline.tsx` “prefer `Group` for new code” | Contradicts layout mapping and `LAYOUT_GUIDE.md`; resolve in source, then document once |
-| Full `DESIGN.md` | Human spec. Agents should **read it when touching tokens/visuals**, not load it on every keystroke |
+| Wrapper authoring recipe applied to `ComplexComponents/` | `PageContentHeader` is not `forwardRef` + `extends MantineX`. Forcing that pattern would invent a fake Mantine base. |
 
 ### Template vs main repo
 
@@ -317,23 +317,35 @@ The orchestrator (human or agent) needs **files that survive a session**, not me
 
 ### Ownership
 
-The design system owns the definition of correctness. Contracts live **next to the wrapper** (or in `components/DesignSystem/contracts/`) and are copied into the kit by the existing `ds-package/scripts/build.js`. The factory/auditor **consumes** them. Cursor rules may **point at** them. Agents must not invent a second variant list.
+The design system owns the definition of correctness. Contracts live **next to the component** (or in `components/DesignSystem/contracts/`) and are copied into the kit by the existing `ds-package/scripts/build.js`. The factory/auditor **consumes** them. Cursor rules may **point at** them. Agents must not invent a second variant list.
 
-`FIGMA_PROPS_REGISTRY.md` is the **Figma-facing** subset of the contract. It is not the contract. Today it already disagrees with wrappers (Button variant→Mantine mapping; Badge variant vs color). Contracts should be generated from, or tested against, TypeScript enums — not from the registry markdown.
+There are two kinds of DS component. Do not write the same contract for both.
 
-`components/DesignSystem/types.ts` already claims to be a single source of truth (`DS_BUTTON_VARIANTS`, `DS_BADGE_VARIANTS`, `STATUS_TO_MANTINE_COLOR`) and is **almost unused** by wrappers. That file is the right seed **if** wrappers actually import it. Until they do, the wrapper source remains authoritative (same rule as `CLAUDE.md`: wrapper wins over docs).
+| Kind | What it is | Example | Contract is about |
+|---|---|---|---|
+| **Mantine wrapper** | Thin DS layer over a Mantine Core component: restricted variants, forced defaults, token mapping | `Button`, `Badge`, `Alert`, `Stack` | Public API vs Mantine, deprecated aliases, fixed `radius` |
+| **AppDirect complex component** | Designed composition unique to this system. **No Mantine counterpart.** Built from DS primitives (and occasionally a Mantine utility that has no DS wrapper) | `PageContentHeader`, also `DataTable`, `KeyInsight`, `NameValue`, `DashboardWidget` | Anatomy, mutually exclusive slots, composition rules, which primitives it may use internally |
+
+`PageContentHeader` is the second kind. Mantine has no page-content-header. Its API (`title`, `subhead`, `badge`, `actions`, mutually exclusive `contentSection`: insights / description / descriptionBlock / nameValuePairs / drawer) is AppDirect. Internally it composes `Card`, `Title`, `Button`, `Badge`, `ThemeIcon`, `KeyInsight`, `NameValue`, `DescriptionBlock`. `Collapse` / `rem` from `@mantine/core` are utilities, not a wrapped “PageContentHeader.” A contract that treated it as `DSPageContentHeaderProps extends MantineX` would be wrong.
+
+`FIGMA_PROPS_REGISTRY.md` is the **Figma-facing** subset of the contract. It is not the contract. Today it already disagrees with wrappers (Button variant→Mantine mapping; Badge variant vs color). Wrapper contracts should be generated from, or tested against, TypeScript enums — not from the registry markdown.
+
+`components/DesignSystem/types.ts` already claims to be a single source of truth (`DS_BUTTON_VARIANTS`, `DS_BADGE_VARIANTS`, `STATUS_TO_MANTINE_COLOR`) and is **almost unused** by wrappers. That file is the right seed **if** wrappers actually import it. Until they do, the **component source** remains authoritative (same rule as `CLAUDE.md`: implementation wins over docs). For `PageContentHeader`, that source is `ComplexComponents/PageContentHeader/PageContentHeader.tsx`, not a Mantine type.
 
 ### Which components get explicit contracts first
 
-Do not contract all ~70 wrappers. Start with components that (1) already restrict Mantine, (2) are used on every prototype page, or (3) are the usual drift magnets.
+Do not contract all ~70 DS exports. Start with components that (1) already restrict a Mantine API, (2) are AppDirect page-level compositions used on every prototype, or (3) are the usual drift magnets.
 
 | Tier | Components | Why |
 |---|---|---|
-| 0 (v1) | `Button`, `Badge`, `Alert`, `PageContentHeader`, `DataTable`, layout primitives (`Stack`, `Inline`/`Group`, `Grid`, `Box`) | Restricted APIs, page-level composition, documented do/don't |
-| 1 | `ActionIcon`, `TextInput`, `Select`, `Card`, `Tooltip`, `Avatar`, `Table` | Defaults (`radius="sm"`), semantic colors, Table vs DataTable |
-| 2 | Remaining wrappers | Passthrough components: TypeScript + import lint is enough until a real restriction exists |
+| 0 wrappers | `Button`, `Badge`, `Alert`, layout primitives (`Stack`, `Inline`/`Group`, `Grid`, `Box`) | Restricted Mantine APIs |
+| 0 complex | `PageContentHeader`, `DataTable` | AppDirect-designed compositions; page-level patterns; not Mantine components |
+| 1 | `ActionIcon`, `TextInput`, `Select`, `Card`, `Tooltip`, `Avatar`, `Table` | Defaults (`radius="sm"`), semantic colors, `Table` vs `DataTable` |
+| 2 | Remaining wrappers and other complex components (`KeyInsight`, `DashboardWidget`, …) | Passthrough wrappers: TypeScript + import lint. Other complex components: wait until a real restriction exists |
 
 Passthrough wrappers (`Paper`, `Divider`, `Kbd`) do not need a narrative contract. An empty `restrictions: []` with `importFrom` is enough.
+
+`PageContentHeader` stays in V1 because prototypes are required to use it for page headers. Its contract fields are `contentSection` exclusivity, required `title`, composition (do not rebuild this from a raw `Card` + `Title`), and that actions use DS `Button` variants — not a Mantine variant map.
 
 ### Contract shape (v1)
 
@@ -516,7 +528,7 @@ This is current, in-repo evidence. A factory that cannot see these will not help
 | Horizontal layout | `figma-layout-mapping.mdc` and `LAYOUT_GUIDE.md`: use `Inline`, never `Group`. `Inline.tsx`: “Prefer `Group` for new code.” `Group.tsx` is a first-class export |
 | Spacing scale | **One scale:** Mantine Core `xs–xl` (10 / 12 / 16 / 20 / 32) plus added `none` (0), `xxs` (4), `xxl` (48). Runtime layout (`Stack` et al.) passes `gap` through to Mantine; `theme.ts` does not override spacing. The 4 / 8 / 16 / 24 / 32 table in `figma-layout-mapping.mdc`, `LAYOUT_GUIDE.md`, and `config.ts` is a **stale pixel→token lookup**, not a competing DS scale. Agents using that table still mis-assign names (`4px` is `xxs`, not `xs`). `DESIGN.md` YAML documents `xxs` but omits `none` / `xxl`; vendored `--ad-spacing-*` has `none` / `xxs` and not `xxl`. |
 | “No CSS modules / no inline styles” | Consumer rule. Producers: `Button.module.css`, `Card.module.css`, `Tooltip` hardcoded `#212529` and `padding: '5px 8px'` (documented exception in DESIGN.md) |
-| Raw Mantine inside DS | Shell, DataTable internals, PageContentHeader (`Collapse`, `rem`), stories. Correct for wrappers; consumption rules do not distinguish producer vs consumer |
+| Raw Mantine inside DS | Shell, DataTable internals, stories, and utilities with no DS wrapper (`Collapse`, `rem` inside `PageContentHeader`). Complex components are **not** Mantine wrappers; they should compose DS primitives. Consumption rules still do not distinguish producer vs consumer. |
 | LAYOUT_GUIDE vs consumption | Guide still says use Mantine Core for “form controls / complex interactions” |
 | Deprecated local shells | `components/HeaderBar.tsx` etc. still present, marked deprecated |
 
@@ -528,7 +540,7 @@ This is current, in-repo evidence. A factory that cannot see these will not help
 
 ### Authoring drift (main repo, still leaks to the kit)
 
-- DataTable, PageContentHeader, Combobox implementations import raw Mantine primitives that have DS wrappers (`ActionIcon`, `Select`, `Text`, `Box`)
+- DataTable and Combobox implementations import raw Mantine primitives that have DS wrappers (`ActionIcon`, `Select`, `Text`, `Box`). `PageContentHeader` is an AppDirect complex component; it correctly composes DS primitives and only reaches `@mantine/core` for `Collapse` / `rem` (no DS Collapse exists).
 - Stories use `style={{` extensively — agents copy stories
 - `Button.figma.tsx` violates the serializer rule
 - `needs-connect` remains on Title, FileInput, RadioGroup, AutocompleteClearable, and most ComplexComponents
@@ -805,7 +817,7 @@ Add `versions` (and optional `template`) to `prototype-manifest.json` in the tem
 
 ### Step 2 — Contracts for tier 0 only
 
-Hand-write JSON for Button, Badge, Alert, PageContentHeader, DataTable, layout primitives. Publish them in the kit. Add a unit test: wrapper enums ⊆ contract enums.
+Hand-write JSON for tier-0 wrappers (Button, Badge, Alert, layout) and tier-0 complex components (`PageContentHeader`, `DataTable`). Publish them in the kit. Wrapper test: enums ⊆ contract enums. Complex-component test: `contentSection` union and required `title` match `PageContentHeader.tsx` — do not assert a Mantine base type.
 
 ### Step 3 — `ds-audit` in the kit
 
