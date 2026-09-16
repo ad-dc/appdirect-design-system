@@ -1,6 +1,6 @@
 # Agentic software-production architecture
 
-**Status:** recommendation only. No packages, contracts, agents, telemetry, or configuration were implemented.
+**Status:** recommendation only. No packages, contracts, agents, telemetry, or configuration were implemented. Execution sequence: [`agentic-production-plan.md`](./agentic-production-plan.md).
 
 **Scope:** treat `appdirect-design-system` (main repository) and `templates/designer-prototype` / `ad-dc/appdirect-prototype-template` (prototype fleet) as one system.
 
@@ -550,7 +550,7 @@ This is current, in-repo evidence. A factory that cannot see these will not help
 
 ### Docs drift
 
-- `STATUS.md` last updated 2026-09-01; kit is 0.2.6
+- `STATUS.md` is current as of 2026-09-16 (kit 0.2.6). `CLAUDE.md` still says `@appdirect/design-tokens` is not a dependency.
 - Memory file `.cursor/memory/code-connect-figma-ds.md` references `.cursor/agents/code-connect-pr.md`, which is absent
 - Template and skills still tell agents to put product widgets in `components/cbp/`. CBP is a split-off prototype. That folder name is leftover and must not become the fleet’s custom-component convention or an audit dimension.
 
@@ -799,7 +799,7 @@ Goal: decide whether the architecture **reduces incorrect UI** and **surfaces re
 
 ## 19. Migration path
 
-No big-bang. Each step is useful alone.
+No big-bang. Each step is useful alone. The working checklist, done-when criteria, and suggested next commit live in [`agentic-production-plan.md`](./agentic-production-plan.md). This section is the rationale-level sequence so the architecture stays readable on its own.
 
 ### Step 0 — Repair contradictions (this repo, before the V1 factory)
 
@@ -811,7 +811,7 @@ Without this, agents will “enforce” the wrong system.
 4. Align `FIGMA_PROPS_REGISTRY.md` Button mapping with the wrapper
 5. Split main-repo `design-system.mdc` so Code Connect and wrapper authoring are not always-on
 6. Expand `lint` beyond the handful of shell files, or admit that `ds-audit` is the real gate
-7. Refresh or snapshot-date `STATUS.md` / `CLAUDE.md` token-dependency text
+7. Refresh `CLAUDE.md` token-dependency text so it matches `package.json`. Keep `STATUS.md` current.
 8. Rename the leftover `components/cbp/` slot in the template (and matching Cursor rules/skills) to a generic local-components folder. Do not carry CBP into audit, telemetry, or metrics.
 
 ### Step 1 — Manifest versions
