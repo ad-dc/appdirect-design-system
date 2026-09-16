@@ -216,7 +216,7 @@ The current `.cursor/rules/design-system.mdc` is always-on and mixes three audie
 |---|---|---|---|
 | DS consumption: import from kit/barrel, no raw `@mantine/core` in app/prototype code, no Tailwind, no consumer CSS modules, no inline `style`, `DataTable` vs `Table`, `PageContentHeader` for page headers | Main repo **and** template | always | Thin always-on rule. Template already has the right thinner version. |
 | Prototype page contract: `create-page`, manifest update, `AppShellLayout` + layout primitives, breadcrumbs, nav `active` | Both | glob `app/prototype/**` | Existing `prototyping.mdc` |
-| Figma layout → `Stack` / `Inline` / `Grid` / `Box` | Both | on demand (Figma implement) | `figma-layout-mapping.mdc` — **fix spacing table first** (see drift) |
+| Figma layout → `Stack` / `Inline` / `Grid` / `Box` | Both | on demand (Figma implement) | `figma-layout-mapping.mdc` — keep; its **pixel→token** table is a stale 4px-grid lookup, not a second spacing scale (see drift) |
 | Code Connect serializer + stub connects | Main repo only | glob `**/*.figma.tsx` | Existing `figma-code-connect.mdc` |
 | Wrapper authoring pattern (`forwardRef`, barrel export, DS defaults) | Main repo only | glob `components/DesignSystem/**` | Extract from always-on `design-system.mdc`; designers must not see this |
 
@@ -514,7 +514,7 @@ This is current, in-repo evidence. A factory that cannot see these will not help
 | Badge API | Wrapper `variant` includes semantic colors; `types.ts` `DS_BADGE_VARIANTS` is `filled \| outline`; registry matches types, not wrapper |
 | Alert `warning` vs `pending` | `DESIGN.md`: `warning` for alerts, `pending` for badges. Wrapper `Alert` has `pending` and no `warning`. Deprecated `type` alias still exists |
 | Horizontal layout | `figma-layout-mapping.mdc` and `LAYOUT_GUIDE.md`: use `Inline`, never `Group`. `Inline.tsx`: “Prefer `Group` for new code.” `Group.tsx` is a first-class export |
-| Spacing scale | Mapping rule: 4/8/16/24/32px → xs/sm/md/lg/xl. `DESIGN.md`: xs=10, sm=12, md=16, lg=20, xl=32, plus xxs=4. Agents following the rule will emit the wrong tokens |
+| Spacing scale | **One scale:** Mantine Core `xs–xl` (10 / 12 / 16 / 20 / 32) plus added `none` (0), `xxs` (4), `xxl` (48). Runtime layout (`Stack` et al.) passes `gap` through to Mantine; `theme.ts` does not override spacing. The 4 / 8 / 16 / 24 / 32 table in `figma-layout-mapping.mdc`, `LAYOUT_GUIDE.md`, and `config.ts` is a **stale pixel→token lookup**, not a competing DS scale. Agents using that table still mis-assign names (`4px` is `xxs`, not `xs`). `DESIGN.md` YAML documents `xxs` but omits `none` / `xxl`; vendored `--ad-spacing-*` has `none` / `xxs` and not `xxl`. |
 | “No CSS modules / no inline styles” | Consumer rule. Producers: `Button.module.css`, `Card.module.css`, `Tooltip` hardcoded `#212529` and `padding: '5px 8px'` (documented exception in DESIGN.md) |
 | Raw Mantine inside DS | Shell, DataTable internals, PageContentHeader (`Collapse`, `rem`), stories. Correct for wrappers; consumption rules do not distinguish producer vs consumer |
 | LAYOUT_GUIDE vs consumption | Guide still says use Mantine Core for “form controls / complex interactions” |
@@ -769,7 +769,7 @@ Goal: decide whether the architecture **reduces incorrect UI** and **surfaces re
 - One primary button per view
 - Status colors only on status components
 - Local components are product-specific, not a second Button
-- Spacing tokens match DESIGN.md, not the stale 4/8/16 mapping
+- Spacing tokens match Mantine Core `xs–xl` plus added `none` / `xxs` / `xxl` (not the stale 4px-grid lookup in agent mapping docs)
 
 **Fleet checks:**
 
@@ -778,7 +778,7 @@ Goal: decide whether the architecture **reduces incorrect UI** and **surfaces re
 - Local-pattern clusters ≥ 3
 - Ratio of declared exceptions to undeclared custom files (low ratio = people bypassing the system)
 
-**Stop-the-line before promoting the factory:** if after two evaluation cycles custom-component count and restricted imports do not move, do not add generating agents. Fix contracts, CI, and the consumption rule. A production factory on top of current contradictions (Inline vs Group, wrong spacing table, Badge variant vs color) will produce more of the same UI.
+**Stop-the-line before promoting the factory:** if after two evaluation cycles custom-component count and restricted imports do not move, do not add generating agents. Fix contracts, CI, and the consumption rule. A production factory on top of current contradictions (Inline vs Group, Badge variant vs color) will produce more of the same UI.
 
 ---
 
@@ -791,7 +791,7 @@ No big-bang. Each step is useful alone.
 Without this, agents will “enforce” the wrong system.
 
 1. Pick `Inline` vs `Group` (layout mapping currently says Inline; `Inline.tsx` says prefer Group)
-2. Fix spacing token table in both copies of `figma-layout-mapping.mdc` to match `DESIGN.md`
+2. Treat spacing as Mantine Core `xs–xl` plus added `none` / `xxs` / `xxl`. Rewrite the pixel→token lookup in both `figma-layout-mapping.mdc` copies, `LAYOUT_GUIDE.md`, and `config.ts` so `4px` maps to `xxs` (not `xs`). Do not invent a second scale. Optionally list `none` and `xxl` in `DESIGN.md` YAML so docs match the token screenshot.
 3. Make `types.ts` actually used by `Button` / `Badge` / `Alert`, or delete the “single source of truth” claim
 4. Align `FIGMA_PROPS_REGISTRY.md` Button mapping with the wrapper
 5. Split main-repo `design-system.mdc` so Code Connect and wrapper authoring are not always-on
