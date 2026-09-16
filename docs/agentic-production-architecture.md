@@ -10,19 +10,11 @@
 
 ## 1. Smallest viable architecture
 
-Ship **evidence tooling**, not an agent platform.
+**V1 is a checker and reporter.** That is a phase, not the destination. The factory later becomes the production path: agents author prototype software against DS-owned contracts, with audit as a gate rather than the product.
 
-The current system already has the right bones: a source-of-truth DS, a published kit tarball, a thin prototype template, Cursor rules/skills copied into that template, and `prototype-manifest.json`. What is missing is a **machine-readable definition of component correctness** owned by the design system, a **deterministic auditor** that prototypes can run locally, and a **small structural report** that can be collected across repos.
+V1 ships **evidence tooling** so that later factory work has something true to generate against. Do not start V1 as an independently versioned factory package, a standing multi-agent runtime, a telemetry platform, LLM evaluation of every contract field, or composite quality scores.
 
-Do **not** start with:
-
-- an independently versioned “code factory” npm package
-- standing Cursor subagents for ordinary coding work
-- a telemetry/analytics platform
-- LLM evaluation of every component property
-- composite “quality scores”
-
-Do start with this closed loop:
+The current system already has the right bones: a source-of-truth DS, a published kit tarball, a thin prototype template, Cursor rules/skills copied into that template, and `prototype-manifest.json`. What V1 adds is a **machine-readable definition of component correctness** owned by the design system, a **deterministic auditor** that prototypes can run locally, and a **small structural report** that can be collected across repos.
 
 ```
 DESIGN.md + DS wrapper source
@@ -43,9 +35,14 @@ fleet rollup (maintainer script over known prototype repos)
 roadmap evidence (recurring local patterns, exception hotspots)
 ```
 
-Cursor agents remain the **author** of prototype code. The factory is a **checker and reporter**, not a second product.
+| Phase | Factory role | Who authors product UI |
+|---|---|---|
+| **V1** | Checker and reporter: contracts, `ds-audit`, manifest versions, fleet evidence | Existing Cursor agents in the prototype repo, using consumption rules/skills |
+| **Later** | Production factory: generate and repair pages against those same contracts; materialize Cursor assets; optionally split from the kit | The factory, still consuming DS contracts rather than inventing them |
 
-A semantic LLM review is invoked only when the auditor cannot classify a finding: a local component that looks like a missing DS primitive, or a page that uses supported components in a semantically wrong way. That review writes a structured exception, it does not invent a parallel contract.
+V1 does not invent a second product. It installs the definition of correctness and the measurement loop the later factory will use. Without that, a generating factory would amplify the drift already in this repo.
+
+In V1, a semantic LLM review is invoked only when the auditor cannot classify a finding: a local component that looks like a missing DS primitive, or a page that uses supported components in a semantically wrong way. That review writes a structured exception. Later, the same contracts become generation constraints.
 
 ---
 
@@ -127,14 +124,14 @@ A semantic LLM review is invoked only when the auditor cannot classify a finding
                                     drift vs gap vs exception
 ```
 
-**Code factory in v1** is not a new package. It is:
+**Code factory in V1** is not a new package. It is the checker/reporter slice of the later factory:
 
 1. Component contracts owned by the DS and published **inside the kit**
 2. A `ds-audit` binary published **with the kit** (same version)
 3. Cursor consumption rules/skills that already ship in the template
-4. An optional later `materialize` step if Cursor assets must update faster than the kit
+4. Room for a later `materialize` step when the factory starts shipping authoring assets independently of visual kit releases
 
-That is enough to make the fleet observable and to keep agents from redefining correctness.
+That is enough to make the fleet observable and to keep today’s agents from redefining correctness. The later factory reuses this loop: it generates against the same contracts, then the same auditor reports whether the output holds.
 
 ---
 
@@ -144,27 +141,29 @@ That is enough to make the fleet observable and to keep agents from redefining c
 
 | Option | What it is | Verdict |
 |---|---|---|
-| **A. Kit-bundled factory (recommended v1)** | Contracts + `ds-audit` ship in `@appdirect/ds-prototype-kit`. Cursor assets stay in the template. | Smallest. Audit always matches the components the prototype actually imported. |
-| **B. Independent factory package** | `@appdirect/code-factory` versioned separately; prototypes bump factory without bumping kit; materializes `.cursor/` assets | Correct *later*, if update cadences diverge. Extra version axis with no evidence yet. Cursor does not natively install rules/skills from npm. |
+| **A. Kit-bundled factory (recommended V1)** | Contracts + `ds-audit` ship in `@appdirect/ds-prototype-kit`. Cursor assets stay in the template. | Smallest checker/reporter. Audit always matches the components the prototype actually imported. |
+| **B. Independent factory package** | `@appdirect/code-factory` versioned separately; prototypes bump factory without bumping kit; materializes `.cursor/` assets; later owns generation/repair | The later production factory. Not V1. Extra version axis before fleet evidence exists. Cursor does not natively install rules/skills from npm. |
 | **C. Template-only factory** | Rules/skills/audit live only in the GitHub template | Existing prototypes never receive audit improvements unless they re-clone. Template publish is already a weak update channel. |
 | **D. Main-repo-only factory** | Agents and audit exist only in `appdirect-design-system` | Does not serve the fleet. Designers are not supposed to write in this repo. |
 
-### Why not B yet
+### Why not B in V1
 
-- The kit **is** the component API the auditor must understand. Splitting factory from kit immediately creates a compatibility matrix (`factory x kit x tokens x template`) before any fleet data exists.
-- Cursor rules and skills are files, not npm APIs. An independent package still needs a **materialize** step into `.cursor/`. That step can be added to the kit later without a new package.
-- Prototype repos should require **minimal custom agent configuration**. Option B only helps that if materialize is automatic; once it is automatic, the package boundary is an implementation detail.
-- The observed pain is not “I need new lint rules but must freeze Button.” It is “I cannot see whether prototypes still match the kit they claim to use.”
+- The kit **is** the component API the auditor must understand. Splitting factory from kit in V1 creates a compatibility matrix (`factory x kit x tokens x template`) before any fleet data exists.
+- Cursor rules and skills are files, not npm APIs. An independent package still needs a **materialize** step into `.cursor/`. That step belongs in the later factory, not as V1 ceremony.
+- Prototype repos should require **minimal custom agent configuration**. Option B only helps that if materialize is automatic; once it is automatic, the package boundary is how the production factory ships.
+- V1 pain is “I cannot see whether prototypes still match the kit they claim to use.” Later pain is “agents generate UI that the auditor already knows is wrong.” Checker first, then author.
 
 ### When to split later (promote A → B)
 
-Split factory from kit only after **all** of these are true:
+V1 stays kit-bundled. The later production factory is the reason to split, not V1 packaging preference.
 
-1. Audit rules or Cursor skills need to ship **without** a visual kit release
-2. More than one supported kit major/minor must be audited with newer rules
+Split factory from kit when **any** of these become true:
+
+1. Factory authoring assets (rules, skills, generation prompts, repair workflows) need to ship **without** a visual kit release
+2. More than one supported kit major/minor must be audited or generated against with newer factory behaviour
 3. Materialize-from-package is already working (so the split does not invent a new install UX)
 
-Until then, version factory **with the kit**. Record `kitVersion` in the prototype manifest; that is also the factory version.
+Until the split, version factory **with the kit**. Record `kitVersion` in the prototype manifest; in V1 that is also the factory version. Keep the `factory` field so the later split does not change the schema.
 
 ### Compatibility validation (v1, still inside the kit)
 
@@ -287,7 +286,9 @@ Isolate work only when it (a) has a large or foreign context, (b) would pollute 
 | Semantic review of a **flagged** local component | Yes, on demand | Needs contract text + similar prototypes + DESIGN.md; should not rewrite the page in the same turn |
 | Fleet rollup across many prototype repos | Yes, maintainer-only | Volume and credentials; output is a table, not code |
 
-**Default agent** in a prototype repo: implement the page, then run `ds-audit`. Stop. If the audit emits `needs_semantic_review`, the user (or orchestrator) may launch the exception reviewer. That reviewer cannot mark a gap as “approved DS change”; it can only propose an exception record.
+**Default agent in V1** (prototype repo): implement the page, then run `ds-audit`. Stop. If the audit emits `needs_semantic_review`, the user (or orchestrator) may launch the exception reviewer. That reviewer cannot mark a gap as “approved DS change”; it can only propose an exception record.
+
+Later, the default path inverts: the factory proposes the page against contracts, then the same auditor gates it.
 
 ---
 
@@ -521,7 +522,7 @@ This is current, in-repo evidence. A factory that cannot see these will not help
 
 ### Pattern drift in the only in-tree prototypes
 
-`app/prototype/customers/page.tsx` is a list of records rendered as `Card` + `Stack` + `Inline` + `Badge`. Rules and Figma Code Connect notes say list pages should use `DataTable`. That may be a **gap** (DataTable is heavy for five static rows) or **drift** (the canonical list pattern was not used). The factory’s job is to **flag** it, not auto-rewrite it.
+`app/prototype/customers/page.tsx` is a list of records rendered as `Card` + `Stack` + `Inline` + `Badge`. Rules and Figma Code Connect notes say list pages should use `DataTable`. That may be a **gap** (DataTable is heavy for five static rows) or **drift** (the canonical list pattern was not used). In V1 the factory **flags** it. Later, the same finding is a generation/repair input, not only a report.
 
 `app/prototype/settings/page.tsx` still has `TODO` nav and empty `PageContentHeader` description — template leftover, not a DS gap.
 
@@ -714,7 +715,7 @@ Run a **fixed evaluation set**, not production vanity metrics.
 4. Human DS review of “would we merge this visual language?”
 5. Repeat quarterly on new prototypes (fleet histograms), not on the gold set alone
 
-If audit counts fall while custom-component clusters stay flat, the factory is catching **drift**. If custom clusters grow around the same hash, the factory is revealing **gaps** — success, not failure. If both rise, agents are producing more code and ignoring the auditor: fix the always-on rules and CI gate, do not add more agents.
+If audit counts fall while custom-component clusters stay flat, the V1 factory is catching **drift**. If custom clusters grow around the same hash, it is revealing **gaps** — success, not failure. If both rise, agents are producing more code and ignoring the auditor: fix the always-on rules and CI gate before promoting the factory from checker to author. Adding generating agents on top of ignored audits will scale the same failures.
 
 **CI gate (prototype):** fail on restricted imports and typecheck; **warn** on composition heuristics and undeclared local components. Failing the build on semantic guesses will train designers to disable the factory.
 
@@ -736,12 +737,14 @@ If audit counts fall while custom-component clusters stay flat, the factory is c
 | Telemetry schema + auditor output | Kit | Aggregation script may live in main repo |
 | Fleet aggregation / roadmap | DS maintainers | Individual prototype authors |
 | Local exceptions | Prototype manifest, declared by author | DS does not veto; rollup may still classify as gap |
+| V1 factory (audit CLI, reports) | Ships with kit; run in prototype | Does not author product UI |
+| Later production factory (generation, repair, Cursor materialize) | Factory package or kit export, consuming DS contracts | Must not own component correctness |
 
-**Versioned together:** kit components + contracts + `ds-audit`.
+**Versioned together (V1):** kit components + contracts + `ds-audit`.
 
-**Versioned independently:** tokens (source), template (runtime), main-repo Code Connect.
+**Versioned independently:** tokens (source), template (runtime), main-repo Code Connect. Later, the production factory (authoring assets, generation/repair) when its cadence diverges from the kit.
 
-**Cursor agents** are not a versioned product. They load rules/skills from the repo they are in. The way to update agent behaviour on the fleet is to update those files (template republish + later materialize), not to host a multi-agent runtime.
+**Cursor agents in V1** are not a versioned product. They load rules/skills from the repo they are in. The later factory versions those assets (template republish, then materialize, then an independent factory package) so authoring behaviour can move without a visual kit release.
 
 ---
 
@@ -775,7 +778,7 @@ Goal: decide whether the architecture **reduces incorrect UI** and **surfaces re
 - Local-pattern clusters ≥ 3
 - Ratio of declared exceptions to undeclared custom files (low ratio = people bypassing the system)
 
-**Stop-the-line for the architecture itself:** if after two evaluation cycles custom-component count and restricted imports do not move, do not add subagents. Fix contracts, CI, and the consumption rule. More agents will amplify the current contradictions (Inline vs Group, wrong spacing table, Badge variant vs color).
+**Stop-the-line before promoting the factory:** if after two evaluation cycles custom-component count and restricted imports do not move, do not add generating agents. Fix contracts, CI, and the consumption rule. A production factory on top of current contradictions (Inline vs Group, wrong spacing table, Badge variant vs color) will produce more of the same UI.
 
 ---
 
@@ -783,7 +786,7 @@ Goal: decide whether the architecture **reduces incorrect UI** and **surfaces re
 
 No big-bang. Each step is useful alone.
 
-### Step 0 — Repair contradictions (this repo, before any factory)
+### Step 0 — Repair contradictions (this repo, before the V1 factory)
 
 Without this, agents will “enforce” the wrong system.
 
@@ -822,22 +825,32 @@ Maintainer script + optional `fleet.json`. Produce a markdown table: kit version
 
 Only after false positives on composition heuristics are understood. Input: audit `needs_semantic_review` items. Output: exception record `{ drift | gap | legitimate_local }`.
 
-### Step 7 — Materialize Cursor assets from the kit (optional)
+### Step 7 — Materialize Cursor assets (start of the production factory)
 
-If consumption rules must update faster than designers bump the kit… wait, they **cannot**: rules that describe APIs must match the installed kit. Materialize is for **audit bugfixes** and skill text, not for new Button variants. If that cadence appears, **then** consider an independent factory package (option B).
+V1 skills stay in the template. When authoring behaviour must move without a visual kit release, the factory starts shipping Cursor assets and materializing them into prototype repos. API-describing rules must still match the installed kit; factory-owned skills (generation, repair, audit-driven rewrite) can move faster.
 
-### Explicitly deferred
+### Step 8 — Production factory
 
-- Independent `@appdirect/code-factory` package
+The factory becomes the authoring path: generate and repair pages against DS contracts, run the same `ds-audit` as a gate, then optionally split to an independent factory package (option B). Do not start this step until V1 evidence shows the checker is actually used (restricted imports and undeclared local components trend down, or clusters are classified as gaps rather than ignored noise).
+
+### Deferred from V1 (not abandoned)
+
+These belong to later factory work or are out of scope:
+
+- Independent `@appdirect/code-factory` package (later factory, option B)
+- Factory-authored generation/repair of prototype pages (later factory)
 - Per-component LLM eval harness
 - Analytics warehouse
 - Standing multi-agent orchestrator
 - Auto-extraction of contracts from Figma
 - Requiring Artifactory in prototype repos
+- CBP as an audit, telemetry, or contract concern (split-off prototype; out of this system)
 
 ---
 
-## 20. What “done” looks like for v1
+## 20. What “done” looks like
+
+### V1 (checker and reporter)
 
 A designer prototype can:
 
@@ -860,4 +873,15 @@ An agent in a prototype repo:
 4. Does not invent Button variants
 5. Is not spawned as a swarm
 
-That is the smallest architecture that produces useful evidence. Everything else waits on that evidence.
+V1 is done when that loop produces useful evidence. The later factory waits on that evidence; it does not replace it.
+
+### Later (production factory)
+
+The same contracts and auditor remain. What changes is authorship:
+
+1. The factory generates or repairs prototype UI against DS contracts
+2. `ds-audit` is a gate on factory output, not the only factory behaviour
+3. Factory assets can update without a visual kit release
+4. Prototypes still need almost no custom agent configuration
+
+The design system still owns correctness. The factory never becomes a second design system.
