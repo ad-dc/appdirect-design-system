@@ -140,7 +140,7 @@ This extracts page content, rewrites imports, and generates a `CONNECTIONS.md` d
 npm run dev            # Start Next.js dev server (Turbopack)
 npm run storybook      # Storybook on port 6006
 npm run build          # Production build
-npm run lint           # ESLint
+npm run lint           # ESLint on app/, components/, next.config.ts
 npm run typecheck      # TypeScript check
 ```
 

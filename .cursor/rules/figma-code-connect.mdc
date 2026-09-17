@@ -57,3 +57,41 @@ example: (props) => (
 ## Subcomponent stubs
 
 Always add stub `figma.connect` calls for internal subcomponent nodes to prevent Figma from falling back to Tailwind auto-generation in Dev Mode.
+
+---
+
+## Composition patterns (instance swap)
+
+When a Figma component has a content slot (Popover, Modal, Drawer, Card, etc.), use `figma.instance()` so child code composes inline:
+
+```tsx
+props: {
+  content: figma.instance('content'),
+},
+example: (props) => (
+  <Popover>
+    {props.content}
+  </Popover>
+),
+```
+
+The instance swap property must be a **direct child** of the component — not nested inside a frame or group. Nested instance swaps will not resolve inline and will render as empty or dead-end links in Dev Mode.
+
+```
+✅ WORKS — direct child:
+Popover (component)
+  └─ TextArea (instance swap 'content')
+  └─ .Popover/Core/pointer
+
+❌ DOES NOT WORK — nested in frame:
+Popover (component)
+  └─ content (frame)
+       └─ TextArea (instance swap)
+```
+
+- `figma.instance('propName')` — instance swap. Renders child code **inline**. Use for content slots.
+- `figma.children('layerName')` — slot link, not inline. Avoid for content composition.
+- `figma.nestedProps('layerName', {...})` — read props from nested instances.
+
+Only code-connected components render in a slot. Non-connected components show as `{/* Code Connect Logic Instance */}` or empty. The `needs-connect` tag in Storybook tracks remaining bindings.
+

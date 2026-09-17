@@ -34,11 +34,12 @@ Inline previews rendered by Claude Code in chat (artifact blocks, React previews
 
 ## DS consumption rules (from `.cursor/rules`)
 
-- **Always use DS components** from `@/components/DesignSystem` — never raw Mantine imports in app code
-- When a Mantine component lacks a DS wrapper, create one: `forwardRef`, typed as `DS[Name]Props extends Mantine[Name]Props`, exported through category index and main barrel
+- **Always use DS components** from `@/components/DesignSystem` — never raw Mantine imports in app/prototype pages
 - **No Tailwind, no CSS modules, no inline `style` props** — use Mantine system props (`bg`, `c`, `w`, `h`, `p`, `m`, `radius`, `shadow`)
-- For any data table / grid / list use `Table` from DS (not raw `@mantine/core`)
-- For page headers use `PageContentHeader` from DS
+- For any data table / grid / list use `DataTable` from DS (not raw `@mantine/core`); `Table` is simple static markup
+- For page headers use `PageContentHeader` from DS (AppDirect complex component, not a Mantine wrapper)
+- Wrapper authoring: `.cursor/rules/ds-wrapper-authoring.mdc` (excludes `ComplexComponents/`)
+- Code Connect: `.cursor/rules/figma-code-connect.mdc` (`*.figma.tsx` only)
 
 ## Fonts
 

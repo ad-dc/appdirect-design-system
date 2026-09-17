@@ -1,0 +1,31 @@
+---
+description: How to author Mantine wrappers in the design system (not ComplexComponents)
+globs: components/DesignSystem/{Buttons,Inputs,Combobox,Navigation,DataDisplay,Overlays,Typography,Misc,Layout,Shell}/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# DS wrapper authoring
+
+Applies to Mantine wrappers under `components/DesignSystem/`. **Does not apply** to `ComplexComponents/` (`PageContentHeader`, `DataTable`, …). Those are AppDirect compositions: they compose DS primitives and must not use the `extends MantineX` recipe.
+
+## When a Mantine component has no DS wrapper
+
+Create one, typed as `DS[Name]Props extends Mantine[Name]Props`, `forwardRef`, export through the category index and `components/DesignSystem/index.ts`.
+
+```tsx
+import React, { forwardRef } from 'react';
+import { [MantineComponent] as Mantine[Component], [MantineComponent]Props as Mantine[Component]Props } from '@mantine/core';
+
+export interface DS[Component]Props extends Mantine[Component]Props {}
+
+export const [Component] = forwardRef<HTML[Element]Element, DS[Component]Props>(
+  ({ ...props }, ref) => <Mantine[Component] ref={ref} {...props} />
+);
+[Component].displayName = '[Component]';
+```
+
+Raw `@mantine/core` imports are allowed **inside these wrapper files**. App and prototype pages still import from `@/components/DesignSystem`.
+
+Shared enums live in `components/DesignSystem/types.ts` and must match the wrapper that imports them. Wrapper TSX is the implementation source of truth.
+
+Do not put Code Connect serializer rules here — use `.cursor/rules/figma-code-connect.mdc` on `*.figma.tsx`.

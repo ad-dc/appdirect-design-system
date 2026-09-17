@@ -15,7 +15,7 @@ A snapshot of where the AppDirect Design System repo is right now. Update this f
 - **Kit:** `@appdirect/ds-prototype-kit` **0.2.6** (GitHub Release tarball)
 - **Branch / consumer model:** Self-serve GitHub template `ad-dc/appdirect-prototype-template` (kit tarball pin). This repo stays write-restricted. `npm run publish-prototype-template` refreshes the template.
 - **Spacing:** Mantine Core `xs–xl` (10/12/16/20/32) plus added `none` / `xxs` / `xxl`. Agent lookups and `theme.ts` match that scale (`4px` → `xxs`).
-- **Factory:** recommendation + plan. Steps 0.1–0.4, 0.7, 0.8 landed. 0.5–0.6 remain. Contracts / `ds-audit` not started. See Active.
+- **Factory:** architecture merged (PR #68). Step 0 complete except remaining doc nits. Next: manifest versions (Step 1), then contracts. See Active.
 
 ---
 
@@ -43,6 +43,8 @@ A snapshot of where the AppDirect Design System repo is right now. Update this f
 - Step 0.3: `Button` / `Badge` / `Alert` import matching unions from `types.ts` (`disabled` on Button; Alert `pending`, not `warning`)
 - Step 0.4: `FIGMA_PROPS_REGISTRY.md` Button pass-through mapping; Badge/Alert match wrappers
 - Step 0.7: `CLAUDE.md` records `@appdirect/design-tokens@^0.0.6` as a main-repo dependency
+- Step 0.5: always-on Cursor rule is consumption only; wrapper authoring and Code Connect are globbed
+- Step 0.6: `npm run lint` covers `app/`, `components/`, `next.config.ts`. Fleet gate remains `ds-audit`.
 
 ### 2026-09-16
 
@@ -57,7 +59,7 @@ A snapshot of where the AppDirect Design System repo is right now. Update this f
 
 ## Active
 
-- **Agentic production V1 (proposal).** Sequence: [`docs/agentic-production-plan.md`](./docs/agentic-production-plan.md). Steps 0.1–0.4, 0.7, 0.8 done. Next: 0.5 + 0.6 (split Cursor rules, lint honesty). Contracts and `ds-audit` stay blocked until Step 0.
+- **Agentic production.** Architecture merged ([#68](https://github.com/ad-dc/appdirect-design-system/pull/68)). Step 0 landed (0.5–0.6 on this follow-up). Next: Step 1 manifest versions, then tier-0 contracts.
 
 ---
 

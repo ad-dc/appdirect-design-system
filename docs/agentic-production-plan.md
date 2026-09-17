@@ -3,8 +3,8 @@
 Working sequence for the factory loop. Rationale, contract sketches, and cited models stay in [`agentic-production-architecture.md`](./agentic-production-architecture.md). Repo snapshot stays in [`STATUS.md`](../STATUS.md).
 
 **As of:** 2026-09-17  
-**Proposal PR:** https://github.com/ad-dc/appdirect-design-system/pull/68 (draft)  
-**Current phase:** Steps 0.1–0.4, 0.7, and 0.8 landed. 0.5–0.6 (Cursor rules split, lint honesty) remain. Contracts, `ds-audit`, agents, and telemetry are not started.
+**Proposal PR:** https://github.com/ad-dc/appdirect-design-system/pull/68 (merged)  
+**Current phase:** Step 0.1–0.4, 0.7, 0.8 merged. 0.5–0.6 in flight. Contracts, `ds-audit`, agents, and telemetry are not started.
 
 ---
 
@@ -12,7 +12,7 @@ Working sequence for the factory loop. Rationale, contract sketches, and cited m
 
 The main repo already ships a design system, kit tarball (`@appdirect/ds-prototype-kit` **0.2.6**), and a thin prototype template (`ad-dc/appdirect-prototype-template`). Cursor consumption rules/skills copy into new prototypes. `prototype-manifest.json` lists pages only (no system versions). Main-repo `lint` barely covers DS/prototype code.
 
-This PR started as **docs only**. It now also: archives leftover `components/cbp/` → `components/local/`; locks `Inline` as the horizontal primitive; rewrites spacing lookups to Mantine Core + `none` / `xxs` / `xxl`. It does not change the kit tarball or the published GitHub template until a maintainer runs `npm run publish-prototype-template`.
+This repo already merged the architecture plus Steps 0.1–0.4, 0.7, and 0.8 (PR #68). Remaining Step 0: Cursor rules split and lint honesty.
 
 | Layer | State |
 |---|---|
@@ -21,7 +21,7 @@ This PR started as **docs only**. It now also: archives leftover `components/cbp
 | Canonical correctness | **Decided:** DS component source. Not Figma, not `DESIGN.md`, not unused `types.ts` |
 | V1 factory | **Decided, not built:** checker and reporter |
 | Later factory | **Decided, gated:** authors/repairs pages against the same contracts |
-| Step 0 (repair contradictions) | **0.1–0.4, 0.7, 0.8 done.** 0.5–0.6 not started (Cursor rules split, lint honesty) |
+| Step 0 (repair contradictions) | **0.1–0.8 done** after this change (0.5–0.6). Contracts still unstarted |
 | Steps 1–5 (manifest, contracts, audit, CI, fleet) | Blocked on Step 0 |
 | Steps 6–8 (semantic reviewer, authoring factory) | Blocked on V1 evidence that the checker is used |
 
@@ -39,10 +39,11 @@ This PR started as **docs only**. It now also: archives leftover `components/cbp
 | External products | Do not install Southleft `ds-contracts-poc`, Curtis Specs as SoT, or Pandya markdown+CSS-as-contract. Steal refuse-by-name + deterministic judge only |
 | Metrics | Dimensional. No 69/100 composite score |
 
-### Still true in the repo (will freeze into contracts if Step 0 is skipped)
+### Still true in the repo
 
-- Always-on `design-system.mdc` mixes consumption, wrapper authoring, and Code Connect (0.5).
-- Main-repo `lint` barely covers DS/prototype code (0.6).
+- LAYOUT_GUIDE still says use Mantine Core for “form controls / complex interactions” (consumption rule forbids that).
+- Vendored kit `--ad-spacing-*` still lacks `xxl`.
+- Published GitHub template is stale until `npm run publish-prototype-template`.
 
 ---
 
@@ -60,8 +61,8 @@ Repair contradictions agents would otherwise enforce. No new packages.
 2. **Spacing lookup:** **Done.** Pixel→token tables match Mantine Core + `none` / `xxs` / `xxl` (`4px` → `xxs`). `DESIGN.md` YAML lists `none` and `xxl`. `theme.ts` resolves the extra keys.
 3. **Shared enums:** **Done.** `Button` / `Badge` / `Alert` import unions from `types.ts`. Arrays match the wrappers (`disabled` on Button; Alert has `pending`, not `warning`).
 4. **Figma registry:** **Done.** Button pass-through mapping (plus `disabled`). Badge/Alert match wrappers. Wrapper wins.
-5. **Cursor rules split:** always-on = consumption only. Wrapper authoring glob excludes `ComplexComponents/`. Code Connect stays on `*.figma.tsx`.
-6. **Lint honesty:** expand ESLint to prototype `app/` + DS, or document that `ds-audit` (Step 3) is the gate.
+5. **Cursor rules split:** **Done.** Always-on = consumption only. Wrapper authoring glob excludes `ComplexComponents/`. Code Connect stays on `*.figma.tsx`.
+6. **Lint honesty:** **Done.** `npm run lint` covers `app/`, `components/`, and `next.config.ts`. Fleet prototypes still wait on `ds-audit` (Step 3).
 7. **Docs drift:** **Done.** `CLAUDE.md` token-dependency text matches `package.json`. Keep `STATUS.md` current.
 8. **Template leftover:** ~~rename `components/cbp/`~~ **Done.** Template slot is `components/local/`. Agent-facing copy does not mention CBP. Published GitHub template still has the old folder until `npm run publish-prototype-template`.
 
@@ -131,6 +132,6 @@ Materialize Cursor assets from the kit, then generate/repair pages against contr
 
 ## Suggested next
 
-Step **0.5 + 0.6**: split always-on Cursor rules (consumption vs wrapper authoring vs Code Connect); expand ESLint or document that `ds-audit` is the gate.
+Step **1** — manifest versions on `prototype-manifest.json`. Then tier-0 contracts (Step 2).
 
-Contracts still wait on a complete Step 0, but 0.3–0.4 no longer block enum truth. Refresh `ad-dc/appdirect-prototype-template` when a maintainer wants clones to pick up `components/local/` and the corrected spacing lookup.
+Refresh `ad-dc/appdirect-prototype-template` when a maintainer wants clones to pick up `components/local/` and the corrected spacing lookup.
