@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint app/layout.tsx app/page.tsx components/HeaderBar.tsx components/MainLayout.tsx components/MantineThemeProvider.tsx components/SidebarNav.tsx components/SidebarNavLink.tsx next.config.ts --max-warnings=0",
+    "lint": "eslint app components next.config.ts --max-warnings=0",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "typecheck:all": "tsc -p tsconfig.all.json --noEmit",
     "storybook": "storybook dev -p 6006",

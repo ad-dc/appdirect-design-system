@@ -211,15 +211,15 @@ Rules are for **invariants that must hold on every relevant edit**. Skills are f
 
 ### Keep (and split)
 
-The current `.cursor/rules/design-system.mdc` is always-on and mixes three audiences: app consumption, DS wrapper authoring, and Figma Code Connect composition. That is too much context for prototype agents.
+The current `.cursor/rules/design-system.mdc` is always-on **consumption only** (split 2026-09-17). Wrapper authoring is `ds-wrapper-authoring.mdc` (excludes `ComplexComponents/`). Code Connect composition lives on `figma-code-connect.mdc` (`*.figma.tsx`).
 
 | Rule | Where | Apply | Keep as |
 |---|---|---|---|
 | DS consumption: import from kit/barrel, no raw `@mantine/core` in app/prototype code, no Tailwind, no consumer CSS modules, no inline `style`, `DataTable` vs `Table`, `PageContentHeader` for page headers | Main repo **and** template | always | Thin always-on rule. Template already has the right thinner version. |
 | Prototype page contract: `create-page`, manifest update, `AppShellLayout` + layout primitives, breadcrumbs, nav `active` | Both | glob `app/prototype/**` | Existing `prototyping.mdc` |
-| Figma layout → `Stack` / `Inline` / `Grid` / `Box` | Both | on demand (Figma implement) | `figma-layout-mapping.mdc` — keep; its **pixel→token** table is a stale 4px-grid lookup, not a second spacing scale (see drift) |
+| Figma layout → `Stack` / `Inline` / `Grid` / `Box` | Both | on demand (Figma implement) | `figma-layout-mapping.mdc` — pixel→token table aligned to Mantine Core + `none` / `xxs` / `xxl` |
 | Code Connect serializer + stub connects | Main repo only | glob `**/*.figma.tsx` | Existing `figma-code-connect.mdc` |
-| Wrapper authoring pattern (`forwardRef`, `DS[Name]Props extends Mantine[Name]Props`, barrel export) | Main repo only | glob `components/DesignSystem/{Buttons,Inputs,Combobox,Navigation,Overlays,DataDisplay,Typography,Misc,Layout}/**` | Extract from always-on `design-system.mdc`. **Do not apply to `ComplexComponents/`.** `PageContentHeader` is not a missing Mantine wrapper. |
+| Wrapper authoring pattern (`forwardRef`, `DS[Name]Props extends Mantine[Name]Props`, barrel export) | Main repo only | glob `components/DesignSystem/{Buttons,Inputs,Combobox,Navigation,Overlays,DataDisplay,Typography,Misc,Layout,Shell}/**` | `ds-wrapper-authoring.mdc`. **Does not apply to `ComplexComponents/`.** |
 
 ### Do not persist as Cursor rules
 
@@ -228,8 +228,8 @@ The current `.cursor/rules/design-system.mdc` is always-on and mixes three audie
 | `LAYOUT_GUIDE.md` “if not layout, use `@mantine/core` for forms” | Contradicts consumption invariant |
 | `rules/mantine-rules.ts` runtime allowlist | Dead code; not wired to ESLint; allowlist is raw Mantine, which consumption forbids |
 | `CLAUDE.md` Claude Code preview sandbox notes | Tool-hosting constraint, not a DS invariant |
-| Code Connect instance-swap essay currently inside always-on `design-system.mdc` | Belongs on `*.figma.tsx` glob only |
-| `Inline.tsx` “prefer `Group` for new code” | Contradicts layout mapping and `LAYOUT_GUIDE.md`; resolve in source, then document once |
+| Code Connect instance-swap essay | On `*.figma.tsx` via `figma-code-connect.mdc` (moved out of always-on, 2026-09-17) |
+| `Inline.tsx` “prefer `Group` for new code” | Resolved: `Inline` for new code; `Group` is the alias |
 | Wrapper authoring recipe applied to `ComplexComponents/` | `PageContentHeader` is not `forwardRef` + `extends MantineX`. Forcing that pattern would invent a fake Mantine base. |
 | Full `DESIGN.md` | Human spec. Agents should **read it when touching tokens/visuals**, not load it on every keystroke |
 
@@ -510,7 +510,7 @@ Prefer tools the prototype already has: TypeScript, ESLint, AST grep, axe/Storyb
 
 **Rule:** if a property is in `enforcement.deterministic` and an LLM is used to “also check it,” the LLM is waste. Use the linter.
 
-Current enforcement gap: `package.json` `lint` in the main repo only lints a handful of shell files, not `components/DesignSystem` or `app/prototype`. The template lints `app/`. v1 of `ds-audit` should not wait for a perfect ESLint config; it can AST-scan the same rules.
+Current enforcement: `package.json` `lint` covers `app/`, `components/` (including DesignSystem and prototype pages), and `next.config.ts`. The template lints `app/`. v1 of `ds-audit` is still the **fleet** gate and should not wait for a perfect ESLint config.
 
 ---
 
@@ -809,8 +809,8 @@ Without this, agents will “enforce” the wrong system.
 2. Treat spacing as Mantine Core `xs–xl` plus added `none` / `xxs` / `xxl`. **Done (2026-09-16):** lookups and `theme.ts` match. Vendored `--ad-spacing-*` still lacks `xxl`.
 3. Make `types.ts` actually used by `Button` / `Badge` / `Alert`, or delete the “single source of truth” claim. **Done (2026-09-17):** wrappers import matching unions.
 4. Align `FIGMA_PROPS_REGISTRY.md` Button mapping with the wrapper. **Done (2026-09-17).**
-5. Split main-repo `design-system.mdc` so Code Connect and wrapper authoring are not always-on
-6. Expand `lint` beyond the handful of shell files, or admit that `ds-audit` is the real gate
+5. Split main-repo `design-system.mdc` so Code Connect and wrapper authoring are not always-on. **Done (2026-09-17):** consumption always-on; `ds-wrapper-authoring.mdc` excludes `ComplexComponents/`; Code Connect on `*.figma.tsx`.
+6. Expand `lint` beyond the handful of shell files, or admit that `ds-audit` is the real gate. **Done (2026-09-17):** `eslint app components next.config.ts`. Fleet gate remains `ds-audit`.
 7. Refresh `CLAUDE.md` token-dependency text so it matches `package.json`. Keep `STATUS.md` current. **Done (2026-09-17).**
 8. Rename the leftover `components/cbp/` slot in the template (and matching Cursor rules/skills) to a generic local-components folder. **Done (2026-09-16):** `components/local/`. Do not carry CBP into audit, telemetry, or metrics.
 
