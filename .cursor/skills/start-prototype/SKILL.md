@@ -37,7 +37,7 @@ If `--template ad-dc/appdirect-prototype-template` 404s, the shared template is 
 
 ## Afterward
 
-Daily work uses `/prototype-workspace` in the new repo. Shared UI: `@appdirect/ds-prototype-kit`. Product widgets: `components/cbp/`. Kit updates: bump the tarball URL.
+Daily work uses `/prototype-workspace` in the new repo. Shared UI: `@appdirect/ds-prototype-kit`. Product widgets: `components/local/`. Kit updates: bump the tarball URL.
 
 ## Do not
 

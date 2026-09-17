@@ -3,15 +3,16 @@
 import React, { forwardRef } from 'react';
 import { Alert as MantineAlert, AlertProps as MantineAlertProps } from '@mantine/core';
 import { RiInformationLine, RiCheckboxCircleLine, RiErrorWarningLine, RiTimeLine } from '@remixicon/react';
+import { ALERT_TO_MANTINE_COLOR, type DSAlertColor } from '../types';
 
 /**
  * Enhanced Alert props extending Mantine's AlertProps
  */
 export interface DSAlertProps extends Omit<MantineAlertProps, 'color' | 'variant' | 'icon'> {
   /** Alert semantic color */
-  color?: 'info' | 'success' | 'danger' | 'pending' | 'default';
+  color?: DSAlertColor;
   /** Deprecated semantic alias kept for backward compatibility */
-  type?: 'info' | 'success' | 'danger' | 'pending' | 'default';
+  type?: DSAlertColor;
   /** Custom icon (overrides default semantic icon) */
   icon?: React.ReactNode;
   /** Alert title */
@@ -91,39 +92,18 @@ export const Alert = forwardRef<HTMLDivElement, DSAlertProps>(
     const semanticColor = color ?? type ?? 'default';
 
     // Map semantic colors to Mantine colors and default icons
-    const getAlertConfig = (alertColor: NonNullable<DSAlertProps['color']>) => {
-      switch (alertColor) {
-        case 'info':
-          return {
-            color: 'blue',
-            icon: <RiInformationLine size={20} />
-          };
-        case 'success':
-          return {
-            color: 'green',
-            icon: <RiCheckboxCircleLine size={20} />
-          };
-        case 'danger':
-          return {
-            color: 'red',
-            icon: <RiErrorWarningLine size={20} />
-          };
-        case 'pending':
-          return {
-            color: 'yellow',
-            icon: <RiTimeLine size={20} />
-          };
-        case 'default':
-          return {
-            color: 'gray',
-            icon: <RiInformationLine size={20} />
-          };
-        default:
-          return {
-            color: 'gray',
-            icon: <RiInformationLine size={20} />
-          };
-      }
+    const getAlertConfig = (alertColor: DSAlertColor) => {
+      const icons: Record<DSAlertColor, React.ReactNode> = {
+        info: <RiInformationLine size={20} />,
+        success: <RiCheckboxCircleLine size={20} />,
+        danger: <RiErrorWarningLine size={20} />,
+        pending: <RiTimeLine size={20} />,
+        default: <RiInformationLine size={20} />,
+      };
+      return {
+        color: ALERT_TO_MANTINE_COLOR[alertColor],
+        icon: icons[alertColor],
+      };
     };
 
     const { color: mantineColor, icon: defaultIcon } = getAlertConfig(semanticColor);

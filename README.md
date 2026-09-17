@@ -39,7 +39,7 @@ Do **not** fork or “Use this template” on **this** repo (`appdirect-design-s
 
 - Pages: `npm run create-page -- --name "Settings" --template app-shell --layout single-column`
 - Shared UI: `import { Button, Stack, Card } from '@appdirect/ds-prototype-kit'`
-- Product widgets: `components/cbp/`
+- Product widgets: `components/local/`
 - Cursor: `/prototype-workspace` (ships in the template)
 - Kit update: bump the tarball URL in `package.json` to the [latest release](https://github.com/ad-dc/appdirect-design-system/releases)
 

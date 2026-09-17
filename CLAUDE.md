@@ -53,15 +53,13 @@ If you add a new HTML entrypoint (e.g. a separate Vite playground), import the s
 
 ## Design tokens (current state)
 
-`@appdirect/design-tokens` is **not** a dependency of this repo right now. The package is mid-flight (`0.2.0-next.3` pre-release) and previously required a sibling-checkout `file:` link plus an `install-links` workaround for Turbopack — which made the template impossible to clone-and-run for outside prototypers.
+This repo **does** depend on `@appdirect/design-tokens@^0.0.6` from Artifactory. `package.json` lists it; `app/layout.tsx` imports `@appdirect/design-tokens/css/foundations.css` and `.../mantine.css`. VPN is required for `npm install` **in this repo**.
 
-Until the package ships a stable Artifactory release:
+Prototypes do **not** use Artifactory. Token CSS is vendored in the kit tarball (`ds-package/vendor/css/`).
 
-- App theming runs from [`styles/theme.ts`](./styles/theme.ts) (open-color palette + a11y blue override + per-variant Button color map).
-- The Storybook preview uses the same `theme` from `styles/theme.ts` rather than `design/createTheme.ts`'s `appTheme`, so stories mirror the real app.
-- Per-variant Button colors are inlined in `styles/theme.ts` as `BUTTON_VARIANT_COLORS`. This is a **snapshot** of `@appdirect/design-tokens@0.2.0-next.3`'s mantine adapter for Button only; treat it as authoritative until the package re-wires.
+App theming still runs from [`styles/theme.ts`](./styles/theme.ts) (open-color palette, a11y blue override, layout spacing scale). Storybook uses that same `theme`, so stories mirror the real app.
 
-When the package stabilizes, the re-wire is small: delete `BUTTON_VARIANT_COLORS` + the `components.Button.vars` callback in `styles/theme.ts`, drop the active-state rules from `components/DesignSystem/Buttons/Button.module.css`, and re-add the four CSS imports (`@appdirect/design-tokens/css/foundations.css` + `@appdirect/design-tokens/css/mantine.css`) to both `app/layout.tsx` and `.storybook/preview.tsx`.
+A later tokens release can replace inlined Button/theme snapshots. Until then, **DS wrapper source** is authoritative when it disagrees with `DESIGN.md` or unused token JSON.
 
 ## See also
 

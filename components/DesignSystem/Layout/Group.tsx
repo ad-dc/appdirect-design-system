@@ -21,8 +21,8 @@ export interface DSGroupProps extends Omit<MantineGroupProps, 'gap'> {
 /**
  * AppDirect Design System Group Component
  *
- * A horizontal layout primitive aligned with Mantine's Group naming and API.
- * Use it for common row layouts with consistent spacing between children.
+ * Mantine-named alias of `Inline`. Prefer `Inline` for new Figma-mapped and
+ * prototype code so agents have one horizontal primitive.
  */
 export const Group = forwardRef<HTMLDivElement, DSGroupProps>(
   (

@@ -31,7 +31,7 @@ export default function PrototypeIndexPage() {
           title="Prototype Pages"
           subhead={manifest.prototypeName}
           contentSection="description"
-          description="Add screens with npm run create-page. Shared UI comes from @appdirect/ds-prototype-kit; product-specific components belong in components/cbp."
+          description="Add screens with npm run create-page. Shared UI comes from @appdirect/ds-prototype-kit; product-specific components belong in components/local."
         />
 
         {pages.length === 0 ? (

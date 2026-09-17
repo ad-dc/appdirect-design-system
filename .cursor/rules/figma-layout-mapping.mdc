@@ -30,7 +30,7 @@ import { Inline } from '@/components/DesignSystem';
 <Inline gap="sm">{children}</Inline>
 ```
 
-Use `Group` only when `Inline` is not semantically appropriate (rare).
+Prefer `Inline`. `Group` is a Mantine-named alias of the same primitive; do not mix both in new code.
 
 ### 3. Grid layout
 
@@ -89,12 +89,16 @@ Map pixel values from Figma to DS spacing tokens:
 
 | Figma Value | DS Token |
 |-------------|----------|
-| 4px         | `"xs"`   |
-| 8px         | `"sm"`   |
+| 0px         | `"none"` |
+| 4px         | `"xxs"`  |
+| 10px        | `"xs"`   |
+| 12px        | `"sm"`   |
 | 16px        | `"md"`   |
-| 24px        | `"lg"`   |
+| 20px        | `"lg"`   |
 | 32px        | `"xl"`   |
 | 48px        | `"xxl"`  |
+
+This is Mantine Core `xs–xl` plus added `none` / `xxs` / `xxl`. There is no 8px or 24px token: nearest is `xxs`/`xs` and `lg`/`xl`.
 
 If `get_variable_defs` returns a Figma spacing variable, resolve it to the closest DS token before using it.
 

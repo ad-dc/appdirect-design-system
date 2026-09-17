@@ -43,14 +43,17 @@ export const designSystemColors = {
 };
 
 /**
- * Design system spacing scale
- * Consistent spacing values for margins, padding, gaps, etc.
+ * Pixel lookup for the layout spacing scale (not a second runtime scale).
+ * Mantine Core `xs–xl` plus added `none` / `xxs` / `xxl`. Layout primitives
+ * pass `gap` through to Mantine; `styles/theme.ts` adds the extra keys.
  */
 export const spacing = {
-  xs: '4px',
-  sm: '8px',
+  none: '0px',
+  xxs: '4px',
+  xs: '10px',
+  sm: '12px',
   md: '16px',
-  lg: '24px',
+  lg: '20px',
   xl: '32px',
   xxl: '48px',
 } as const;

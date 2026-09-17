@@ -3,7 +3,7 @@ name: prototype-workspace
 description: >-
   Works in an AppDirect designer prototype repo (proto-*). Creates pages with
   create-page, imports UI from @appdirect/ds-prototype-kit, puts product widgets
-  in components/cbp, and bumps the kit tarball URL for design-system updates.
+  in components/local, and bumps the kit tarball URL for design-system updates.
   Use when adding prototype screens, scaffolding pages, or updating the DS kit.
 ---
 
@@ -17,7 +17,7 @@ This repo is a **thin Next.js shell**. It does not contain design-system source.
 import { Button, Card, Stack, TextInput } from '@appdirect/ds-prototype-kit';
 ```
 
-Never import from `@mantine/core` in pages. Never add or edit `components/DesignSystem/`. Domain-specific widgets belong in `components/cbp/`. Use `DataTable` for sortable/filterable/paginated data; `Table` is only simple markup.
+Never import from `@mantine/core` in pages. Never add or edit `components/DesignSystem/`. Domain-specific widgets belong in `components/local/`. Use `DataTable` for sortable/filterable/paginated data; `Table` is only simple markup.
 
 ## New page
 

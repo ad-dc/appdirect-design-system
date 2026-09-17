@@ -20,7 +20,7 @@ Need layout/spacing?
 | Component | Use DS Primitive | Use Mantine Core | Reason |
 |-----------|------------------|------------------|---------|
 | `Stack` | ✅ **Always** | ❌ Never | Ensures consistent vertical spacing with design tokens |
-| `Group` | ✅ Use `Inline` | ❌ Never | Ensures consistent horizontal spacing with design tokens |
+| `Group` | ✅ Use `Inline` (DS `Group` is the Mantine-named alias) | ❌ Never | One horizontal primitive for new code |
 | `Box` | ✅ **Always** | ❌ Never | Provides design token access for spacing/colors |
 | `SimpleGrid` | ✅ Use `Grid` | ❌ Never | Ensures consistent grid spacing with design tokens |
 | `Grid` (CSS Grid) | ✅ **Always** | ❌ Never | DS wrapper provides consistent defaults |
@@ -242,11 +242,13 @@ import { Center, Container } from '@/components/DesignSystem';
 
 ### **Spacing Scale**
 ```tsx
-// Available spacing values (mapped to design tokens)
-gap="xs"   // 4px
-gap="sm"   // 8px  
+// Available spacing values (Mantine Core xs–xl plus none / xxs / xxl)
+gap="none" // 0px
+gap="xxs"  // 4px
+gap="xs"   // 10px
+gap="sm"   // 12px
 gap="md"   // 16px (default)
-gap="lg"   // 24px
+gap="lg"   // 20px
 gap="xl"   // 32px
 gap="xxl"  // 48px
 
