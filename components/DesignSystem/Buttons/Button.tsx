@@ -3,6 +3,7 @@
 import React, { forwardRef } from 'react';
 import { Button as MantineButton, ButtonProps as MantineButtonProps } from '@mantine/core';
 import { ComponentSize } from '../config';
+import { type DSButtonVariant } from '../types';
 import styles from './Button.module.css';
 
 /**
@@ -14,7 +15,7 @@ export interface DSButtonProps extends Omit<MantineButtonProps, 'size' | 'color'
   /** @deprecated Color is now driven by design tokens via mantine.css adapter; this prop is ignored */
   color?: string;
   /** Button style variant */
-  variant?: 'primary' | 'secondary' | 'default' | 'disabled' | 'link' | 'secret' | 'outline' | 'danger';
+  variant?: DSButtonVariant;
   /** Whether button takes full width */
   fullWidth?: boolean;
   /** Loading state with spinner */

@@ -522,11 +522,11 @@ This is current, in-repo evidence. A factory that cannot see these will not help
 
 | Topic | Sources that disagree |
 |---|---|
-| Token package in this repo | `package.json` and `app/layout.tsx` import `@appdirect/design-tokens`; `CLAUDE.md` still says it is not a dependency; `STATUS.md` matches package.json |
+| Token package in this repo | **Aligned (2026-09-17):** `CLAUDE.md` matches `package.json` / `app/layout.tsx` (`@appdirect/design-tokens@^0.0.6`, Artifactory, VPN). |
 | Token CSS in prototypes | Kit vendors a snapshot (`ds-package/vendor/css`); main repo uses live package. Snapshot refresh is a manual `cp` |
-| Button variant mapping | Wrapper pass-through vs `FIGMA_PROPS_REGISTRY.md` filled/blue table vs `types.ts` omitting `disabled` |
-| Badge API | Wrapper `variant` includes semantic colors; `types.ts` `DS_BADGE_VARIANTS` is `filled \| outline`; registry matches types, not wrapper |
-| Alert `warning` vs `pending` | `DESIGN.md`: `warning` for alerts, `pending` for badges. Wrapper `Alert` has `pending` and no `warning`. Deprecated `type` alias still exists |
+| Button variant mapping | **Aligned (2026-09-17):** `types.ts` `DS_BUTTON_VARIANTS` includes `disabled`; `Button.tsx` imports it; registry documents pass-through + `disabled` → default. |
+| Badge API | **Aligned (2026-09-17):** `types.ts` matches wrapper variants/colors; registry notes Figma subset vs full wrapper. |
+| Alert `warning` vs `pending` | **Aligned (2026-09-17):** wrapper `Alert` has `pending`, not `warning`. `types.ts` `DS_ALERT_COLORS` and `DESIGN.md` match. Deprecated `type` alias remains. |
 | Horizontal layout | **Aligned (2026-09-16):** `Inline` for new Figma/agent/prototype rows. `Group` is the Mantine-named alias. Mapping, `LAYOUT_GUIDE.md`, and wrapper comments agree. |
 | Spacing scale | **One scale, lookups aligned (2026-09-16):** Mantine Core `xs–xl` (10 / 12 / 16 / 20 / 32) plus `none` (0), `xxs` (4), `xxl` (48). `theme.ts` sets that map. Vendored `--ad-spacing-*` still has `none` / `xxs` and not `xxl` (tokens package gap). |
 | “No CSS modules / no inline styles” | Consumer rule. Producers: `Button.module.css`, `Card.module.css`, `Tooltip` hardcoded `#212529` and `padding: '5px 8px'` (documented exception in DESIGN.md) |
@@ -807,11 +807,11 @@ Without this, agents will “enforce” the wrong system.
 
 1. Pick `Inline` vs `Group` (layout mapping currently says Inline; `Inline.tsx` says prefer Group). **Done (2026-09-16):** `Inline` for new code; `Group` is the alias.
 2. Treat spacing as Mantine Core `xs–xl` plus added `none` / `xxs` / `xxl`. **Done (2026-09-16):** lookups and `theme.ts` match. Vendored `--ad-spacing-*` still lacks `xxl`.
-3. Make `types.ts` actually used by `Button` / `Badge` / `Alert`, or delete the “single source of truth” claim
-4. Align `FIGMA_PROPS_REGISTRY.md` Button mapping with the wrapper
+3. Make `types.ts` actually used by `Button` / `Badge` / `Alert`, or delete the “single source of truth” claim. **Done (2026-09-17):** wrappers import matching unions.
+4. Align `FIGMA_PROPS_REGISTRY.md` Button mapping with the wrapper. **Done (2026-09-17).**
 5. Split main-repo `design-system.mdc` so Code Connect and wrapper authoring are not always-on
 6. Expand `lint` beyond the handful of shell files, or admit that `ds-audit` is the real gate
-7. Refresh `CLAUDE.md` token-dependency text so it matches `package.json`. Keep `STATUS.md` current.
+7. Refresh `CLAUDE.md` token-dependency text so it matches `package.json`. Keep `STATUS.md` current. **Done (2026-09-17).**
 8. Rename the leftover `components/cbp/` slot in the template (and matching Cursor rules/skills) to a generic local-components folder. **Done (2026-09-16):** `components/local/`. Do not carry CBP into audit, telemetry, or metrics.
 
 ### Step 1 — Manifest versions

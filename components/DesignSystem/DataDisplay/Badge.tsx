@@ -3,6 +3,7 @@
 import React, { forwardRef } from 'react';
 import { Badge as MantineBadge, BadgeProps as MantineBadgeProps } from '@mantine/core';
 import { ComponentSize } from '../config';
+import { type DSBadgeColor, type DSBadgeVariant } from '../types';
 
 /**
  * Enhanced Badge props extending Mantine's BadgeProps
@@ -11,9 +12,9 @@ export interface DSBadgeProps extends Omit<MantineBadgeProps, 'size' | 'color' |
   /** Badge size from design system scale */
   size?: ComponentSize;
   /** Badge style variant */
-  variant?: 'filled' | 'outline' | 'info' | 'success' | 'danger' | 'pending' | 'default' | 'warning';
+  variant?: DSBadgeVariant;
   /** Badge semantic color variant */
-  color?: 'info' | 'success' | 'danger' | 'pending' | 'default' | 'warning' | 'blue' | 'green' | 'red' | 'yellow' | 'gray';
+  color?: DSBadgeColor;
 }
 
 /**

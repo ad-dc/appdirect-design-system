@@ -71,7 +71,7 @@ Style-based variants used across components:
 
 | Prop | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
-| `variant` | `'primary' \| 'secondary' \| 'default' \| 'outline' \| 'danger' \| 'link' \| 'secret'` | No | `'default'` | Visual style variant |
+| `variant` | `'primary' \| 'secondary' \| 'default' \| 'disabled' \| 'link' \| 'secret' \| 'outline' \| 'danger'` | No | `'default'` | Visual style variant. `disabled` is a variant in Figma/Code Connect and also sets `disabled` on the wrapper. |
 | `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | No | `'sm'` | Button size |
 | `fullWidth` | `boolean` | No | `false` | Whether button spans full width |
 | `disabled` | `boolean` | No | `false` | Disabled state |
@@ -80,17 +80,16 @@ Style-based variants used across components:
 | `rightSection` | `ReactNode` | No | - | Icon on the right side |
 | `children` | `ReactNode` | Yes | - | Button label text |
 
-#### Variant to Mantine Mapping
+#### Variant mapping
 
-| DS Variant | Mantine Variant | Mantine Color |
-|------------|-----------------|---------------|
-| `primary` | `filled` | `blue` |
-| `secondary` | `filled` | `cyan` |
-| `default` | `default` | (theme default) |
-| `outline` | `outline` | `blue` |
-| `danger` | `filled` | `red` |
-| `link` | `subtle` | `blue` |
-| `secret` | `subtle` | `gray` |
+The wrapper **passes the DS variant name through** to Mantine (`data-variant="primary"` etc.). Token CSS targets those names. Do **not** map `primary` → Mantine `filled` + `blue` in Code Connect.
+
+| DS Variant | What the wrapper does |
+|------------|------------------------|
+| `primary`, `secondary`, `default`, `outline`, `danger`, `link`, `secret` | Passed through as Mantine `variant` |
+| `disabled` | Mantine `variant="default"` and `disabled` |
+
+`color` on `Button` is deprecated and ignored.
 
 #### Example Configurations
 
@@ -156,9 +155,9 @@ Style-based variants used across components:
 
 | Prop | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
-| `variant` | `'filled' \| 'outline'` | No | `'filled'` | Visual style |
+| `variant` | `'filled' \| 'outline'` | No | `'filled'` | Visual style (Figma / Code Connect). The wrapper also accepts semantic names (`info`, `success`, `danger`, `pending`, `default`, `warning`) as a color shortcut. |
 | `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | No | `'md'` | Badge size |
-| `color` | `'info' \| 'success' \| 'danger' \| 'pending' \| 'default'` | No | `'default'` | Semantic color |
+| `color` | `'info' \| 'success' \| 'danger' \| 'pending' \| 'default' \| 'warning'` | No | `'default'` | Semantic color. Wrapper also accepts Mantine aliases (`blue`, `green`, `red`, `yellow`, `gray`). |
 | `hasIcon` | `boolean` | No | `false` | Show circle icon on left |
 | `children` | `ReactNode` | Yes | - | Badge text |
 
@@ -170,6 +169,7 @@ Style-based variants used across components:
 | `success` | `green` |
 | `danger` | `red` |
 | `pending` | `yellow` |
+| `warning` | `yellow` |
 | `default` | `gray` |
 
 #### Example Configurations
@@ -1151,7 +1151,7 @@ Code Connect maps the **DS** `DropZone` in `Inputs/DropZone.tsx` (not raw Mantin
 | Chip | DataDisplay | variant, checked, size | - | default |
 | Pill | DataDisplay | size, withRemoveButton | md | - |
 | Avatar | DataDisplay | variant, size, src/initials | md | - |
-| Alert | DataDisplay | type, title, withCloseButton | - | default |
+| Alert | DataDisplay | color, title, withCloseButton | - | default |
 | Card | DataDisplay | children (slot); fixed surface in code | - | - |
 | Indicator | DataDisplay | variant→type, size, withBorder, hasLabel/label, inline | sm | default |
 | Progress | DataDisplay | value, size, animated | md | - |

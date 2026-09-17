@@ -35,8 +35,8 @@ colors:
   on-info: "#ffffff"            # --ad-color-status-on-info
   success: "#40c057"            # green.6; --ad-color-status-success
   on-success: "#ffffff"         # --ad-color-status-on-success
-  pending: "#fab005"            # yellow.6; --ad-color-status-warning (Badge/Chip/Indicator use "pending"; Alert uses "warning" — same color)
-  warning: "#fab005"            # yellow.6; alert/notification-specific alias for pending
+  pending: "#fab005"            # yellow.6; --ad-color-status-warning (Badge, Chip, Indicator, Alert use "pending")
+  warning: "#fab005"            # yellow.6; token alias for pending (Badge still accepts `warning`)
   on-warning: "#000000"         # --ad-color-status-on-warning (A11Y override: dark text on yellow bg)
   danger: "#fa5252"             # red.6; --ad-color-status-error
   on-danger: "#ffffff"          # --ad-color-status-on-error
@@ -249,7 +249,7 @@ The palette has four groups: brand, neutrals, status, and app chrome.
 - **Primary (#326FDE)** — A11y-compliant override of Open Color's blue.6. The **one interaction color**: links, primary buttons, focus rings, active tabs. Reserve it for the single most important action on a surface. `--ad-color-brand-primary`
 - **Secondary (#15aabf)** — AppDirect cyan.6. Used for secondary action buttons. Not a generic "alternate" color — use it specifically for the `secondary` Button variant. `--ad-action-secondary-bg`
 - **Neutrals (gray.0–gray.9)** — Carry all page chrome: backgrounds, borders, dividers, secondary text, disabled states. Neutrals do most of the visual work.
-- **Status colors (info / success / pending / danger)** — Used only on badges, alerts, and status indicators. Never as decoration. Danger is reserved for destructive outcomes and error states. `pending` is the canonical yellow status name (Badge, Chip, Indicator); `warning` is used specifically for alerts and notifications — same color (#fab005), different semantic context.
+- **Status colors (info / success / pending / danger)** — Used only on badges, alerts, and status indicators. Never as decoration. Danger is reserved for destructive outcomes and error states. `pending` is the canonical yellow status name on Badge, Chip, Indicator, **and Alert**. `warning` is a Badge color/variant alias for the same yellow (`#fab005`), not an Alert `color`.
 - **AppDirect Navy (#011B58)** — The app header/sidebar background color. Not yet in the `--ad-*` token system; currently hardcoded in `AppShellLayout.tsx`. Do not use this color for anything other than app chrome until it is tokenized.
 - **Surface / on-surface** — Pure white surface (`--ad-color-bg-default`) with black text (`--ad-color-text-default`). Tinted surfaces (`--ad-color-bg-subtle`, `--ad-color-bg-muted`) are used for secondary areas only.
 
@@ -384,7 +384,7 @@ All inputs default to `radius="sm"` and `size="sm"` matching the button default.
 **Badge:**
 - Variants: `filled` (default) · `outline` · `info` · `success` · `pending` · `warning` · `danger` · `default`
 - Colors: `info` · `success` · `pending` · `warning` · `danger` · `default` · `blue` · `green` · `yellow` · `red` · `gray`
-- Use `pending` for in-progress/queued states; use `warning` for alert-context notifications
+- Use `pending` for in-progress/queued states (including Alert `color="pending"`). `warning` is a Badge alias for the same yellow.
 - Always `radius="sm"` (4px) — never pill-shaped, despite Mantine's default
 - Semantic shorthand: `<Badge variant="success">` resolves color automatically; `color` prop is only needed when overriding
 
@@ -518,7 +518,7 @@ The `components` section in the front matter defines per-variant tokens for the 
 
 - **Do** use `primary` (#326FDE) for the **single most important action** per surface; default buttons everywhere else
 - **Don't** use more than one primary button on a single view
-- **Do** use status colors (info / success / pending / danger) for badges, chips, and indicators; use `warning` specifically for alerts and notifications
+- **Do** use status colors (info / success / pending / danger) for badges, chips, indicators, and alerts. Alert `color` is `pending`, not `warning`.
 - **Don't** use status colors for decoration or emphasis in body text
 - **Do** use `label-md` (Inter Semi-Bold 14px) for button labels, tab labels, and form field labels
 - **Don't** use more than two type families on a screen (Inter for UI, Roboto Mono for data — that's it)
