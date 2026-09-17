@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint app --max-warnings=0",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "create-page": "node tools/create-page.js"
+    "create-page": "node tools/create-page.js",
+    "fill-manifest-versions": "node tools/fill-manifest-versions.js"
   },
   "dependencies": {
     "@appdirect/ds-prototype-kit": "__KIT_TARBALL_URL__",

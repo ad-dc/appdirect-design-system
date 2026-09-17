@@ -32,7 +32,7 @@ Then edit `app/prototype/<slug>/page.tsx`. Index: http://localhost:3000/prototyp
 
 ## Kit update
 
-When a new kit ships, set `@appdirect/ds-prototype-kit` in `package.json` to the new GitHub Release `.tgz` URL and run `npm install`.
+When a new kit ships, set `@appdirect/ds-prototype-kit` in `package.json` to the new GitHub Release `.tgz` URL, run `npm install`, then `npm run fill-manifest-versions`. Do not hand-edit `prototype-manifest.json` `versions`.
 
 Releases: https://github.com/ad-dc/appdirect-design-system/releases
 

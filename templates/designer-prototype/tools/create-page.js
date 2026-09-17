@@ -5,15 +5,13 @@
  *
  * Usage:
  *   npm run create-page -- --name "Settings" --template app-shell --layout single-column
+ *
+ * Updates pages and navGroups only. Do not assign manifest.versions here —
+ * tools/fill-manifest-versions.js owns kit / tokens / factory / mantine pins.
  */
 
 const fs = require('fs');
 const path = require('path');
-
-const ROOT = path.resolve(__dirname, '..');
-const MANIFEST_PATH = path.join(ROOT, 'prototype-manifest.json');
-const TEMPLATES_DIR = path.join(__dirname, 'page-templates');
-const PAGES_DIR = path.join(ROOT, 'app', 'prototype');
 
 function parseArgs(argv) {
   const args = {};
@@ -29,7 +27,7 @@ function parseArgs(argv) {
 function slugify(str) {
   return str
     .toLowerCase()
-    .replace(/[^a-zA-Z0-9]+/g, '-')
+    .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
 }
 
@@ -42,8 +40,37 @@ function toPascalCase(str) {
     .join('');
 }
 
-function main() {
-  const args = parseArgs(process.argv);
+function emptyManifest() {
+  return { prototypeName: 'AppDirect Prototype', pages: [], navGroups: {} };
+}
+
+function registerPage(manifest, { slug, title, template, layout, navGroup, description, icon }) {
+  if (!Array.isArray(manifest.pages)) manifest.pages = [];
+  if (!manifest.navGroups || typeof manifest.navGroups !== 'object') manifest.navGroups = {};
+
+  manifest.pages.push({
+    slug,
+    title,
+    template,
+    contentLayout: layout,
+    navGroup,
+    description,
+  });
+
+  if (!manifest.navGroups[navGroup]) {
+    manifest.navGroups[navGroup] = { title: navGroup, items: [] };
+  }
+  manifest.navGroups[navGroup].items.push({ slug, icon });
+  return manifest;
+}
+
+function main(argv = process.argv, { root } = {}) {
+  const ROOT = root || path.resolve(__dirname, '..');
+  const MANIFEST_PATH = path.join(ROOT, 'prototype-manifest.json');
+  const TEMPLATES_DIR = path.join(__dirname, 'page-templates');
+  const PAGES_DIR = path.join(ROOT, 'app', 'prototype');
+
+  const args = parseArgs(argv);
 
   if (!args.name) {
     console.error('Error: --name is required.\n');
@@ -85,7 +112,7 @@ function main() {
     process.exit(1);
   }
 
-  let manifest = { prototypeName: 'AppDirect Prototype', pages: [], navGroups: {} };
+  let manifest = emptyManifest();
   if (fs.existsSync(MANIFEST_PATH)) {
     manifest = JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf-8'));
   }
@@ -103,19 +130,9 @@ function main() {
   const pagePath = path.join(pageDir, 'page.tsx');
   fs.writeFileSync(pagePath, content, 'utf-8');
 
-  manifest.pages.push({
-    slug,
-    title: name,
-    template,
-    contentLayout: layout,
-    navGroup,
-    description,
-  });
-
-  if (!manifest.navGroups[navGroup]) {
-    manifest.navGroups[navGroup] = { title: navGroup, items: [] };
-  }
-  manifest.navGroups[navGroup].items.push({ slug, icon });
+  // Mutate pages/navGroups only. versions, template, exceptions, and any other
+  // unknown keys round-trip through JSON.parse / JSON.stringify unchanged.
+  registerPage(manifest, { slug, title: name, template, layout, navGroup, description, icon });
 
   fs.writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2) + '\n', 'utf-8');
 
@@ -125,6 +142,12 @@ function main() {
   console.log(`  Template: ${template}`);
   console.log(`  Layout:   ${layout}`);
   console.log(`  Manifest: updated\n`);
+
+  return { slug, pagePath, manifest };
 }
 
-main();
+if (require.main === module) {
+  main();
+}
+
+module.exports = { parseArgs, slugify, toPascalCase, registerPage, main };

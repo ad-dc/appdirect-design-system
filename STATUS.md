@@ -15,7 +15,7 @@ A snapshot of where the AppDirect Design System repo is right now. Update this f
 - **Kit:** `@appdirect/ds-prototype-kit` **0.2.6** (GitHub Release tarball)
 - **Branch / consumer model:** Self-serve GitHub template `ad-dc/appdirect-prototype-template` (kit tarball pin). This repo stays write-restricted. `npm run publish-prototype-template` refreshes the template.
 - **Spacing:** Mantine Core `xs–xl` (10/12/16/20/32) plus added `none` / `xxs` / `xxl`. Agent lookups and `theme.ts` match that scale (`4px` → `xxs`).
-- **Factory:** architecture merged (PR #68). Step 0 complete except remaining doc nits. Next: manifest versions (Step 1), then contracts. See Active.
+- **Factory:** architecture merged (PR #68). Step 0 complete (PR #69). Step 1: `prototype-manifest.json` pins kit / tokens / factory / mantine. Next: tier-0 contracts. See Active.
 
 ---
 
@@ -45,6 +45,7 @@ A snapshot of where the AppDirect Design System repo is right now. Update this f
 - Step 0.7: `CLAUDE.md` records `@appdirect/design-tokens@^0.0.6` as a main-repo dependency
 - Step 0.5: always-on Cursor rule is consumption only; wrapper authoring and Code Connect are globbed
 - Step 0.6: `npm run lint` covers `app/`, `components/`, `next.config.ts`. Fleet gate remains `ds-audit`.
+- Step 1: `prototype-manifest.json` (this repo + template) has `versions`; `npm run fill-manifest-versions` fills them from `package.json` / kit pin. `create-page` leaves pins alone. `template.meta.json` has `templateVersion` and `minKit`.
 
 ### 2026-09-16
 
@@ -59,7 +60,7 @@ A snapshot of where the AppDirect Design System repo is right now. Update this f
 
 ## Active
 
-- **Agentic production.** Architecture merged ([#68](https://github.com/ad-dc/appdirect-design-system/pull/68)). Step 0 landed (0.5–0.6 on this follow-up). Next: Step 1 manifest versions, then tier-0 contracts.
+- **Agentic production.** Architecture merged ([#68](https://github.com/ad-dc/appdirect-design-system/pull/68)). Step 0 merged ([#69](https://github.com/ad-dc/appdirect-design-system/pull/69)). Step 1 (manifest versions) on this change. Next: Step 2 tier-0 contracts.
 
 ---
 

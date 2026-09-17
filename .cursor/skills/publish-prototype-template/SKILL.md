@@ -20,7 +20,7 @@ Run from the **appdirect-design-system** checkout. This is maintainer work. It d
 npm run publish-prototype-template -- --dry-run
 ```
 
-3. If the kit URL looks right, run without `--dry-run`. That creates or updates `ad-dc/appdirect-prototype-template` and sets `is_template=true`.
+3. If the kit URL looks right, run without `--dry-run`. That creates or updates `ad-dc/appdirect-prototype-template`, bakes `prototype-manifest.json` `versions` from the kit pin, and sets `is_template=true`.
 4. Report the template URL and the consumer command:
 
 ```bash

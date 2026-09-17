@@ -95,7 +95,7 @@ Options:
 - `--icon`: Remix Icon class (e.g. `ri-settings-3-line`). Default: `ri-file-line`
 - `--description`: Short description for the manifest
 
-The CLI creates a page at `app/prototype/<slug>/page.tsx` and updates `prototype-manifest.json`.
+The CLI creates a page at `app/prototype/<slug>/page.tsx` and updates `prototype-manifest.json` pages/nav. It does not hand-edit `versions` — run `npm run fill-manifest-versions` after a kit bump.
 
 ### 3. Build your page
 
@@ -147,7 +147,8 @@ npm run typecheck      # TypeScript check
 ### Prototyping
 
 ```bash
-npm run create-page         # Scaffold a new prototype page in this repo
+npm run create-page              # Scaffold a new prototype page in this repo
+npm run fill-manifest-versions   # Rewrite prototype-manifest.json versions from package.json / kit pin
 npm run create-prototype    # Create a per-designer prototype repo from the thin template
 npm run export-pages        # Export pages for production use
 ```
@@ -227,6 +228,7 @@ components/
 
 tools/
   create-page.js
+  fill-manifest-versions.js   # Fill manifest versions from package.json / kit pin
   create-prototype-repo.js    # Optional local scaffold
   publish-prototype-template.js  # Push thin starter to ad-dc/appdirect-prototype-template
   export-page.js
@@ -236,7 +238,7 @@ templates/
   designer-prototype/         # Thin Next.js starter (source of the GitHub template)
 
 ds-package/                   # Publishable npm package (@appdirect/ds-prototype-kit)
-prototype-manifest.json       # Registry of all prototype pages
+prototype-manifest.json       # Page registry + pinned kit / tokens / factory / mantine versions
 ```
 
 ---

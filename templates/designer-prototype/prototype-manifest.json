@@ -1,5 +1,15 @@
 {
   "prototypeName": "__PROTOTYPE_NAME__",
+  "template": {
+    "id": "ad-dc/appdirect-prototype-template",
+    "version": "2026.09.17"
+  },
+  "versions": {
+    "kit": "",
+    "tokensSnapshot": "0.0.6",
+    "factory": "",
+    "mantine": "9.0.1"
+  },
   "pages": [],
   "navGroups": {}
 }

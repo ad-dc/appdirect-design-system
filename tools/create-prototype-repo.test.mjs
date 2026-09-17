@@ -96,6 +96,16 @@ test('main copies template, pins kit, and strips placeholders', () => {
     const manifest = JSON.parse(readFileSync(path.join(out, 'prototype-manifest.json'), 'utf8'));
     assert.equal(manifest.prototypeName, 'Alex Prototypes');
     assert.deepEqual(manifest.pages, []);
+    assert.deepEqual(manifest.template, {
+      id: 'ad-dc/appdirect-prototype-template',
+      version: '2026.09.17',
+    });
+    assert.deepEqual(manifest.versions, {
+      kit: '0.2.0',
+      tokensSnapshot: '0.0.6',
+      factory: '0.2.0',
+      mantine: '9.0.1',
+    });
 
     const nextConfig = readFileSync(path.join(out, 'next.config.ts'), 'utf8');
     assert.match(nextConfig, /transpilePackages: \['@appdirect\/ds-prototype-kit', 'mantine-react-table-open'\]/);
@@ -126,6 +136,7 @@ test('main copies template, pins kit, and strips placeholders', () => {
     assert.equal(existsSync(path.join(out, '.npmrc')), false);
     assert.equal(existsSync(path.join(out, 'components/DesignSystem')), false);
     assert.equal(existsSync(path.join(out, 'components/local/index.ts')), true);
+    assert.equal(existsSync(path.join(out, 'tools/fill-manifest-versions.js')), true);
     assert.equal(existsSync(path.join(out, '.cursor/skills/prototype-workspace/SKILL.md')), true);
     assert.equal(existsSync(path.join(out, '.cursor/skills/start-prototype/SKILL.md')), true);
     assert.equal(existsSync(path.join(out, 'public/assets/AppDirect-Mark_White.svg')), true);

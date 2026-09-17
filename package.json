@@ -12,6 +12,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "create-page": "node tools/create-page.js",
+    "fill-manifest-versions": "node tools/fill-manifest-versions.js",
     "create-prototype": "node tools/create-prototype-repo.js",
     "publish-prototype-template": "node tools/publish-prototype-template.js",
     "export-pages": "node tools/export-page.js",
