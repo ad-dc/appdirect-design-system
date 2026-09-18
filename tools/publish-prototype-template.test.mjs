@@ -44,6 +44,8 @@ test('materialize bakes kit URL and strips placeholders', () => {
     const readme = readFileSync(path.join(dir, 'README.md'), 'utf8');
     assert.match(readme, /AppDirect Prototype/);
     assert.doesNotMatch(readme, /__PROTOTYPE_NAME__/);
+    assert.equal(existsSync(path.join(dir, '.github/workflows/ds-check.yml')), true);
+    assert.equal(existsSync(path.join(dir, '.cursor/skills/audit-prototype/SKILL.md')), true);
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }

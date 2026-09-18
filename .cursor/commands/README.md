@@ -8,6 +8,10 @@ This repo includes project-local Cursor slash commands.
 
 Self-serve: create **your own** GitHub repo from `ad-dc/appdirect-prototype-template`. For designers, engineers, and PMs. Follows `.cursor/skills/start-prototype/SKILL.md`.
 
+### `/audit-prototype`
+
+Run `ds-audit` on in-tree `app/prototype` pages. Restricted `@mantine/core` imports fail; missing headers warn. Follows `.cursor/skills/audit-prototype/SKILL.md`. Designer clones use the template copy of this command.
+
 ### `/publish-prototype-template`
 
 Maintainer: refresh the shared GitHub template so self-serve clones stay current. Follows `.cursor/skills/publish-prototype-template/SKILL.md`.

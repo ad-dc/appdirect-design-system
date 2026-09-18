@@ -14,7 +14,7 @@ import { fileURLToPath } from 'node:url';
 
 const require = createRequire(import.meta.url);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const { runAudit, main } = require('../ds-package/bin/ds-audit.js');
+const { runAudit, main, formatAnnotations } = require('../ds-package/bin/ds-audit.js');
 
 function makeProto(files) {
   const dir = mkdtempSync(path.join(tmpdir(), 'ds-audit-'));
@@ -163,5 +163,57 @@ test('CLI --help does not write a report', () => {
     assert.equal(existsSync(path.join(dir, 'prototype-audit.json')), false);
   } finally {
     rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('CI annotations: restricted import is an error; missing header only warns', () => {
+  const failDir = makeProto({
+    'package.json': { name: 'proto-ci-fail' },
+    'app/prototype/home/page.tsx': `
+import { Button } from '@mantine/core';
+export default function Home() {
+  return <Button>Go</Button>;
+}
+`,
+  });
+  const warnDir = makeProto({
+    'package.json': { name: 'proto-ci-warn' },
+    'app/prototype/home/page.tsx': `
+import { Stack } from '@appdirect/ds-prototype-kit';
+export default function Home() {
+  return <Stack>Hi</Stack>;
+}
+`,
+  });
+
+  try {
+    const failed = runAudit(failDir, { out: false });
+    assert.equal(failed.exitCode, 1);
+    const failNotes = formatAnnotations(failed.report);
+    assert.ok(failNotes.some((line) => line.startsWith('::error ') && line.includes('restricted-import.mantine-core')));
+    assert.equal(
+      failNotes.some((line) => line.startsWith('::error ') && line.includes('missing-page-content-header')),
+      false
+    );
+
+    const warned = runAudit(warnDir, { out: false });
+    assert.equal(warned.exitCode, 0);
+    assert.equal(warned.report.health.audit, 'pass');
+    const warnNotes = formatAnnotations(warned.report);
+    assert.ok(warnNotes.some((line) => line.startsWith('::warning ') && line.includes('missing-page-content-header')));
+    assert.equal(warnNotes.some((line) => line.startsWith('::error ')), false);
+
+    const logs = [];
+    const orig = console.log;
+    console.log = (...args) => logs.push(args.join(' '));
+    try {
+      main(['node', 'ds-audit.js', '--root', warnDir, '--out', path.join(warnDir, 'out.json'), '--ci']);
+    } finally {
+      console.log = orig;
+    }
+    assert.ok(logs.some((line) => line.startsWith('::warning ') && line.includes('missing-page-content-header')));
+  } finally {
+    rmSync(failDir, { recursive: true, force: true });
+    rmSync(warnDir, { recursive: true, force: true });
   }
 });

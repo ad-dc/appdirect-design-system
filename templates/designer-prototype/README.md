@@ -8,7 +8,7 @@ AppDirect prototype workspace. Shared UI comes from [`@appdirect/ds-prototype-ki
 gh repo create my-prototype --template ad-dc/appdirect-prototype-template --private --clone
 ```
 
-In Cursor, `/prototype-workspace` adds pages; `/start-prototype` creates another repo.
+In Cursor, `/prototype-workspace` adds pages; `/audit-prototype` runs typecheck + `ds-audit`; `/start-prototype` creates another repo.
 
 ## Setup
 
@@ -44,6 +44,8 @@ npm run ds:audit
 ```
 
 Writes `prototype-audit.json`. Restricted `@mantine/core` imports fail. Missing page headers and handmade record lists are findings, not failures. No network.
+
+Pull requests run the same check in `.github/workflows/ds-check.yml` (typecheck + audit). Restricted imports fail the job; missing headers warn.
 
 ## Update the design system
 

@@ -40,8 +40,9 @@ Do **not** fork or “Use this template” on **this** repo (`appdirect-design-s
 - Pages: `npm run create-page -- --name "Settings" --template app-shell --layout single-column`
 - Shared UI: `import { Button, Stack, Card } from '@appdirect/ds-prototype-kit'`
 - Product widgets: `components/local/`
-- Cursor: `/prototype-workspace` (ships in the template)
+- Cursor: `/prototype-workspace` and `/audit-prototype` (ship in the template)
 - Kit update: bump the tarball URL in `package.json` to the [latest release](https://github.com/ad-dc/appdirect-design-system/releases)
+- CI (after the next template publish): typecheck + `ds-audit` — restricted `@mantine/core` imports fail; missing headers warn
 
 You do not need a maintainer to open a repo for you.
 
@@ -225,7 +226,9 @@ components/
 .cursor/
   skills/start-prototype/     # Self-serve: gh repo create --template
   skills/publish-prototype-template/
+  skills/audit-prototype/     # ds-audit fail vs warn (in-tree prototypes)
   commands/start-prototype.md
+  commands/audit-prototype.md
 
 tools/
   create-page.js

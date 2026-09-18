@@ -7,6 +7,7 @@
  *
  * Usage:
  *   ds-audit
+ *   ds-audit --ci
  *   node ds-package/bin/ds-audit.js --root /path/to/prototype
  */
 
@@ -265,6 +266,46 @@ function isPrototypeIndex(fileRel) {
   return fileRel === 'app/prototype/page.tsx';
 }
 
+function githubEscape(value) {
+  return String(value).replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
+}
+
+function githubAnnotation(kind, finding, message) {
+  const params = [];
+  if (finding.file) params.push(`file=${githubEscape(finding.file)}`);
+  if (finding.line) params.push(`line=${finding.line}`);
+  if (finding.rule || finding.id) params.push(`title=${githubEscape(finding.rule || finding.id)}`);
+  const prefix = params.length ? `::${kind} ${params.join(',')}::` : `::${kind} ::`;
+  return `${prefix}${githubEscape(message)}`;
+}
+
+function formatAnnotations(report) {
+  const lines = [];
+  for (const item of (report.findings && report.findings.restrictedImports) || []) {
+    lines.push(
+      githubAnnotation(
+        'error',
+        item,
+        'Do not import @mantine/core in prototype app/ or components/local. Use the kit (or @/components/DesignSystem in this repo).'
+      )
+    );
+  }
+  for (const item of (report.patterns && report.patterns.unsupported) || []) {
+    let message = item.id;
+    if (item.id === 'missing-page-content-header') {
+      message = 'Prototype page is missing PageContentHeader.';
+    } else if (item.id === 'handmade-record-list') {
+      message = `Handmade record list; use ${item.insteadOf || 'DataTable or Table'}.`;
+    }
+    lines.push(githubAnnotation('warning', item, message));
+  }
+  return lines;
+}
+
+function shouldAnnotate(args = {}, env = process.env) {
+  return Boolean(args.ci) || env.GITHUB_ACTIONS === 'true';
+}
+
 function localComponentFiles(root) {
   const dir = path.join(root, 'components', 'local');
   const files = walkFiles(dir).filter((file) => path.basename(file) !== 'index.ts' && path.basename(file) !== 'index.tsx');
@@ -443,10 +484,10 @@ function runAudit(root, options = {}) {
   return { report, exitCode: auditFail ? 1 : 0, outPath };
 }
 
-function main(argv = process.argv) {
+function main(argv = process.argv, env = process.env) {
   const args = parseArgs(argv);
   if (args.help) {
-    console.log('Usage: ds-audit [--root <dir>] [--out <file>]');
+    console.log('Usage: ds-audit [--root <dir>] [--out <file>] [--ci]');
     return { exitCode: 0 };
   }
   const root = typeof args.root === 'string' ? path.resolve(args.root) : process.cwd();
@@ -457,8 +498,12 @@ function main(argv = process.argv) {
   console.log(`  restrictedImports:  ${report.compliance.restrictedImports}`);
   console.log(`  deprecatedApi:      ${report.compliance.deprecatedApi}`);
   console.log(`  tokenViolations:    ${report.compliance.tokenViolations}`);
+  console.log(`  unsupported:        ${report.patterns.unsupported.length}`);
   console.log(`  customComponents:   ${report.adoption.customComponents.count}`);
   if (result.outPath) console.log(`  wrote:              ${result.outPath}`);
+  if (shouldAnnotate(args, env)) {
+    for (const line of formatAnnotations(report)) console.log(line);
+  }
   return result;
 }
 
@@ -467,4 +512,4 @@ if (require.main === module) {
   process.exit(result.exitCode);
 }
 
-module.exports = { runAudit, main, parseArgs };
+module.exports = { runAudit, main, parseArgs, formatAnnotations, shouldAnnotate };
