@@ -1,0 +1,33 @@
+{
+  "$schema": "../../contracts/ds-component-contract.v1.json",
+  "id": "DataTable",
+  "kind": "complex",
+  "version": "0.2.6",
+  "purpose": "Sortable, filterable, paginated record table. AppDirect composition over mantine-react-table-open, not a Mantine Table wrapper.",
+  "importFrom": ["@appdirect/ds-prototype-kit", "@/components/DesignSystem"],
+  "mantineCounterpart": null,
+  "anatomy": ["paper", "toolbar", "table", "pagination"],
+  "api": {
+    "props": {
+      "data": { "type": "array", "required": true },
+      "columns": { "type": "array", "required": true },
+      "totalCount": { "type": "number" },
+      "isLoading": { "type": "boolean" },
+      "isError": { "type": "boolean" },
+      "showFilters": { "type": "boolean" },
+      "showSearch": { "type": "boolean" }
+    }
+  },
+  "composition": {
+    "mustUseFor": ["sortable/filterable/paginated record lists"],
+    "preferInstead": {
+      "staticMarkup": "Table",
+      "handmadeRecordList": "DataTable or Table, not stacked Card/Inline rows of records"
+    },
+    "notes": "Static dummy lists may use Table, not DataTable."
+  },
+  "enforcement": {
+    "deterministic": ["importFrom", "kind", "mantineCounterpart", "api.props.data.required", "api.props.columns.required"],
+    "semantic": ["purpose", "composition.mustUseFor", "composition.preferInstead.staticMarkup"]
+  }
+}

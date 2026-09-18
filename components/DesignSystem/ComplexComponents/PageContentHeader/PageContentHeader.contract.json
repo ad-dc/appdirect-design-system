@@ -1,0 +1,51 @@
+{
+  "$schema": "../../contracts/ds-component-contract.v1.json",
+  "id": "PageContentHeader",
+  "kind": "complex",
+  "version": "0.2.6",
+  "purpose": "Required page header for prototype pages. AppDirect composition; Mantine has no page-content-header.",
+  "importFrom": ["@appdirect/ds-prototype-kit", "@/components/DesignSystem"],
+  "mantineCounterpart": null,
+  "anatomy": ["card", "title", "subhead", "badge", "icon", "actions", "contentSection"],
+  "api": {
+    "props": {
+      "title": { "type": "string", "required": true },
+      "subhead": { "type": "string" },
+      "badge": { "type": "string" },
+      "icon": { "type": "ReactNode" },
+      "actions": {
+        "type": "array",
+        "item": {
+          "label": "string",
+          "onClick": "function",
+          "variant": {
+            "enum": ["primary", "secondary", "default", "disabled", "link", "secret", "outline", "danger"]
+          }
+        },
+        "notes": "Actions use DS Button variants, not a Mantine variant map."
+      },
+      "contentSection": {
+        "enum": ["insights", "description", "descriptionBlock", "nameValuePairs", "drawer"],
+        "required": true,
+        "exclusive": true,
+        "notes": "Mutually exclusive content slots. Do not pass more than one section's data as if they compose."
+      }
+    }
+  },
+  "composition": {
+    "mustUseFor": ["prototype page headers"],
+    "mustNotRebuildFrom": ["Card + Title"],
+    "internalPrimitives": ["Card", "Title", "Button", "Badge", "ThemeIcon", "KeyInsight", "NameValue", "DescriptionBlock", "Inline", "Stack"],
+    "mantineUtilitiesOnly": ["Collapse", "rem"]
+  },
+  "enforcement": {
+    "deterministic": [
+      "importFrom",
+      "kind",
+      "mantineCounterpart",
+      "api.props.title.required",
+      "api.props.contentSection.enum"
+    ],
+    "semantic": ["purpose", "composition.mustUseFor", "composition.mustNotRebuildFrom"]
+  }
+}
