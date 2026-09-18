@@ -42,6 +42,8 @@ const TEXT_EXT = new Set([
   '.md',
   '.css',
   '.mdc',
+  '.yml',
+  '.yaml',
   '.template',
   '.gitignore',
   '.npmrc',

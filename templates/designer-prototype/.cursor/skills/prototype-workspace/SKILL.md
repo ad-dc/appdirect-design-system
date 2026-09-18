@@ -49,6 +49,8 @@ npm run ds:audit
 
 Writes `prototype-audit.json`. Restricted `@mantine/core` imports fail. Missing `PageContentHeader` and handmade record lists are findings, not failures. No network.
 
+For the full fail-vs-warn ritual (typecheck + audit, kit bump then re-audit), use `/audit-prototype`.
+
 ## Setup
 
 `npm install` then `npm run dev`. Token CSS ships inside the kit tarball. No Artifactory.

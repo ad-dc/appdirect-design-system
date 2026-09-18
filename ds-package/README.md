@@ -64,6 +64,8 @@ npm run ds:audit
 
 No LLM. No network. Writes `prototype-audit.json`. Exit 1 only when prototype `app/` or `components/local/` import `@mantine/core`. Composition heuristics (missing `PageContentHeader`, handmade record lists) are reported, not failed.
 
+In GitHub Actions (`GITHUB_ACTIONS=true`) or with `--ci`, restricted imports emit `::error` annotations and heuristics emit `::warning` annotations. The prototype template workflow runs typecheck + `ds-audit`.
+
 ## Component Categories
 
 - **Buttons:** Button, ActionIcon, CloseButton

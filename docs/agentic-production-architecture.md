@@ -1,6 +1,6 @@
 # Agentic software-production architecture
 
-**Status:** recommendation plus landed Step 0–3. `ds-audit` ships with the kit and writes `prototype-audit.json`. No prototype CI, fleet rollup, or authoring agents yet. Execution sequence: [`agentic-production-plan.md`](./agentic-production-plan.md).
+**Status:** recommendation plus landed Step 0–4. Prototype CI runs typecheck + `ds-audit` (fail on restricted imports, warn on heuristics). No fleet rollup or authoring agents yet. Execution sequence: [`agentic-production-plan.md`](./agentic-production-plan.md).
 
 **Scope:** treat `appdirect-design-system` (main repository) and `templates/designer-prototype` / `ad-dc/appdirect-prototype-template` (prototype fleet) as one system.
 
@@ -251,6 +251,7 @@ A skill is warranted when the steps are stable, easy to get wrong, and already h
 | `publish-prototype-template` | Main only | Maintainer ritual; pins kit URL |
 | `create-prototype` | Main only | Optional local scaffold; skill already defers to `start-prototype` |
 | `prototype-workspace` | Template only | Daily page creation, kit bump, local product UI |
+| `audit-prototype` | Template + main | typecheck + `ds-audit`; fail on restricted imports, warn on heuristics |
 
 ### Promote commands → skills (main repo only)
 
@@ -260,10 +261,8 @@ A skill is warranted when the steps are stable, easy to get wrong, and already h
 
 | Skill | Where | Trigger |
 |---|---|---|
-| `audit-prototype` | Template (and main repo for in-tree prototypes) | “check this prototype”, “are we on the kit”, before PR |
-| `bump-kit` | Template | “update the design system”; bump tarball URL, `npm install`, run `ds-audit`, update manifest versions |
-
-Fold kit bump into `prototype-workspace` if two skills feel like ceremony. Prefer one skill over two if the only difference is a flag.
+| `audit-prototype` | Template (and main repo for in-tree prototypes) | “check this prototype”, “are we on the kit”, before PR. **Done (2026-09-18).** |
+| Kit bump | Folded into `prototype-workspace` | “update the design system”; bump tarball URL, `npm install`, `fill-manifest-versions`, re-audit |
 
 ### Do not add as skills
 
@@ -282,7 +281,7 @@ Isolate work only when it (a) has a large or foreign context, (b) would pollute 
 |---|---|---|
 | Scaffold / edit a prototype page | No | `prototype-workspace` + rules |
 | Run lint / typecheck / `ds-audit` | No | Commands |
-| Bump kit | No | Skill |
+| Bump kit | No | `prototype-workspace` |
 | Code Connect prop audit for one component | No | Existing `/code-connect-props` skill/command |
 | Code Connect publish + PR packaging | Maybe | Only if Figma CLI + git/PR steps keep overflowing the mapping thread. A skill is probably enough; the referenced `.cursor/agents/code-connect-pr.md` does not exist. |
 | Semantic review of a **flagged** local component | Yes, on demand | Needs contract text + similar prototypes + DESIGN.md; should not rewrite the page in the same turn |
@@ -827,11 +826,13 @@ Hand-write JSON for tier-0 wrappers (Button, Badge, Alert, layout) and tier-0 co
 
 Read-only scanner: versions, restricted imports, deprecated APIs, token/style bans, component usage counts, local component file list. Write `prototype-audit.json`. Wire `npm run ds:audit` in the template.
 
-No LLM. No network. **Done (2026-09-18).** Exit 1 only on restricted `@mantine/core` imports; missing `PageContentHeader` and handmade record lists are findings. `health.typecheck/lint/build` stay `skipped` until Step 4.
+No LLM. No network. **Done (2026-09-18).** Exit 1 only on restricted `@mantine/core` imports; missing `PageContentHeader` and handmade record lists are findings. `health.typecheck/lint/build` stay `skipped` in the JSON; the template workflow runs `tsc` as its own step.
 
 ### Step 4 — Template: CI warn + `audit-prototype` skill
 
 Prototype GitHub Action: typecheck + audit. Fail on imports; warn on heuristics. Skill documents how to bump kit and re-audit.
+
+**Done (2026-09-18).** `ds-check.yml` in the template. `::error` vs `::warning` from `ds-audit --ci`. Kit bump stays in `prototype-workspace`; `audit-prototype` is the check skill.
 
 ### Step 5 — Fleet rollup
 
