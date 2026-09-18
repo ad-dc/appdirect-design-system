@@ -4,7 +4,7 @@ Working sequence for the factory loop. Rationale, contract sketches, and cited m
 
 **As of:** 2026-09-18  
 **Proposal PR:** https://github.com/ad-dc/appdirect-design-system/pull/68 (merged)  
-**Current phase:** Step 0–3 merged. Step 4 (prototype CI + `audit-prototype` skill) in this change. Next: fleet rollup (Step 5).
+**Current phase:** Step 0–4 merged. Step 5 (fleet rollup) in this change. Next: semantic reviewer (Step 6, optional) after false positives are understood.
 
 ---
 
@@ -19,14 +19,14 @@ This repo already merged the architecture (PR #68) and Step 0 (PR #69).
 | Design system source | Shipping. Mix of Mantine wrappers and AppDirect complex components |
 | Kit + template | Shipping. New clones pin the kit tarball; existing clones do not auto-update |
 | Canonical correctness | **Decided:** DS component source. Not Figma, not `DESIGN.md`, not unused `types.ts` |
-| V1 factory | Checker shipping (`ds-audit`). Fleet evidence not yet |
+| V1 factory | Checker shipping (`ds-audit` + fleet rollup). Evidence depends on clones writing audits |
 | Later factory | **Decided, gated:** authors/repairs pages against the same contracts |
 | Step 0 (repair contradictions) | **0.1–0.8 done** (PR #69). |
 | Step 1 (manifest versions) | **Done** (PR #70). Clones still pick it up on the next template publish. |
 | Step 2 (tier-0 contracts) | **Done** (PR #71). |
 | Step 3 (`ds-audit`) | **Done** (PR #72). |
-| Step 4 (prototype CI + skill) | **Done** in this change. |
-| Step 5 (fleet) | Next |
+| Step 4 (prototype CI + skill) | **Done** (PR #73). |
+| Step 5 (fleet) | **Done** in this change. |
 | Steps 6–8 (semantic reviewer, authoring factory) | Blocked on V1 evidence that the checker is used |
 
 ### Locked decisions
@@ -53,7 +53,7 @@ This repo already merged the architecture (PR #68) and Step 0 (PR #69).
 
 ## Plan
 
-Step 4 (prototype CI + skill) is done. Next is fleet rollup (Step 5).
+Step 5 (fleet rollup) is done. Next is the optional semantic reviewer (Step 6), only after Step 4 false positives are understood. The authoring factory (Steps 7–8) stays gated.
 
 **Stop-the-line:** if after V1 the checker is ignored (restricted imports and undeclared local components do not move), do not add generating agents.
 
@@ -115,6 +115,8 @@ Template GitHub Action: typecheck + audit. **Fail** on restricted imports. **War
 
 Maintainer script + optional `fleet.json` of prototype clone URLs. Table: kit lag, top violation rules, local-pattern clusters (≥3 = gap candidate). No analytics platform. No prompts.
 
+**Done (2026-09-18).** `npm run fleet-rollup` reads `fleet.json` (optional `--discover` via `gh`). Prints markdown answering “how current is the fleet?” and “which primitive throws the most exceptions?”. Clusters with n ≥ 3 repos are gap candidates. Does not write DESIGN.md.
+
 **Done when:** a maintainer can answer “how current is the fleet?” and “which primitive throws the most exceptions?”
 
 ### Step 6 — Semantic reviewer (optional)
@@ -144,6 +146,6 @@ Materialize Cursor assets from the kit, then generate/repair pages against contr
 
 ## Suggested next
 
-Step **5** — fleet rollup. Maintainer table: kit lag, top violation rules, local-pattern clusters.
+Step **6** — optional semantic reviewer, only after Step 4 false positives are understood. Then Steps 7–8 (authoring factory) if Step 5 shows the checker is used.
 
 Refresh `ad-dc/appdirect-prototype-template` when a maintainer wants clones to pick up `components/local/`, the corrected spacing lookup, and manifest `versions`.

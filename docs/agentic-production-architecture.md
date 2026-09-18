@@ -1,6 +1,6 @@
 # Agentic software-production architecture
 
-**Status:** recommendation plus landed Step 0–4. Prototype CI runs typecheck + `ds-audit` (fail on restricted imports, warn on heuristics). No fleet rollup or authoring agents yet. Execution sequence: [`agentic-production-plan.md`](./agentic-production-plan.md).
+**Status:** recommendation plus landed Step 0–5. Fleet rollup is a maintainer markdown table from `prototype-audit.json` files. No semantic reviewer or authoring agents yet. Execution sequence: [`agentic-production-plan.md`](./agentic-production-plan.md).
 
 **Scope:** treat `appdirect-design-system` (main repository) and `templates/designer-prototype` / `ad-dc/appdirect-prototype-template` (prototype fleet) as one system.
 
@@ -653,7 +653,7 @@ One generated file per prototype: `prototype-audit.json`. Produced by `ds-audit`
 2. Optional: commit it (small, structural) **or** upload as a GitHub Actions artifact
 3. Maintainer script in the main repo: `gh` list of repos created from `appdirect-prototype-template`, fetch latest `prototype-audit.json`
 
-If the org cannot query template-generated repos, keep a manual `fleet.json` list of clone URLs in the main repo. That is ugly and sufficient.
+**Implemented 2026-09-18:** `npm run fleet-rollup` reads `fleet.json` (manual clone list) and optionally `--discover`s template-generated repos. Fetches committed `prototype-audit.json` via `gh`. Artifact unzip is not in v1.
 
 **Privacy:** no prompt text, no file contents, no user email. Paths and counts only.
 
@@ -837,6 +837,8 @@ Prototype GitHub Action: typecheck + audit. Fail on imports; warn on heuristics.
 ### Step 5 — Fleet rollup
 
 Maintainer script + optional `fleet.json`. Produce a markdown table: kit versions, top violations, local-pattern clusters. Feed DESIGN.md pending work.
+
+**Done (2026-09-18).** `tools/fleet-rollup.js` / `npm run fleet-rollup`. Gap candidate = same local component or unsupported pattern in ≥ 3 repos. Human review before DESIGN.md.
 
 ### Step 6 — Semantic reviewer (optional)
 

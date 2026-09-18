@@ -59,6 +59,16 @@ That updates `ad-dc/appdirect-prototype-template` (GitHub template). Cursor: `/p
 
 Optional local copy from this checkout (same files, no GitHub template): `npm run create-prototype -- --name my-prototype`.
 
+### Fleet rollup
+
+List prototype clone slugs in `fleet.json`, then:
+
+```bash
+npm run fleet-rollup
+```
+
+Prints kit lag, top violation rules, and local-pattern clusters (n ≥ 3 repos = gap candidate). Optional `--discover` asks GitHub for repos generated from `ad-dc/appdirect-prototype-template`. No prompts, no analytics service. Put a DESIGN.md pending-work note only after human review of a cluster.
+
 ## Quick Start: Prototyping (this repo)
 
 ### 1. Set up
@@ -151,6 +161,7 @@ npm run typecheck      # TypeScript check
 npm run create-page              # Scaffold a new prototype page in this repo
 npm run fill-manifest-versions   # Rewrite prototype-manifest.json versions from package.json / kit pin
 npm run ds:audit                 # Read-only DS audit → prototype-audit.json (fail on @mantine/core in app/)
+npm run fleet-rollup             # Maintainer table: kit lag, top rules, local-pattern clusters
 npm run create-prototype    # Create a per-designer prototype repo from the thin template
 npm run export-pages        # Export pages for production use
 ```
@@ -235,6 +246,7 @@ tools/
   fill-manifest-versions.js   # Fill manifest versions from package.json / kit pin
   create-prototype-repo.js    # Optional local scaffold
   publish-prototype-template.js  # Push thin starter to ad-dc/appdirect-prototype-template
+  fleet-rollup.js             # Maintainer fleet table from prototype-audit.json
   export-page.js
   page-templates/
 
@@ -244,6 +256,7 @@ templates/
 ds-package/                   # Publishable npm package (@appdirect/ds-prototype-kit)
   bin/ds-audit.js             # Read-only prototype auditor (kit bin: ds-audit)
 prototype-manifest.json       # Page registry + pinned kit / tokens / factory / mantine versions
+fleet.json                    # Optional list of prototype clone slugs for fleet-rollup
 ```
 
 ---
