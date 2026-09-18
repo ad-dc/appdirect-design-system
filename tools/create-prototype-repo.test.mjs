@@ -104,7 +104,7 @@ test('main copies template, pins kit, and strips placeholders', () => {
       kit: '0.2.0',
       tokensSnapshot: '0.0.6',
       factory: '0.2.0',
-      mantine: '9.0.1',
+      mantine: '9.6.0',
     });
 
     const nextConfig = readFileSync(path.join(out, 'next.config.ts'), 'utf8');

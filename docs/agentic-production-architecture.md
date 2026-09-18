@@ -175,7 +175,7 @@ A small `compatibility` block in the kit (or `template.meta.json` plus kit `pack
   "kit": "0.2.6",
   "tokensSnapshot": "0.0.6",
   "templateRange": ">=0.1.0",
-  "mantine": "^9.0.1",
+  "mantine": "^9.6.0",
   "react": "^19.2.0"
 }
 ```
@@ -575,7 +575,7 @@ Proposed `prototype-manifest.json`:
     "kit": "0.2.6",
     "tokensSnapshot": "0.0.6",
     "factory": "0.2.6",
-    "mantine": "9.0.1"
+    "mantine": "9.6.0"
   },
   "pages": [],
   "navGroups": {},

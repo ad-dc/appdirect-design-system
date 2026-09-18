@@ -14,8 +14,8 @@ npm install https://github.com/ad-dc/appdirect-design-system/releases/download/v
 
 Align with **Mantine 9**:
 
-- `@mantine/core` ^9.0.1
-- `@mantine/hooks` ^9.0.1
+- `@mantine/core` ^9.6.0
+- `@mantine/hooks` ^9.6.0
 - `react` ^19.2.0
 - `react-dom` ^19.2.0
 

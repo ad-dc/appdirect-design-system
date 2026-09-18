@@ -35,7 +35,7 @@ test('materialize bakes kit URL and strips placeholders', () => {
       kit: '0.2.0',
       tokensSnapshot: '0.0.6',
       factory: '0.2.0',
-      mantine: '9.0.1',
+      mantine: '9.6.0',
     });
     assert.deepEqual(manifest.template, {
       id: 'ad-dc/appdirect-prototype-template',

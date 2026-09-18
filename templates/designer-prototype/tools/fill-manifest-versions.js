@@ -84,8 +84,31 @@ function resolveTokensSnapshot(root, pkg) {
   return '';
 }
 
-function resolveMantine(pkg) {
-  return semverFromSpec(depSpec(pkg, '@mantine/core'));
+function lockfileResolvedVersion(root, name) {
+  const lock = readJson(path.join(root, 'package-lock.json'));
+  if (!lock) return '';
+  if (lock.packages) {
+    const entry = lock.packages[`node_modules/${name}`];
+    if (entry && entry.version) return entry.version;
+  }
+  if (lock.dependencies && lock.dependencies[name] && lock.dependencies[name].version) {
+    return semverFromSpec(lock.dependencies[name].version);
+  }
+  return '';
+}
+
+function installedPackageVersion(root, name) {
+  const parts = name.startsWith('@') ? name.split('/') : [name];
+  const pkg = readJson(path.join(root, 'node_modules', ...parts, 'package.json'));
+  return (pkg && pkg.version) || '';
+}
+
+function resolveMantine(root, pkg) {
+  return firstNonEmpty(
+    installedPackageVersion(root, '@mantine/core'),
+    lockfileResolvedVersion(root, '@mantine/core'),
+    semverFromSpec(depSpec(pkg, '@mantine/core'))
+  );
 }
 
 function resolveTemplate(root) {
@@ -129,7 +152,7 @@ function fillManifestVersions(root, options = {}) {
     resolveTokensSnapshot(root, pkg),
     previous.tokensSnapshot
   );
-  const mantine = firstNonEmpty(options.mantine, resolveMantine(pkg), previous.mantine);
+  const mantine = firstNonEmpty(options.mantine, resolveMantine(root, pkg), previous.mantine);
   // V1: factory ships with the kit. Keep the field so a later split does not change the schema.
   const factory = firstNonEmpty(options.factory, kit, previous.factory);
 

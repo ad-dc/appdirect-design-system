@@ -143,6 +143,55 @@ test('keeps previous pins when package.json has no resolvable kit', () => {
   }
 });
 
+test('prefers lockfile resolved Mantine over the package.json range floor', () => {
+  const dir = makeRoot({
+    'package.json': {
+      dependencies: {
+        '@mantine/core': '^9.0.1',
+      },
+    },
+    'package-lock.json': {
+      lockfileVersion: 3,
+      packages: {
+        'node_modules/@mantine/core': { version: '9.6.0' },
+      },
+    },
+    'prototype-manifest.json': { prototypeName: 'Lockfile Pin', pages: [], navGroups: {} },
+  });
+
+  try {
+    const result = fillManifestVersions(dir);
+    assert.equal(result.versions.mantine, '9.6.0');
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('prefers installed Mantine over lockfile', () => {
+  const dir = makeRoot({
+    'package.json': {
+      dependencies: {
+        '@mantine/core': '^9.0.1',
+      },
+    },
+    'package-lock.json': {
+      lockfileVersion: 3,
+      packages: {
+        'node_modules/@mantine/core': { version: '9.0.1' },
+      },
+    },
+    'node_modules/@mantine/core/package.json': { name: '@mantine/core', version: '9.6.0' },
+    'prototype-manifest.json': { prototypeName: 'Installed Pin', pages: [], navGroups: {} },
+  });
+
+  try {
+    const result = fillManifestVersions(dir);
+    assert.equal(result.versions.mantine, '9.6.0');
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
 test('reads tokensSnapshot from an installed kit package.json', () => {
   const dir = makeRoot({
     'package.json': {

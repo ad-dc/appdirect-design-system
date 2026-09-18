@@ -595,11 +595,11 @@ This order is already configured in `app/layout.tsx` and `.storybook/preview.tsx
 
 | Package | Version | Role |
 |---|---|---|
-| `@mantine/core` | `^9.0.1` | Base component library |
-| `@mantine/hooks` | `^9.0.1` | Utility hooks (useDisclosure, etc.) |
-| `@mantine/dates` | `^9.0.1` | Date/time inputs |
-| `@mantine/notifications` | `^9.0.1` | Toast notifications |
-| `@mantine/dropzone` | `^9.0.1` | File drag-and-drop |
+| `@mantine/core` | `^9.6.0` | Base component library |
+| `@mantine/hooks` | `^9.6.0` | Utility hooks (useDisclosure, etc.) |
+| `@mantine/dates` | `^9.6.0` | Date/time inputs |
+| `@mantine/notifications` | `^9.6.0` | Toast notifications |
+| `@mantine/dropzone` | `^9.6.0` | File drag-and-drop |
 | `@appdirect/design-tokens` | `^0.0.6` | AppDirect token CSS variables (`--ad-*`) |
 | `@tabler/icons-react` | `^3.33.0` | Icon library (supplementary) |
 | `@remixicon/react` | `^4.6.0` | Primary icon library; default avatar icon |
