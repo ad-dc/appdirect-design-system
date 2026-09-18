@@ -3,8 +3,9 @@ name: prototype-workspace
 description: >-
   Works in an AppDirect designer prototype repo (proto-*). Creates pages with
   create-page, imports UI from @appdirect/ds-prototype-kit, puts product widgets
-  in components/local, and bumps the kit tarball URL for design-system updates.
-  Use when adding prototype screens, scaffolding pages, or updating the DS kit.
+  in components/local, bumps the kit tarball URL for design-system updates, and
+  runs ds-audit. Use when adding prototype screens, scaffolding pages, updating
+  the DS kit, or checking DS compliance.
 ---
 
 # Designer prototype workspace
@@ -37,6 +38,16 @@ When a new kit ships, set `@appdirect/ds-prototype-kit` in `package.json` to the
 Releases: https://github.com/ad-dc/appdirect-design-system/releases
 
 Do not cherry-pick or merge `appdirect-design-system`.
+
+## Audit
+
+After implementing or changing a page, run:
+
+```bash
+npm run ds:audit
+```
+
+Writes `prototype-audit.json`. Restricted `@mantine/core` imports fail. Missing `PageContentHeader` and handmade record lists are findings, not failures. No network.
 
 ## Setup
 

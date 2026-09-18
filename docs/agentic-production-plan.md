@@ -4,7 +4,7 @@ Working sequence for the factory loop. Rationale, contract sketches, and cited m
 
 **As of:** 2026-09-18  
 **Proposal PR:** https://github.com/ad-dc/appdirect-design-system/pull/68 (merged)  
-**Current phase:** Step 0–1 merged. Step 2 (tier-0 contracts) in this change. Next: `ds-audit` (Step 3).
+**Current phase:** Step 0–2 merged or stacked. Step 3 (`ds-audit`) in this change. Next: prototype CI + `audit-prototype` skill (Step 4).
 
 ---
 
@@ -19,12 +19,13 @@ This repo already merged the architecture (PR #68) and Step 0 (PR #69).
 | Design system source | Shipping. Mix of Mantine wrappers and AppDirect complex components |
 | Kit + template | Shipping. New clones pin the kit tarball; existing clones do not auto-update |
 | Canonical correctness | **Decided:** DS component source. Not Figma, not `DESIGN.md`, not unused `types.ts` |
-| V1 factory | **Decided, not built:** checker and reporter |
+| V1 factory | Checker shipping (`ds-audit`). Fleet evidence not yet |
 | Later factory | **Decided, gated:** authors/repairs pages against the same contracts |
 | Step 0 (repair contradictions) | **0.1–0.8 done** (PR #69). |
 | Step 1 (manifest versions) | **Done** (PR #70). Clones still pick it up on the next template publish. |
-| Step 2 (tier-0 contracts) | **Done** in this change. |
-| Steps 3–5 (audit, CI, fleet) | Next |
+| Step 2 (tier-0 contracts) | **Done** (PR #71, stacked). |
+| Step 3 (`ds-audit`) | **Done** in this change. |
+| Steps 4–5 (CI, fleet) | Next |
 | Steps 6–8 (semantic reviewer, authoring factory) | Blocked on V1 evidence that the checker is used |
 
 ### Locked decisions
@@ -51,7 +52,7 @@ This repo already merged the architecture (PR #68) and Step 0 (PR #69).
 
 ## Plan
 
-Step 2 (source-of-truth contracts) is done. Next is `ds-audit` (Step 3).
+Step 3 (`ds-audit`) is done. Next is prototype CI + `audit-prototype` skill (Step 4).
 
 **Stop-the-line:** if after V1 the checker is ignored (restricted imports and undeclared local components do not move), do not add generating agents.
 
@@ -64,7 +65,7 @@ Repair contradictions agents would otherwise enforce. No new packages.
 3. **Shared enums:** **Done.** `Button` / `Badge` / `Alert` import unions from `types.ts`. Arrays match the wrappers (`disabled` on Button; Alert has `pending`, not `warning`).
 4. **Figma registry:** **Done.** Button pass-through mapping (plus `disabled`). Badge/Alert match wrappers. Wrapper wins.
 5. **Cursor rules split:** **Done.** Always-on = consumption only. Wrapper authoring glob excludes `ComplexComponents/`. Code Connect stays on `*.figma.tsx`.
-6. **Lint honesty:** **Done.** `npm run lint` covers `app/`, `components/`, and `next.config.ts`. Fleet prototypes still wait on `ds-audit` (Step 3).
+6. **Lint honesty:** **Done.** `npm run lint` covers `app/`, `components/`, and `next.config.ts`. Fleet gate is `ds-audit` (Step 3 shipped; CI wiring is Step 4).
 7. **Docs drift:** **Done.** `CLAUDE.md` token-dependency text matches `package.json`. Keep `STATUS.md` current.
 8. **Template leftover:** ~~rename `components/cbp/`~~ **Done.** Template slot is `components/local/`. Agent-facing copy does not mention CBP. Published GitHub template still has the old folder until `npm run publish-prototype-template`.
 
@@ -96,6 +97,8 @@ Tests: wrapper enums ⊆ contract enums; `PageContentHeader` `contentSection` + 
 Read-only CLI, same version as the kit. Writes `prototype-audit.json`.
 
 Scan: versions, banned `@mantine/core` in prototype `app/` and local components, deprecated APIs, raw hex/px / `style=`, component usage counts, local component file list. No LLM. No network. Definition of Done is this command plus `tsc`.
+
+**Done (2026-09-18).** `ds-package/bin/ds-audit.js` is the kit `ds-audit` bin. Template and this repo expose `npm run ds:audit`. Exit 1 only on restricted `@mantine/core` imports; composition heuristics (missing `PageContentHeader`, handmade record lists) are findings, not failures. `health.typecheck/lint/build` are `skipped` until Step 4. No network.
 
 **Done when:** `npm run ds:audit` runs in the template against a fresh clone.
 
@@ -138,6 +141,6 @@ Materialize Cursor assets from the kit, then generate/repair pages against contr
 
 ## Suggested next
 
-Step **3** — `ds-audit` in the kit. Then prototype CI + `audit-prototype` skill (Step 4).
+Step **4** — prototype CI + `audit-prototype` skill. Fail CI on restricted imports; warn on composition heuristics.
 
 Refresh `ad-dc/appdirect-prototype-template` when a maintainer wants clones to pick up `components/local/`, the corrected spacing lookup, and manifest `versions`.

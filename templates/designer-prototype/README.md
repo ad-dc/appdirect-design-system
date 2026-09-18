@@ -37,6 +37,14 @@ import { Card, Stack, Button, TextInput, Badge } from '@appdirect/ds-prototype-k
 
 Product-specific components go in `components/local/`.
 
+## Audit
+
+```bash
+npm run ds:audit
+```
+
+Writes `prototype-audit.json`. Restricted `@mantine/core` imports fail. Missing page headers and handmade record lists are findings, not failures. No network.
+
 ## Update the design system
 
 When a new kit ships, bump the tarball URL in `package.json` to the [latest release](https://github.com/ad-dc/appdirect-design-system/releases), run `npm install`, then `npm run fill-manifest-versions`. Do not cherry-pick or fork `appdirect-design-system`.

@@ -54,6 +54,16 @@ function MyPage() {
 
 Tier-0 component contracts ship in the kit as JSON (`@appdirect/ds-prototype-kit/contracts` and `@appdirect/ds-prototype-kit/contracts/Button.json`). They are copied from `*.contract.json` files next to DS source. Wrapper enums must stay a subset of the contract; complex components (`PageContentHeader`, `DataTable`) are not Mantine wrappers.
 
+## Audit
+
+The kit ships a `ds-audit` CLI (same version as the components). In a prototype repo:
+
+```bash
+npm run ds:audit
+```
+
+No LLM. No network. Writes `prototype-audit.json`. Exit 1 only when prototype `app/` or `components/local/` import `@mantine/core`. Composition heuristics (missing `PageContentHeader`, handmade record lists) are reported, not failed.
+
 ## Component Categories
 
 - **Buttons:** Button, ActionIcon, CloseButton

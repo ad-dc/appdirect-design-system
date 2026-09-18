@@ -149,6 +149,7 @@ npm run typecheck      # TypeScript check
 ```bash
 npm run create-page              # Scaffold a new prototype page in this repo
 npm run fill-manifest-versions   # Rewrite prototype-manifest.json versions from package.json / kit pin
+npm run ds:audit                 # Read-only DS audit → prototype-audit.json (fail on @mantine/core in app/)
 npm run create-prototype    # Create a per-designer prototype repo from the thin template
 npm run export-pages        # Export pages for production use
 ```
@@ -238,6 +239,7 @@ templates/
   designer-prototype/         # Thin Next.js starter (source of the GitHub template)
 
 ds-package/                   # Publishable npm package (@appdirect/ds-prototype-kit)
+  bin/ds-audit.js             # Read-only prototype auditor (kit bin: ds-audit)
 prototype-manifest.json       # Page registry + pinned kit / tokens / factory / mantine versions
 ```
 
