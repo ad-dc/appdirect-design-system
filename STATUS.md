@@ -16,7 +16,7 @@ A snapshot of where the AppDirect Design System repo is right now. Update this f
 - **Kit:** `@appdirect/ds-prototype-kit` **0.2.6** (GitHub Release tarball)
 - **Branch / consumer model:** Self-serve GitHub template `ad-dc/appdirect-prototype-template` (kit tarball pin). This repo stays write-restricted. `npm run publish-prototype-template` refreshes the template.
 - **Spacing:** Mantine Core `xs–xl` (10/12/16/20/32) plus added `none` / `xxs` / `xxl`. Agent lookups and `theme.ts` match that scale (`4px` → `xxs`).
-- **Factory:** architecture merged (PR #68). Steps 0–3 merged (#69–#72). Step 4: prototype CI + `audit-prototype` skill. Next: fleet rollup (Step 5). See Active.
+- **Factory:** architecture merged (PR #68). Steps 0–4 merged (#69–#73). Step 5: fleet rollup. Next: optional semantic reviewer (Step 6). See Active.
 
 ---
 
@@ -45,6 +45,7 @@ A snapshot of where the AppDirect Design System repo is right now. Update this f
 - Step 2: tier-0 `*.contract.json` next to source (Button, Badge, Alert, layout, `PageContentHeader`, `DataTable`). Kit build copies them to `dist/contracts/`.
 - Step 3: kit `ds-audit` CLI writes `prototype-audit.json`. `npm run ds:audit` in this repo and the template. Fail only on restricted `@mantine/core` imports.
 - Step 4: template GitHub Action typecheck + `ds-audit`. Restricted imports fail CI (`::error`); missing `PageContentHeader` / handmade lists warn (`::warning`). `audit-prototype` skill in the template and this repo.
+- Step 5: `npm run fleet-rollup` prints kit lag, top violation rules, and local-pattern clusters from `fleet.json` / `prototype-audit.json`.
 
 ### 2026-09-17
 
@@ -68,7 +69,7 @@ A snapshot of where the AppDirect Design System repo is right now. Update this f
 
 ## Active
 
-- **Agentic production.** Architecture merged ([#68](https://github.com/ad-dc/appdirect-design-system/pull/68)). Step 0 ([#69](https://github.com/ad-dc/appdirect-design-system/pull/69)). Step 1 ([#70](https://github.com/ad-dc/appdirect-design-system/pull/70)). Step 2 ([#71](https://github.com/ad-dc/appdirect-design-system/pull/71)). Step 3 ([#72](https://github.com/ad-dc/appdirect-design-system/pull/72)). Step 4 (prototype CI + skill) on this change. Next: Step 5 fleet rollup.
+- **Agentic production.** Architecture merged ([#68](https://github.com/ad-dc/appdirect-design-system/pull/68)). Steps 0–4: [#69](https://github.com/ad-dc/appdirect-design-system/pull/69)–[#73](https://github.com/ad-dc/appdirect-design-system/pull/73). Step 5 (fleet rollup) on this change. Next: Step 6 optional semantic reviewer (gated); Steps 7–8 stay blocked until the checker is used.
 
 ---
 

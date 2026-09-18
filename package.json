@@ -14,6 +14,7 @@
     "create-page": "node tools/create-page.js",
     "fill-manifest-versions": "node tools/fill-manifest-versions.js",
     "ds:audit": "node ds-package/bin/ds-audit.js",
+    "fleet-rollup": "node tools/fleet-rollup.js",
     "create-prototype": "node tools/create-prototype-repo.js",
     "publish-prototype-template": "node tools/publish-prototype-template.js",
     "export-pages": "node tools/export-page.js",
