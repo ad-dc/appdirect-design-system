@@ -1,5 +1,8 @@
 {
   "description": "Source files for per-designer prototype repos. Do not run this folder in place — use npm run create-prototype from the design-system repo.",
   "kitRepo": "ad-dc/appdirect-design-system",
-  "kitPackage": "@appdirect/ds-prototype-kit"
+  "kitPackage": "@appdirect/ds-prototype-kit",
+  "templateVersion": "2026.09.17",
+  "minKit": "0.2.6",
+  "tokensSnapshot": "0.0.6"
 }

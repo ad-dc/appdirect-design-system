@@ -27,6 +27,8 @@ Open [http://localhost:3000/prototype](http://localhost:3000/prototype).
 npm run create-page -- --name "Settings" --template app-shell --layout single-column
 ```
 
+`create-page` updates pages and nav only. After a kit bump, run `npm run fill-manifest-versions` so `prototype-manifest.json` `versions` match the pin.
+
 Import shared components from the kit:
 
 ```tsx
@@ -37,4 +39,4 @@ Product-specific components go in `components/local/`.
 
 ## Update the design system
 
-When a new kit ships, bump the tarball URL in `package.json` to the [latest release](https://github.com/ad-dc/appdirect-design-system/releases) and run `npm install`. Do not cherry-pick or fork `appdirect-design-system`.
+When a new kit ships, bump the tarball URL in `package.json` to the [latest release](https://github.com/ad-dc/appdirect-design-system/releases), run `npm install`, then `npm run fill-manifest-versions`. Do not cherry-pick or fork `appdirect-design-system`.

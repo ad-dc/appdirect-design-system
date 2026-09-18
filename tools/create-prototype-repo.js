@@ -26,6 +26,7 @@
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
+const { fillManifestVersions, semverFromSpec } = require('./fill-manifest-versions.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const TEMPLATE_DIR = path.join(ROOT, 'templates', 'designer-prototype');
@@ -125,6 +126,32 @@ function applyPlaceholders(dir, replacements) {
   }
   walk(dir);
   return leftover;
+}
+
+function readTemplateIdentity() {
+  const metaPath = path.join(TEMPLATE_DIR, 'template.meta.json');
+  const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
+  return {
+    id: meta.templateId || 'ad-dc/appdirect-prototype-template',
+    version: meta.templateVersion,
+  };
+}
+
+function tokensSnapshotFromThisRepo() {
+  const rootPkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
+  const fromDep = semverFromSpec(
+    rootPkg.dependencies && rootPkg.dependencies['@appdirect/design-tokens']
+  );
+  if (fromDep) return fromDep;
+  const kitPkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'ds-package', 'package.json'), 'utf8'));
+  return kitPkg.tokensSnapshot || '';
+}
+
+function fillScaffoldManifest(dest) {
+  fillManifestVersions(dest, {
+    tokensSnapshot: tokensSnapshotFromThisRepo(),
+    template: readTemplateIdentity(),
+  });
 }
 
 function resolveKitTarballUrl({ kitUrl, kitTag }) {
@@ -243,6 +270,8 @@ function main(argv = process.argv) {
     process.exit(1);
   }
 
+  fillScaffoldManifest(dest);
+
   if (args.github && args.noGit) {
     console.error('Error: --github requires git. Do not pass --no-git.');
     process.exit(1);
@@ -284,5 +313,6 @@ module.exports = {
   resolveKitTarballUrl,
   applyPlaceholders,
   copyDir,
+  fillScaffoldManifest,
   main,
 };

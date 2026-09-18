@@ -4,15 +4,15 @@ Working sequence for the factory loop. Rationale, contract sketches, and cited m
 
 **As of:** 2026-09-17  
 **Proposal PR:** https://github.com/ad-dc/appdirect-design-system/pull/68 (merged)  
-**Current phase:** Step 0.1–0.4, 0.7, 0.8 merged. 0.5–0.6 in flight. Contracts, `ds-audit`, agents, and telemetry are not started.
+**Current phase:** Step 0 complete (PR #69). Step 1 (manifest versions) in this change. Next: tier-0 contracts. `ds-audit`, agents, and telemetry are not started.
 
 ---
 
 ## Where we are
 
-The main repo already ships a design system, kit tarball (`@appdirect/ds-prototype-kit` **0.2.6**), and a thin prototype template (`ad-dc/appdirect-prototype-template`). Cursor consumption rules/skills copy into new prototypes. `prototype-manifest.json` lists pages only (no system versions). Main-repo `lint` barely covers DS/prototype code.
+The main repo already ships a design system, kit tarball (`@appdirect/ds-prototype-kit` **0.2.6**), and a thin prototype template (`ad-dc/appdirect-prototype-template`). Cursor consumption rules/skills copy into new prototypes. `prototype-manifest.json` now pins `versions` (`kit`, `tokensSnapshot`, `factory`, `mantine`); `create-page` leaves those pins alone.
 
-This repo already merged the architecture plus Steps 0.1–0.4, 0.7, and 0.8 (PR #68). Remaining Step 0: Cursor rules split and lint honesty.
+This repo already merged the architecture (PR #68) and Step 0 (PR #69).
 
 | Layer | State |
 |---|---|
@@ -21,8 +21,9 @@ This repo already merged the architecture plus Steps 0.1–0.4, 0.7, and 0.8 (PR
 | Canonical correctness | **Decided:** DS component source. Not Figma, not `DESIGN.md`, not unused `types.ts` |
 | V1 factory | **Decided, not built:** checker and reporter |
 | Later factory | **Decided, gated:** authors/repairs pages against the same contracts |
-| Step 0 (repair contradictions) | **0.1–0.8 done** after this change (0.5–0.6). Contracts still unstarted |
-| Steps 1–5 (manifest, contracts, audit, CI, fleet) | Blocked on Step 0 |
+| Step 0 (repair contradictions) | **0.1–0.8 done** (PR #69). |
+| Step 1 (manifest versions) | **Done** in this change. Clones still pick it up on the next template publish. |
+| Steps 2–5 (contracts, audit, CI, fleet) | Next |
 | Steps 6–8 (semantic reviewer, authoring factory) | Blocked on V1 evidence that the checker is used |
 
 ### Locked decisions
@@ -49,7 +50,7 @@ This repo already merged the architecture plus Steps 0.1–0.4, 0.7, and 0.8 (PR
 
 ## Plan
 
-Do not start contracts or `ds-audit` until Step 0 items that would be **encoded as truth** are resolved. Each step is useful alone.
+Step 0 (source-of-truth repairs) is done. Each remaining step is useful alone. Do not start `ds-audit` until tier-0 contracts exist (Step 2).
 
 **Stop-the-line:** if after V1 the checker is ignored (restricted imports and undeclared local components do not move), do not add generating agents.
 
@@ -71,6 +72,8 @@ Repair contradictions agents would otherwise enforce. No new packages.
 ### Step 1 — Manifest versions
 
 Extend `prototype-manifest.json` (template + this repo) with `versions` filled from `package.json` / kit pin (`kit`, `tokensSnapshot`, `factory` = kit in V1). `create-page` does not hand-edit versions.
+
+**Done (2026-09-17).** `npm run fill-manifest-versions` rewrites pins. `create-prototype` / `publish-prototype-template` fill `versions` and `template` when the kit URL is baked. `template.meta.json` has `templateVersion` and `minKit`. Published GitHub template still needs `npm run publish-prototype-template` for clones to pick this up.
 
 **Done when:** a new prototype clone has readable system pins without opening `package.json`.
 
@@ -132,6 +135,6 @@ Materialize Cursor assets from the kit, then generate/repair pages against contr
 
 ## Suggested next
 
-Step **1** — manifest versions on `prototype-manifest.json`. Then tier-0 contracts (Step 2).
+Step **2** — tier-0 contracts (Button, Badge, Alert, layout, `PageContentHeader`, `DataTable`). Then `ds-audit` (Step 3).
 
-Refresh `ad-dc/appdirect-prototype-template` when a maintainer wants clones to pick up `components/local/` and the corrected spacing lookup.
+Refresh `ad-dc/appdirect-prototype-template` when a maintainer wants clones to pick up `components/local/`, the corrected spacing lookup, and manifest `versions`.

@@ -21,6 +21,7 @@ const {
   copyDir,
   applyPlaceholders,
   resolveKitTarballUrl,
+  fillScaffoldManifest,
 } = require('./create-prototype-repo.js');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -77,6 +78,7 @@ function materialize(dest, kitTarballUrl) {
     const detail = leftover.map((item) => `${item.file}: ${item.tokens.join(', ')}`).join('\n');
     throw new Error(`Unsubstituted placeholders:\n${detail}`);
   }
+  fillScaffoldManifest(dest);
 }
 
 function gitCommitPush(dir, message) {

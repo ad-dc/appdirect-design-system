@@ -1,6 +1,6 @@
 # Agentic software-production architecture
 
-**Status:** recommendation only. No packages, contracts, agents, telemetry, or configuration were implemented. Execution sequence: [`agentic-production-plan.md`](./agentic-production-plan.md).
+**Status:** recommendation plus landed Step 0–1. No contracts, `ds-audit`, agents, or telemetry yet. Execution sequence: [`agentic-production-plan.md`](./agentic-production-plan.md).
 
 **Scope:** treat `appdirect-design-system` (main repository) and `templates/designer-prototype` / `ad-dc/appdirect-prototype-template` (prototype fleet) as one system.
 
@@ -80,7 +80,7 @@ In V1, a semantic LLM review is invoked only when the auditor cannot classify a 
 | `@appdirect/ds-prototype-kit` | GitHub Release tarball, currently `0.2.6` | Prototype repos; CSS is a **vendored snapshot** of tokens |
 | Prototype template | GitHub template repo; kit URL baked at publish time | New prototypes only |
 | Cursor rules/skills | Copied into template at publish; **not independently versioned** | New prototypes; existing clones do not auto-update |
-| `prototype-manifest.json` | Page registry only; **no system versions** | Local `create-page` |
+| `prototype-manifest.json` | Page registry **plus** `versions` (`kit`, `tokensSnapshot`, `factory`, `mantine`); optional `template` | Local `create-page` (pages/nav only); `fill-manifest-versions` rewrites pins |
 
 **Important split already in place:** designers never need Artifactory. The kit tarball inlines token CSS (`ds-package/vendor/css/`). The main repo still imports live `@appdirect/design-tokens`. Those two token surfaces can drift independently. That is the first fleet-health problem, before any agent architecture.
 
@@ -175,7 +175,7 @@ A small `compatibility` block in the kit (or `template.meta.json` plus kit `pack
   "kit": "0.2.6",
   "tokensSnapshot": "0.0.6",
   "templateRange": ">=0.1.0",
-  "mantine": "^9.0.1",
+  "mantine": "^9.6.0",
   "react": "^19.2.0"
 }
 ```
@@ -575,7 +575,7 @@ Proposed `prototype-manifest.json`:
     "kit": "0.2.6",
     "tokensSnapshot": "0.0.6",
     "factory": "0.2.6",
-    "mantine": "9.0.1"
+    "mantine": "9.6.0"
   },
   "pages": [],
   "navGroups": {},
@@ -594,10 +594,11 @@ Notes:
 
 - `versions.factory` equals `versions.kit` in v1. Keep the field so a later split does not change the schema.
 - `template.version` can be a date stamp or git sha written by `publish-prototype-template`.
-- `ds-audit` should **rewrite `versions` from lockfile/package.json**, not trust hand-edited numbers.
+- `fill-manifest-versions` (and later `ds-audit`) should **rewrite `versions` from lockfile/package.json**, not trust hand-edited numbers. `create-page` leaves `versions` alone.
 - `exceptions` are opt-in and local. Recurrence across repos is computed centrally, not by copying another team’s exception list.
+- **Implemented 2026-09-17:** both manifests include `versions`; template source has `template` + `template.meta.json` `templateVersion` / `minKit`. Pins are filled from `package.json` / kit tarball / `ds-package`.
 
-`template.meta.json` should gain `templateVersion` and `minKit` so new clones are self-describing before the first audit.
+`template.meta.json` should gain `templateVersion` and `minKit` so new clones are self-describing before the first audit. **Done (2026-09-17).**
 
 ---
 
@@ -816,7 +817,7 @@ Without this, agents will “enforce” the wrong system.
 
 ### Step 1 — Manifest versions
 
-Add `versions` (and optional `template`) to `prototype-manifest.json` in the template and in this repo. Have `create-page` leave them alone; have a tiny script fill them from `package.json`.
+Add `versions` (and optional `template`) to `prototype-manifest.json` in the template and in this repo. Have `create-page` leave them alone; have a tiny script fill them from `package.json`. **Done (2026-09-17).**
 
 ### Step 2 — Contracts for tier 0 only
 

@@ -30,6 +30,17 @@ test('materialize bakes kit URL and strips placeholders', () => {
     assert.equal(pkg.dependencies['@appdirect/ds-prototype-kit'], KIT_URL);
     assert.equal(pkg.dependencies['@appdirect/design-tokens'], undefined);
     assert.equal(existsSync(path.join(dir, '.npmrc')), false);
+    const manifest = JSON.parse(readFileSync(path.join(dir, 'prototype-manifest.json'), 'utf8'));
+    assert.deepEqual(manifest.versions, {
+      kit: '0.2.0',
+      tokensSnapshot: '0.0.6',
+      factory: '0.2.0',
+      mantine: '9.6.0',
+    });
+    assert.deepEqual(manifest.template, {
+      id: 'ad-dc/appdirect-prototype-template',
+      version: '2026.09.17',
+    });
     const readme = readFileSync(path.join(dir, 'README.md'), 'utf8');
     assert.match(readme, /AppDirect Prototype/);
     assert.doesNotMatch(readme, /__PROTOTYPE_NAME__/);

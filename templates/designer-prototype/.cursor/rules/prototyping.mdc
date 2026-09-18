@@ -11,7 +11,7 @@ alwaysApply: false
 When creating a new prototype page:
 
 1. Use `npm run create-page` or manually create under `app/prototype/<slug>/page.tsx`
-2. Update `prototype-manifest.json` with the new page entry
+2. Update `prototype-manifest.json` with the new page entry (pages/nav only). Do not hand-edit `versions` — run `npm run fill-manifest-versions` after a kit bump.
 3. Choose a template: `app-shell` (header + nav) or `content-only` (header only)
 4. Choose a content layout: `single-column` or `tertiary` (main + aside)
 
