@@ -1,9 +1,9 @@
 {
   "prototypeName": "AppDirect Prototype",
   "versions": {
-    "kit": "0.2.6",
+    "kit": "0.2.7",
     "tokensSnapshot": "0.0.6",
-    "factory": "0.2.6",
+    "factory": "0.2.7",
     "mantine": "9.6.0"
   },
   "pages": [

@@ -146,6 +146,8 @@ test('kit build copies contracts and ds-audit into dist', () => {
   const index = JSON.parse(
     readFileSync(path.join(ROOT, 'ds-package/dist/contracts/index.json'), 'utf8')
   );
+  const kitPkg = JSON.parse(readFileSync(path.join(ROOT, 'ds-package/package.json'), 'utf8'));
+  assert.equal(index.version, kitPkg.version);
   const ids = index.contracts.map((item) => item.id).sort();
   assert.deepEqual(ids, [
     'Alert',

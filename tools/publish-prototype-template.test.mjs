@@ -39,7 +39,7 @@ test('materialize bakes kit URL and strips placeholders', () => {
     });
     assert.deepEqual(manifest.template, {
       id: 'ad-dc/appdirect-prototype-template',
-      version: '2026.09.17',
+      version: '2026.09.18',
     });
     const readme = readFileSync(path.join(dir, 'README.md'), 'utf8');
     assert.match(readme, /AppDirect Prototype/);
