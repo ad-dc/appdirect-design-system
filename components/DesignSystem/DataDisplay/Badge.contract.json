@@ -1,0 +1,38 @@
+{
+  "$schema": "../contracts/ds-component-contract.v1.json",
+  "id": "Badge",
+  "kind": "wrapper",
+  "version": "0.2.6",
+  "purpose": "Compact status or category label. Not a button.",
+  "importFrom": ["@appdirect/ds-prototype-kit", "@/components/DesignSystem"],
+  "mantineCounterpart": "Badge",
+  "anatomy": ["root", "children"],
+  "api": {
+    "props": {
+      "variant": {
+        "enum": ["filled", "outline", "info", "success", "danger", "pending", "default", "warning"],
+        "default": "filled",
+        "notes": "Semantic names (info/success/danger/pending/warning/default) also act as color shortcuts when color is default. Only filled and outline map to Mantine variants."
+      },
+      "color": {
+        "enum": ["info", "success", "danger", "pending", "default", "warning", "blue", "green", "red", "yellow", "gray"],
+        "default": "default"
+      },
+      "size": { "enum": ["xs", "sm", "md", "lg", "xl"], "default": "md" },
+      "radius": { "fixed": "sm", "consumerOverride": false }
+    }
+  },
+  "deprecatedPatterns": [
+    "import { Badge } from '@mantine/core'"
+  ],
+  "enforcement": {
+    "deterministic": [
+      "importFrom",
+      "api.props.variant.enum",
+      "api.props.color.enum",
+      "api.props.size.enum",
+      "api.props.radius.fixed"
+    ],
+    "semantic": ["purpose"]
+  }
+}

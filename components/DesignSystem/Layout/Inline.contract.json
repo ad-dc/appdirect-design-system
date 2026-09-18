@@ -1,0 +1,38 @@
+{
+  "$schema": "../contracts/ds-component-contract.v1.json",
+  "id": "Inline",
+  "kind": "wrapper",
+  "version": "0.2.6",
+  "purpose": "Horizontal layout primitive for new Figma-mapped and prototype code (flex-direction: row).",
+  "importFrom": ["@appdirect/ds-prototype-kit", "@/components/DesignSystem"],
+  "mantineCounterpart": "Group",
+  "aliasedBy": ["Group"],
+  "api": {
+    "props": {
+      "gap": {
+        "enum": ["none", "xxs", "xs", "sm", "md", "lg", "xl", "xxl"],
+        "default": "md"
+      },
+      "align": {
+        "enum": ["flex-start", "flex-end", "center", "baseline", "stretch"],
+        "default": "center"
+      },
+      "justify": {
+        "enum": ["flex-start", "flex-end", "center", "space-between", "space-around", "space-evenly"],
+        "default": "flex-start"
+      },
+      "wrap": {
+        "enum": ["nowrap", "wrap", "wrap-reverse"],
+        "default": "wrap"
+      }
+    }
+  },
+  "deprecatedPatterns": [
+    "import { Group } from '@mantine/core'",
+    "import { Group } from '@/components/DesignSystem' in new code (use Inline)"
+  ],
+  "enforcement": {
+    "deterministic": ["importFrom", "api.props.gap.enum"],
+    "semantic": ["purpose"]
+  }
+}

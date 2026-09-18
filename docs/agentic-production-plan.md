@@ -2,9 +2,9 @@
 
 Working sequence for the factory loop. Rationale, contract sketches, and cited models stay in [`agentic-production-architecture.md`](./agentic-production-architecture.md). Repo snapshot stays in [`STATUS.md`](../STATUS.md).
 
-**As of:** 2026-09-17  
+**As of:** 2026-09-18  
 **Proposal PR:** https://github.com/ad-dc/appdirect-design-system/pull/68 (merged)  
-**Current phase:** Step 0 complete (PR #69). Step 1 (manifest versions) in this change. Next: tier-0 contracts. `ds-audit`, agents, and telemetry are not started.
+**Current phase:** Step 0–1 merged. Step 2 (tier-0 contracts) in this change. Next: `ds-audit` (Step 3).
 
 ---
 
@@ -22,8 +22,9 @@ This repo already merged the architecture (PR #68) and Step 0 (PR #69).
 | V1 factory | **Decided, not built:** checker and reporter |
 | Later factory | **Decided, gated:** authors/repairs pages against the same contracts |
 | Step 0 (repair contradictions) | **0.1–0.8 done** (PR #69). |
-| Step 1 (manifest versions) | **Done** in this change. Clones still pick it up on the next template publish. |
-| Steps 2–5 (contracts, audit, CI, fleet) | Next |
+| Step 1 (manifest versions) | **Done** (PR #70). Clones still pick it up on the next template publish. |
+| Step 2 (tier-0 contracts) | **Done** in this change. |
+| Steps 3–5 (audit, CI, fleet) | Next |
 | Steps 6–8 (semantic reviewer, authoring factory) | Blocked on V1 evidence that the checker is used |
 
 ### Locked decisions
@@ -50,7 +51,7 @@ This repo already merged the architecture (PR #68) and Step 0 (PR #69).
 
 ## Plan
 
-Step 0 (source-of-truth repairs) is done. Each remaining step is useful alone. Do not start `ds-audit` until tier-0 contracts exist (Step 2).
+Step 2 (source-of-truth contracts) is done. Next is `ds-audit` (Step 3).
 
 **Stop-the-line:** if after V1 the checker is ignored (restricted imports and undeclared local components do not move), do not add generating agents.
 
@@ -85,6 +86,8 @@ Hand-write JSON next to source; copy into the kit on build.
 - **Complex:** `PageContentHeader`, `DataTable`.
 
 Tests: wrapper enums ⊆ contract enums; `PageContentHeader` `contentSection` + required `title` match the TSX. No Mantine base type on complex components.
+
+**Done (2026-09-18).** `*.contract.json` next to source; kit build copies them to `dist/contracts/`. `npm run test:scripts` fails if a Button/Badge/Alert enum is added without the contract.
 
 **Done when:** changing a Button variant without updating the contract fails CI in this repo.
 
@@ -135,6 +138,6 @@ Materialize Cursor assets from the kit, then generate/repair pages against contr
 
 ## Suggested next
 
-Step **2** — tier-0 contracts (Button, Badge, Alert, layout, `PageContentHeader`, `DataTable`). Then `ds-audit` (Step 3).
+Step **3** — `ds-audit` in the kit. Then prototype CI + `audit-prototype` skill (Step 4).
 
 Refresh `ad-dc/appdirect-prototype-template` when a maintainer wants clones to pick up `components/local/`, the corrected spacing lookup, and manifest `versions`.

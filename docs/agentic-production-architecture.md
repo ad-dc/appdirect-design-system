@@ -1,6 +1,6 @@
 # Agentic software-production architecture
 
-**Status:** recommendation plus landed Step 0–1. No contracts, `ds-audit`, agents, or telemetry yet. Execution sequence: [`agentic-production-plan.md`](./agentic-production-plan.md).
+**Status:** recommendation plus landed Step 0–2. No `ds-audit`, agents, or telemetry yet. Execution sequence: [`agentic-production-plan.md`](./agentic-production-plan.md).
 
 **Scope:** treat `appdirect-design-system` (main repository) and `templates/designer-prototype` / `ad-dc/appdirect-prototype-template` (prototype fleet) as one system.
 
@@ -396,7 +396,7 @@ Keep the schema small. Every field must have an enforcement owner: `deterministi
 }
 ```
 
-The JSON above is a **proposal**, not an implemented file. A representative example grounded in the actual `Button` wrapper follows.
+The JSON above is the v1 shape. Tier-0 files live next to source as `*.contract.json` (e.g. `Buttons/Button.contract.json`) and are copied to `ds-package/dist/contracts/` on kit build.
 
 ### Representative example: `Button` (from this repository)
 
@@ -412,7 +412,7 @@ Observed definition of correctness:
 - `leftSection` / `rightSection` are supported
 - Consumer CSS module `Button.module.css` exists despite the “no CSS modules” **consumer** rule — that exception is **producer-side** and must be named in the contract so auditors do not flag the kit itself
 
-Proposed contract (abridged, still recommendation-only):
+Proposed contract (abridged; implemented as `Buttons/Button.contract.json`):
 
 ```json
 {
@@ -821,7 +821,7 @@ Add `versions` (and optional `template`) to `prototype-manifest.json` in the tem
 
 ### Step 2 — Contracts for tier 0 only
 
-Hand-write JSON for tier-0 wrappers (Button, Badge, Alert, layout) and tier-0 complex components (`PageContentHeader`, `DataTable`). Publish them in the kit. Wrapper test: enums ⊆ contract enums. Complex-component test: `contentSection` union and required `title` match `PageContentHeader.tsx` — do not assert a Mantine base type.
+Hand-write JSON for tier-0 wrappers (Button, Badge, Alert, layout) and tier-0 complex components (`PageContentHeader`, `DataTable`). Publish them in the kit. Wrapper test: enums ⊆ contract enums. Complex-component test: `contentSection` union and required `title` match `PageContentHeader.tsx` — do not assert a Mantine base type. **Done (2026-09-18).**
 
 ### Step 3 — `ds-audit` in the kit
 

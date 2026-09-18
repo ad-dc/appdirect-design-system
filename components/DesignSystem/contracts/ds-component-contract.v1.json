@@ -1,0 +1,23 @@
+{
+  "$id": "https://appdirect.local/schemas/ds-component-contract.v1.json",
+  "title": "DS component contract v1",
+  "description": "Machine-readable definition of component correctness. Wrapper contracts describe a restricted Mantine API. Complex contracts describe AppDirect compositions with no Mantine counterpart. Source of truth is the TSX next to the file, not this schema.",
+  "type": "object",
+  "required": ["id", "kind", "version", "importFrom", "enforcement"],
+  "properties": {
+    "id": { "type": "string" },
+    "kind": { "enum": ["wrapper", "complex"] },
+    "version": { "type": "string" },
+    "aliasOf": { "type": "string" },
+    "mantineCounterpart": { "type": ["string", "null"] },
+    "importFrom": { "type": "array", "items": { "type": "string" } },
+    "enforcement": {
+      "type": "object",
+      "required": ["deterministic", "semantic"],
+      "properties": {
+        "deterministic": { "type": "array", "items": { "type": "string" } },
+        "semantic": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

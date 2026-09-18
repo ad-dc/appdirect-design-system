@@ -1,0 +1,27 @@
+{
+  "$schema": "../contracts/ds-component-contract.v1.json",
+  "id": "Box",
+  "kind": "wrapper",
+  "version": "0.2.6",
+  "purpose": "Flexible container primitive for spacing and color tokens when Stack/Inline/Grid do not apply.",
+  "importFrom": ["@appdirect/ds-prototype-kit", "@/components/DesignSystem"],
+  "mantineCounterpart": "Box",
+  "api": {
+    "props": {
+      "p": {
+        "enum": ["none", "xxs", "xs", "sm", "md", "lg", "xl", "xxl"],
+        "notes": "Also accepts string | number passthrough."
+      },
+      "m": {
+        "enum": ["none", "xxs", "xs", "sm", "md", "lg", "xl", "xxl"]
+      }
+    }
+  },
+  "deprecatedPatterns": [
+    "import { Box } from '@mantine/core'"
+  ],
+  "enforcement": {
+    "deterministic": ["importFrom", "api.props.p.enum"],
+    "semantic": ["purpose"]
+  }
+}

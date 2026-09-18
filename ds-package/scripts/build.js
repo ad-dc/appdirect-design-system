@@ -138,6 +138,42 @@ function copyTokenCss() {
   }
 }
 
+function collectContractFiles(dir, relativeBase = '', out = []) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    const relativePath = path.join(relativeBase, entry.name);
+    if (entry.isDirectory()) {
+      collectContractFiles(full, relativePath, out);
+    } else if (entry.name.endsWith('.contract.json')) {
+      out.push({ src: full, relativePath });
+    }
+  }
+  return out;
+}
+
+function copyContracts() {
+  const dest = path.join(DIST_DIR, 'contracts');
+  fs.mkdirSync(dest, { recursive: true });
+  const files = collectContractFiles(SOURCE_DIR);
+  if (!files.length) {
+    throw new Error('No *.contract.json files found under components/DesignSystem');
+  }
+  const index = [];
+  for (const file of files) {
+    const json = JSON.parse(fs.readFileSync(file.src, 'utf-8'));
+    if (!json.id) {
+      throw new Error(`Contract missing id: ${file.relativePath}`);
+    }
+    fs.writeFileSync(path.join(dest, `${json.id}.json`), JSON.stringify(json, null, 2) + '\n');
+    index.push({ id: json.id, kind: json.kind, source: file.relativePath.replace(/\\/g, '/') });
+  }
+  index.sort((a, b) => a.id.localeCompare(b.id));
+  fs.writeFileSync(
+    path.join(dest, 'index.json'),
+    JSON.stringify({ version: '0.2.6', contracts: index }, null, 2) + '\n'
+  );
+}
+
 function removeEmptyDirs(dir) {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   for (const entry of entries) {
@@ -160,6 +196,7 @@ function main() {
   copyDirSync(SOURCE_DIR, DIST_DIR);
   copyTableHooks();
   copyTokenCss();
+  copyContracts();
 
   // Clean up empty directories left by skipped files
   removeEmptyDirs(DIST_DIR);
@@ -178,7 +215,7 @@ function main() {
   countFiles(DIST_DIR);
 
   console.log(`  Copied ${fileCount} files to dist/`);
-  console.log('  Included: DataTable, table hooks, vendor/css');
+  console.log('  Included: DataTable, table hooks, vendor/css, contracts');
   console.log('  Done.\n');
 }
 
