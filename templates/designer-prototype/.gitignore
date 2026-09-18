@@ -3,6 +3,7 @@
 .pnp.*
 
 /coverage
+/prototype-audit.json
 /.next/
 /out/
 /build

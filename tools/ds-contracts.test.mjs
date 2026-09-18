@@ -11,7 +11,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -141,7 +141,7 @@ test('DataTable is a complex contract with required data and columns', () => {
   assert.match(contract.composition.notes, /Static dummy lists may use Table/);
 });
 
-test('kit build copies contracts to dist/contracts', () => {
+test('kit build copies contracts and ds-audit into dist', () => {
   execFileSync('node', [path.join(ROOT, 'ds-package/scripts/build.js')], { stdio: 'pipe' });
   const index = JSON.parse(
     readFileSync(path.join(ROOT, 'ds-package/dist/contracts/index.json'), 'utf8')
@@ -162,4 +162,7 @@ test('kit build copies contracts to dist/contracts', () => {
   for (const id of ids) {
     assert.equal(existsSync(path.join(ROOT, `ds-package/dist/contracts/${id}.json`)), true);
   }
+  const bin = path.join(ROOT, 'ds-package/dist/bin/ds-audit.js');
+  assert.equal(existsSync(bin), true);
+  assert.equal((statSync(bin).mode & 0o111) !== 0, true);
 });

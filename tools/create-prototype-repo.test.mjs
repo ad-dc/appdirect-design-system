@@ -92,6 +92,7 @@ test('main copies template, pins kit, and strips placeholders', () => {
     assert.equal(pkg.dependencies['@appdirect/ds-prototype-kit'], KIT_URL);
     assert.equal(pkg.dependencies['@appdirect/design-tokens'], undefined);
     assert.equal(pkg.dependencies['mantine-react-table-open'], '^9.0.3');
+    assert.equal(pkg.scripts['ds:audit'], 'ds-audit');
 
     const manifest = JSON.parse(readFileSync(path.join(out, 'prototype-manifest.json'), 'utf8'));
     assert.equal(manifest.prototypeName, 'Alex Prototypes');

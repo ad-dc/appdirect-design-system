@@ -174,6 +174,18 @@ function copyContracts() {
   );
 }
 
+function copyBin() {
+  const dest = path.join(DIST_DIR, 'bin');
+  fs.mkdirSync(dest, { recursive: true });
+  const from = path.join(ROOT, 'bin', 'ds-audit.js');
+  if (!fs.existsSync(from)) {
+    throw new Error(`Missing ds-audit CLI: ${from}`);
+  }
+  const to = path.join(dest, 'ds-audit.js');
+  fs.copyFileSync(from, to);
+  fs.chmodSync(to, 0o755);
+}
+
 function removeEmptyDirs(dir) {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   for (const entry of entries) {
@@ -197,6 +209,7 @@ function main() {
   copyTableHooks();
   copyTokenCss();
   copyContracts();
+  copyBin();
 
   // Clean up empty directories left by skipped files
   removeEmptyDirs(DIST_DIR);
@@ -215,7 +228,7 @@ function main() {
   countFiles(DIST_DIR);
 
   console.log(`  Copied ${fileCount} files to dist/`);
-  console.log('  Included: DataTable, table hooks, vendor/css, contracts');
+  console.log('  Included: DataTable, table hooks, vendor/css, contracts, ds-audit');
   console.log('  Done.\n');
 }
 

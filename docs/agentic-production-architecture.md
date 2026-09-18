@@ -1,6 +1,6 @@
 # Agentic software-production architecture
 
-**Status:** recommendation plus landed Step 0–2. No `ds-audit`, agents, or telemetry yet. Execution sequence: [`agentic-production-plan.md`](./agentic-production-plan.md).
+**Status:** recommendation plus landed Step 0–3. `ds-audit` ships with the kit and writes `prototype-audit.json`. No prototype CI, fleet rollup, or authoring agents yet. Execution sequence: [`agentic-production-plan.md`](./agentic-production-plan.md).
 
 **Scope:** treat `appdirect-design-system` (main repository) and `templates/designer-prototype` / `ad-dc/appdirect-prototype-template` (prototype fleet) as one system.
 
@@ -827,7 +827,7 @@ Hand-write JSON for tier-0 wrappers (Button, Badge, Alert, layout) and tier-0 co
 
 Read-only scanner: versions, restricted imports, deprecated APIs, token/style bans, component usage counts, local component file list. Write `prototype-audit.json`. Wire `npm run ds:audit` in the template.
 
-No LLM. No network.
+No LLM. No network. **Done (2026-09-18).** Exit 1 only on restricted `@mantine/core` imports; missing `PageContentHeader` and handmade record lists are findings. `health.typecheck/lint/build` stay `skipped` until Step 4.
 
 ### Step 4 — Template: CI warn + `audit-prototype` skill
 

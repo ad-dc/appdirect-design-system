@@ -12,6 +12,7 @@
 
 # testing
 /coverage
+/prototype-audit.json
 
 # next.js
 /.next/
