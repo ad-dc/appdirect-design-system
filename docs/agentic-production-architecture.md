@@ -77,7 +77,7 @@ In V1, a semantic LLM review is invoked only when the auditor cannot classify a 
 | Artifact | Versioning today | Consumed by |
 |---|---|---|
 | `@appdirect/design-tokens` | Artifactory `^0.0.6` | Main repo only |
-| `@appdirect/ds-prototype-kit` | GitHub Release tarball, currently `0.2.6` | Prototype repos; CSS is a **vendored snapshot** of tokens |
+| `@appdirect/ds-prototype-kit` | GitHub Release tarball, currently `0.2.7` | Prototype repos; CSS is a **vendored snapshot** of tokens |
 | Prototype template | GitHub template repo; kit URL baked at publish time | New prototypes only |
 | Cursor rules/skills | Copied into template at publish; **not independently versioned** | New prototypes; existing clones do not auto-update |
 | `prototype-manifest.json` | Page registry **plus** `versions` (`kit`, `tokensSnapshot`, `factory`, `mantine`); optional `template` | Local `create-page` (pages/nav only); `fill-manifest-versions` rewrites pins |

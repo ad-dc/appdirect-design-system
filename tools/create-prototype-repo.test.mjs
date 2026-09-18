@@ -99,7 +99,7 @@ test('main copies template, pins kit, and strips placeholders', () => {
     assert.deepEqual(manifest.pages, []);
     assert.deepEqual(manifest.template, {
       id: 'ad-dc/appdirect-prototype-template',
-      version: '2026.09.17',
+      version: '2026.09.18',
     });
     assert.deepEqual(manifest.versions, {
       kit: '0.2.0',

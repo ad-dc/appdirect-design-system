@@ -15,6 +15,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
+const KIT_PKG = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf-8'));
 const PROJECT_ROOT = path.resolve(ROOT, '..');
 const SOURCE_DIR = path.join(PROJECT_ROOT, 'components', 'DesignSystem');
 const HOOKS_DIR = path.join(PROJECT_ROOT, 'hooks');
@@ -170,7 +171,7 @@ function copyContracts() {
   index.sort((a, b) => a.id.localeCompare(b.id));
   fs.writeFileSync(
     path.join(dest, 'index.json'),
-    JSON.stringify({ version: '0.2.6', contracts: index }, null, 2) + '\n'
+    JSON.stringify({ version: KIT_PKG.version, contracts: index }, null, 2) + '\n'
   );
 }
 

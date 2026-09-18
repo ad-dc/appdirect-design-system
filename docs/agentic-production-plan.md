@@ -4,13 +4,13 @@ Working sequence for the factory loop. Rationale, contract sketches, and cited m
 
 **As of:** 2026-09-18  
 **Proposal PR:** https://github.com/ad-dc/appdirect-design-system/pull/68 (merged)  
-**Current phase:** Step 0–4 merged. Step 5 (fleet rollup) in this change. Next: semantic reviewer (Step 6, optional) after false positives are understood.
+**Current phase:** Step 0–5 merged. Kit **0.2.7**. Next: publish the tarball + template, then collect fleet audits. Steps 6–8 stay gated.
 
 ---
 
 ## Where we are
 
-The main repo already ships a design system, kit tarball (`@appdirect/ds-prototype-kit` **0.2.6**), and a thin prototype template (`ad-dc/appdirect-prototype-template`). Cursor consumption rules/skills copy into new prototypes. `prototype-manifest.json` now pins `versions` (`kit`, `tokensSnapshot`, `factory`, `mantine`); `create-page` leaves those pins alone.
+The main repo already ships a design system, kit tarball (`@appdirect/ds-prototype-kit` **0.2.7**), and a thin prototype template (`ad-dc/appdirect-prototype-template`). Cursor consumption rules/skills copy into new prototypes. `prototype-manifest.json` now pins `versions` (`kit`, `tokensSnapshot`, `factory`, `mantine`); `create-page` leaves those pins alone.
 
 This repo already merged the architecture (PR #68) and Step 0 (PR #69).
 
@@ -26,7 +26,7 @@ This repo already merged the architecture (PR #68) and Step 0 (PR #69).
 | Step 2 (tier-0 contracts) | **Done** (PR #71). |
 | Step 3 (`ds-audit`) | **Done** (PR #72). |
 | Step 4 (prototype CI + skill) | **Done** (PR #73). |
-| Step 5 (fleet) | **Done** in this change. |
+| Step 5 (fleet) | **Done** (PR #74). |
 | Steps 6–8 (semantic reviewer, authoring factory) | Blocked on V1 evidence that the checker is used |
 
 ### Locked decisions
@@ -53,7 +53,7 @@ This repo already merged the architecture (PR #68) and Step 0 (PR #69).
 
 ## Plan
 
-Step 5 (fleet rollup) is done. Next is the optional semantic reviewer (Step 6), only after Step 4 false positives are understood. The authoring factory (Steps 7–8) stays gated.
+Step 5 (fleet rollup) is done. Next is publish kit **0.2.7** + the GitHub template, then collect fleet audits. The optional semantic reviewer (Step 6) waits on false positives. The authoring factory (Steps 7–8) stays gated.
 
 **Stop-the-line:** if after V1 the checker is ignored (restricted imports and undeclared local components do not move), do not add generating agents.
 
@@ -148,4 +148,4 @@ Materialize Cursor assets from the kit, then generate/repair pages against contr
 
 Step **6** — optional semantic reviewer, only after Step 4 false positives are understood. Then Steps 7–8 (authoring factory) if Step 5 shows the checker is used.
 
-Refresh `ad-dc/appdirect-prototype-template` when a maintainer wants clones to pick up `components/local/`, the corrected spacing lookup, and manifest `versions`.
+Refresh `ad-dc/appdirect-prototype-template` after the **0.2.7** kit tarball is on GitHub Releases so clones pick up `ds-audit`, contracts, and prototype CI.
