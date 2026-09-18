@@ -19,7 +19,9 @@
       "default": "./dist/types.ts"
     },
     "./css/foundations.css": "./dist/css/foundations.css",
-    "./css/mantine.css": "./dist/css/mantine.css"
+    "./css/mantine.css": "./dist/css/mantine.css",
+    "./contracts": "./dist/contracts/index.json",
+    "./contracts/*": "./dist/contracts/*"
   },
   "files": [
     "dist",

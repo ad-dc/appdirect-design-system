@@ -50,6 +50,10 @@ function MyPage() {
 }
 ```
 
+## Contracts
+
+Tier-0 component contracts ship in the kit as JSON (`@appdirect/ds-prototype-kit/contracts` and `@appdirect/ds-prototype-kit/contracts/Button.json`). They are copied from `*.contract.json` files next to DS source. Wrapper enums must stay a subset of the contract; complex components (`PageContentHeader`, `DataTable`) are not Mantine wrappers.
+
 ## Component Categories
 
 - **Buttons:** Button, ActionIcon, CloseButton

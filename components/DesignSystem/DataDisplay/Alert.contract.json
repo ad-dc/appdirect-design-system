@@ -1,0 +1,44 @@
+{
+  "$schema": "../contracts/ds-component-contract.v1.json",
+  "id": "Alert",
+  "kind": "wrapper",
+  "version": "0.2.6",
+  "purpose": "Inline status message. Use pending, not warning.",
+  "importFrom": ["@appdirect/ds-prototype-kit", "@/components/DesignSystem"],
+  "mantineCounterpart": "Alert",
+  "anatomy": ["root", "icon", "title", "children", "closeButton"],
+  "api": {
+    "props": {
+      "color": {
+        "enum": ["info", "success", "danger", "pending", "default"],
+        "default": "default",
+        "notes": "No warning. Use pending for caution/in-progress."
+      },
+      "type": {
+        "enum": ["info", "success", "danger", "pending", "default"],
+        "deprecated": true,
+        "replacement": "color"
+      },
+      "variant": { "fixed": "light", "consumerOverride": false },
+      "radius": { "fixed": "sm", "consumerOverride": false },
+      "title": { "type": "string" },
+      "withCloseButton": { "type": "boolean", "default": false },
+      "icon": { "type": "ReactNode", "notes": "Overrides the semantic default icon" }
+    }
+  },
+  "deprecatedPatterns": [
+    "import { Alert } from '@mantine/core'",
+    "color=\"warning\"",
+    "type=\"warning\""
+  ],
+  "enforcement": {
+    "deterministic": [
+      "importFrom",
+      "api.props.color.enum",
+      "api.props.type.deprecated",
+      "api.props.variant.fixed",
+      "api.props.radius.fixed"
+    ],
+    "semantic": ["purpose"]
+  }
+}

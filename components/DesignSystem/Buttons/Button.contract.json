@@ -1,0 +1,55 @@
+{
+  "$schema": "../contracts/ds-component-contract.v1.json",
+  "id": "Button",
+  "kind": "wrapper",
+  "version": "0.2.6",
+  "purpose": "Submit or trigger an action. Not for navigation or icon-only controls.",
+  "importFrom": ["@appdirect/ds-prototype-kit", "@/components/DesignSystem"],
+  "mantineCounterpart": "Button",
+  "anatomy": ["root", "children", "leftSection", "rightSection"],
+  "api": {
+    "props": {
+      "variant": {
+        "enum": ["primary", "secondary", "default", "disabled", "link", "secret", "outline", "danger"],
+        "default": "default",
+        "notes": "disabled is a state alias: maps to Mantine default + disabled={true}"
+      },
+      "size": { "enum": ["xs", "sm", "md", "lg", "xl"], "default": "sm" },
+      "radius": { "fixed": "sm", "consumerOverride": false },
+      "color": { "deprecated": true, "ignored": true },
+      "loading": { "type": "boolean" },
+      "disabled": { "type": "boolean" },
+      "fullWidth": { "type": "boolean" },
+      "leftSection": { "type": "ReactNode" },
+      "rightSection": { "type": "ReactNode" },
+      "children": { "required": true, "type": "ReactNode" }
+    }
+  },
+  "states": ["enabled", "hover", "active", "disabled", "loading"],
+  "composition": {
+    "preferInstead": {
+      "iconOnly": "ActionIcon",
+      "navigation": "NavLink or Anchor/Text link variant"
+    }
+  },
+  "content": { "maxPrimaryPerView": 1 },
+  "deprecatedPatterns": [
+    "import { Button } from '@mantine/core'",
+    "variant=\"disabled\"",
+    "color=\"blue\"",
+    "radius=\"xl\""
+  ],
+  "exceptions": {
+    "producerCssModule": "components/DesignSystem/Buttons/Button.module.css is allowed in the kit, not in prototypes"
+  },
+  "enforcement": {
+    "deterministic": [
+      "importFrom",
+      "api.props.variant.enum",
+      "api.props.size.enum",
+      "api.props.radius.fixed",
+      "api.props.color.deprecated"
+    ],
+    "semantic": ["purpose", "composition", "content.maxPrimaryPerView"]
+  }
+}

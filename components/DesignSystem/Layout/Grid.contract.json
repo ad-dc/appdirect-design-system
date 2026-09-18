@@ -1,0 +1,23 @@
+{
+  "$schema": "../contracts/ds-component-contract.v1.json",
+  "id": "Grid",
+  "kind": "wrapper",
+  "version": "0.2.6",
+  "purpose": "Responsive 12-column grid. Use Grid.Col for explicit spans.",
+  "importFrom": ["@appdirect/ds-prototype-kit", "@/components/DesignSystem"],
+  "mantineCounterpart": "Grid",
+  "anatomy": ["root", "Col"],
+  "api": {
+    "props": {
+      "columns": { "type": "number", "notes": "Mantine 12-column grid" }
+    }
+  },
+  "deprecatedPatterns": [
+    "import { Grid } from '@mantine/core'",
+    "import { SimpleGrid } from '@mantine/core'"
+  ],
+  "enforcement": {
+    "deterministic": ["importFrom"],
+    "semantic": ["purpose"]
+  }
+}
