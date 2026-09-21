@@ -10,6 +10,7 @@ import {
   Badge,
   Inline,
   PageContentHeader,
+  Button,
 } from '@/components/DesignSystem';
 import manifest from '@/prototype-manifest.json';
 
@@ -23,6 +24,10 @@ export default function PrototypeIndexPage() {
           contentSection="description"
           description=""
         />
+
+        <Button component={Link} href="/slides" variant="outline">
+          Factory deck
+        </Button>
 
         <Stack gap="md">
           {manifest.pages.map((page) => (
