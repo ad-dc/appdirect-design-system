@@ -26,7 +26,7 @@ export default function PrototypeIndexPage() {
         />
 
         <Button component={Link} href="/slides" variant="outline">
-          Factory deck — slide 1
+          Factory deck
         </Button>
 
         <Stack gap="md">

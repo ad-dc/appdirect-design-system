@@ -25,13 +25,25 @@ Render this as a single 16:9 slide. One idea only: these three surfaces are what
 
 | # | Slide | One idea |
 |---|---|---|
-| 01 | **Building blocks** (this prompt) | Three surfaces, one factory |
-| 02 | Code Connect | Figma component → DS source → agent-readable props |
+| 01 | **Building blocks** | Three surfaces, one factory |
+| 02 | **Code Connect** (this prompt) | Figma component → DS source → agent-readable props |
 | 03 | Token adapters | One source, n+1 emitters (Mantine, Tailwind, Vue, Figma, …) |
 | 04 | DS + prototype + contracts | Next.js DS, template counter, contract metrics |
 | 05 | Agent loop | Prompt in → those three surfaces → measured UI out |
 
-Live render in this repo: `/slides` (slide 01 only). Prototype index links it as **Factory deck — slide 1**.
+Live render: `/slides` (arrow keys). Direct links: `/slides#building-blocks`, `/slides#code-connect`. Prototype index: **Factory deck**.
+
+### Slide 02 prompt
+
+```
+Show Code Connect as one slide. One idea: the Figma component is not the API.
+
+A Figma Button is mapped through Button.figma.tsx (figma.connect, figma.enum for variant and size, figma.string for children) onto the DS Button wrapper. Dev Mode and agents receive real DS props — not a guessed API from a screenshot.
+
+Canonical correctness stays DS source. Code Connect is the bridge, not a second source of truth. Do not treat Figma or DESIGN.md as the contract.
+
+Keep the deck language: AppDirect navy, Inter, one primary accent. Do not repeat slide 01’s two-column stack. Show the mapping as a pipeline.
+```
 
 ## Constraints the renderer must keep
 
