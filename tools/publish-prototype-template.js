@@ -95,9 +95,11 @@ function gitCommitPush(dir, message) {
 }
 
 function setTemplateFlag(repo, isTemplate) {
+  // Prefer `gh repo edit` over `gh api -X PATCH`: PATCH without a parsed body
+  // opens $EDITOR for the request payload on some gh/shell setups.
   execFileSync(
     'gh',
-    ['api', '-X', 'PATCH', `repos/${repo}`, '-F', `is_template=${isTemplate}`],
+    ['repo', 'edit', repo, `--template=${isTemplate}`],
     { stdio: 'pipe' }
   );
 }
