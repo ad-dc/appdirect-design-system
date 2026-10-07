@@ -49,3 +49,4 @@ storybook-static
 .env.local
 .claude/
 ds-package/.npmrc
+.artifacts/

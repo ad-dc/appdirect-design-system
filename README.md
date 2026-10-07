@@ -1,4 +1,4 @@
-# AppDirect Prototype Kit
+# AppDirect Design System
 
 Next.js 16 runtime shell with an AppDirect design system (**Mantine v9**, React 19.2+), Storybook, and Figma Code Connect.
 
@@ -6,19 +6,22 @@ This repository is the **design-system source of truth**. You do not need write 
 
 ## Start a prototype (self-serve)
 
-Designers, engineers, and PMs create **their own** GitHub repo from a thin template. The template is `ad-dc/appdirect-prototype-template`. It pins [`@appdirect/ds-prototype-kit`](https://github.com/ad-dc/appdirect-design-system/releases) (GitHub Release tarball) and does **not** contain DS source.
+Designers, engineers, and PMs create **their own** GitHub repo from a thin template. The template is [`ad-dc/appdirect-prototype-template`](https://github.com/ad-dc/appdirect-prototype-template). It pins [`@appdirect/ds-prototype-kit`](https://github.com/ad-dc/appdirect-design-system/releases) (GitHub Release tarball) and does **not** contain DS source.
 
-### GitHub UI
+**This repo is not a GitHub template.** Self-serve “Use this template” lives only on the thin starter above. (GitHub cannot point this repo’s button at another repo; we keep the template flag off here so the UI does not copy the whole design system.)
 
-1. Open [ad-dc/appdirect-prototype-template](https://github.com/ad-dc/appdirect-prototype-template)
-2. Click **Use this template** → **Create a new repository**
-3. Create it under **your GitHub account** (or `ad-dc` if you can create org repos)
-4. Clone, then:
+### GitHub UI (one click)
+
+1. Open **[Create a prototype from the template](https://github.com/ad-dc/appdirect-prototype-template/generate)**
+2. Name the repo, create it under **your GitHub account** (or `ad-dc` if you can create org repos)
+3. Clone, then:
 
 ```bash
 npm install
 npm run dev
 ```
+
+Or open [ad-dc/appdirect-prototype-template](https://github.com/ad-dc/appdirect-prototype-template) and click **Use this template** → **Create a new repository**.
 
 ### Terminal or Cursor agent (`/start-prototype`)
 
@@ -31,9 +34,9 @@ npm run dev
 
 The kit tarball and token CSS come from GitHub Releases on this repo. Public npm covers Mantine, Next.js, and fonts. Prototype `npm install` does **not** use Artifactory or VPN.
 
-Open [http://localhost:3000/prototype](http://localhost:3000/prototype).
+In the new prototype repo, open [http://localhost:3000/prototype](http://localhost:3000/prototype).
 
-Do **not** fork or “Use this template” on **this** repo (`appdirect-design-system`). That copies DS source and forces cherry-picks.
+Do **not** fork this repo (`appdirect-design-system`) to start a prototype. That copies DS source and forces cherry-picks.
 
 ### In the prototype repo
 
@@ -55,7 +58,7 @@ npm run publish-prototype-template -- --dry-run
 npm run publish-prototype-template
 ```
 
-That updates `ad-dc/appdirect-prototype-template` (GitHub template). Cursor: `/publish-prototype-template`.
+That updates `ad-dc/appdirect-prototype-template` (GitHub template), marks it as a template, and ensures **this** repo is *not* marked as a template. Cursor: `/publish-prototype-template`.
 
 Optional local copy from this checkout (same files, no GitHub template): `npm run create-prototype -- --name my-prototype`.
 
@@ -69,7 +72,9 @@ npm run fleet-rollup
 
 Prints kit lag, top violation rules, and local-pattern clusters (n ≥ 3 repos = gap candidate). Optional `--discover` asks GitHub for repos generated from `ad-dc/appdirect-prototype-template`. No prompts, no analytics service. Put a DESIGN.md pending-work note only after human review of a cluster.
 
-## Quick Start: Prototyping (this repo)
+## Quick Start: this repo (design-system source)
+
+Prefer the self-serve template above for product ideation. Use this checkout to work on DS components, Storybook, kit releases, and the shared template source.
 
 ### 1. Set up
 
@@ -91,9 +96,11 @@ If you see a 404 or auth error on `@appdirect/design-tokens` during install, ver
    npm login --registry https://artifactory.appdirect.tools/artifactory/api/npm/npm-repo
    ```
 
-Visit `http://localhost:3000/prototype` to see the prototype index page.
+Visit [http://localhost:3000](http://localhost:3000) to read this README in the app. Storybook (`npm run storybook`) is the component showcase. `/prototype` redirects here; product prototypes belong in repos created from `ad-dc/appdirect-prototype-template`.
 
-### 2. Create a new page
+### 2. Optional: local prototype page in this checkout
+
+Maintainers can still scaffold a throwaway page while iterating on DS wrappers:
 
 ```bash
 npm run create-page -- --name "Settings" --template app-shell --layout single-column
@@ -106,7 +113,7 @@ Options:
 - `--icon`: Remix Icon class (e.g. `ri-settings-3-line`). Default: `ri-file-line`
 - `--description`: Short description for the manifest
 
-The CLI creates a page at `app/prototype/<slug>/page.tsx` and updates `prototype-manifest.json` pages/nav. It does not hand-edit `versions` — run `npm run fill-manifest-versions` after a kit bump.
+The CLI creates a page at `app/prototype/<slug>/page.tsx` and updates `prototype-manifest.json` pages/nav. It does not hand-edit `versions` — run `npm run fill-manifest-versions` after a kit bump. Do not land long-lived product PoCs here.
 
 ### 3. Build your page
 
