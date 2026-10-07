@@ -136,13 +136,17 @@ export default function Customers() {
   }
 });
 
-test('in-tree Revenue Ops customers page is a handmade-record-list finding, not a restricted import', () => {
+test('in-tree app/prototype has no restricted imports after PoC cleanup', () => {
   const result = runAudit(ROOT, { out: false });
-  assert.equal(result.report.findings.restrictedImports.some((item) => item.file.startsWith('app/prototype/')), false);
-  assert.ok(
+  assert.equal(
+    result.report.findings.restrictedImports.some((item) => item.file.startsWith('app/prototype/')),
+    false
+  );
+  assert.equal(
     result.report.patterns.unsupported.some(
-      (item) => item.id === 'handmade-record-list' && item.file === 'app/prototype/customers/page.tsx'
-    )
+      (item) => item.file === 'app/prototype/customers/page.tsx'
+    ),
+    false
   );
 });
 

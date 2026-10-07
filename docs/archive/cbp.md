@@ -10,6 +10,6 @@ CBP is a product prototype. It is not part of this design-system repo, the kit, 
 |---|---|
 | `templates/designer-prototype/components/cbp/` | Empty barrel (`export {}`) plus a CBP-named comment. No product widgets. |
 | Template skills / rules / README | Taught new prototypes to put widgets in `components/cbp/`. |
-| `app/prototype/{customers,customer-detail,settings}` | Generic Revenue Ops DS demos (2026-03-24). Not CBP product source. Left in place. |
+| `app/prototype/{customers,customer-detail,settings}` | Generic Revenue Ops DS demos (2026-03-24). Not CBP product source. Removed later; home route now renders `README.md`. |
 
 The empty slot was renamed to `components/local/`. Agent-facing template copy no longer names CBP. Do not add CBP to contracts, telemetry, skills, or metrics.

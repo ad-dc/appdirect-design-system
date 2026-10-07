@@ -62,7 +62,7 @@ A snapshot of where the AppDirect Design System repo is right now. Update this f
 - Agentic production architecture (recommendation only): [`docs/agentic-production-architecture.md`](./docs/agentic-production-architecture.md), PR [#68](https://github.com/ad-dc/appdirect-design-system/pull/68)
 - Working plan: [`docs/agentic-production-plan.md`](./docs/agentic-production-plan.md) — V1 = checker/reporter; later = authoring factory; Step 0 must land before contracts
 - Locked: CBP out of scope; `PageContentHeader` is an AppDirect complex component; do not install Southleft/Specs/Pandya as the contract runtime
-- Step 0.8: archived leftover template `components/cbp/` to `components/local/`. See [`docs/archive/cbp.md`](./docs/archive/cbp.md). `app/prototype` Revenue Ops demos left in place.
+- Step 0.8: archived leftover template `components/cbp/` to `components/local/`. See [`docs/archive/cbp.md`](./docs/archive/cbp.md). Revenue Ops PoC pages under `app/prototype` were later removed; `/` renders `README.md`.
 - Step 0.1: `Inline` is the horizontal primitive for new Figma/agent/prototype code; `Group` is the Mantine-named alias
 - Step 0.2: spacing lookups (`figma-layout-mapping`, `LAYOUT_GUIDE`, `config.ts`) and `theme.ts` match Mantine Core + `none` / `xxs` / `xxl`
 

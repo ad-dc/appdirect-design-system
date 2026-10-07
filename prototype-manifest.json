@@ -1,54 +1,16 @@
 {
-  "prototypeName": "AppDirect Prototype",
+  "prototypeName": "AppDirect Design System",
   "versions": {
     "kit": "0.2.7",
     "tokensSnapshot": "0.0.6",
     "factory": "0.2.7",
     "mantine": "9.6.0"
   },
-  "pages": [
-    {
-      "slug": "customers",
-      "title": "Customer List",
-      "template": "app-shell",
-      "contentLayout": "single-column",
-      "navGroup": "main",
-      "description": "Example customer overview page with data table"
-    },
-    {
-      "slug": "customer-detail",
-      "title": "Customer Detail",
-      "template": "app-shell",
-      "contentLayout": "tertiary",
-      "navGroup": "main",
-      "description": "Example customer detail page with side panel"
-    },
-    {
-      "slug": "settings",
-      "title": "Settings",
-      "template": "app-shell",
-      "contentLayout": "single-column",
-      "navGroup": "main",
-      "description": ""
-    }
-  ],
+  "pages": [],
   "navGroups": {
     "main": {
-      "title": "Revenue Ops",
-      "items": [
-        {
-          "slug": "customers",
-          "icon": "ri-team-line"
-        },
-        {
-          "slug": "customer-detail",
-          "icon": "ri-user-line"
-        },
-        {
-          "slug": "settings",
-          "icon": "ri-settings-3-line"
-        }
-      ]
+      "title": "Main",
+      "items": []
     }
   }
 }

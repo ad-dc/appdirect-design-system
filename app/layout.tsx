@@ -19,8 +19,8 @@ import 'remixicon/fonts/remixicon.css';
 import { RootProviders } from "@/components/RootProviders";
 
 export const metadata: Metadata = {
-  title: "Cursor Mantine App",
-  description: "Runtime shell for the AppDirect Mantine design system",
+  title: "AppDirect Design System",
+  description: "Design-system source of truth for AppDirect admin UIs",
 };
 
 export default function RootLayout({

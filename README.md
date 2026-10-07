@@ -34,7 +34,7 @@ npm run dev
 
 The kit tarball and token CSS come from GitHub Releases on this repo. Public npm covers Mantine, Next.js, and fonts. Prototype `npm install` does **not** use Artifactory or VPN.
 
-Open [http://localhost:3000/prototype](http://localhost:3000/prototype).
+In the new prototype repo, open [http://localhost:3000/prototype](http://localhost:3000/prototype).
 
 Do **not** fork this repo (`appdirect-design-system`) to start a prototype. That copies DS source and forces cherry-picks.
 
@@ -72,7 +72,9 @@ npm run fleet-rollup
 
 Prints kit lag, top violation rules, and local-pattern clusters (n ≥ 3 repos = gap candidate). Optional `--discover` asks GitHub for repos generated from `ad-dc/appdirect-prototype-template`. No prompts, no analytics service. Put a DESIGN.md pending-work note only after human review of a cluster.
 
-## Quick Start: Prototyping (this repo)
+## Quick Start: this repo (design-system source)
+
+Prefer the self-serve template above for product ideation. Use this checkout to work on DS components, Storybook, kit releases, and the shared template source.
 
 ### 1. Set up
 
@@ -94,9 +96,11 @@ If you see a 404 or auth error on `@appdirect/design-tokens` during install, ver
    npm login --registry https://artifactory.appdirect.tools/artifactory/api/npm/npm-repo
    ```
 
-Visit `http://localhost:3000/prototype` to see the prototype index page.
+Visit [http://localhost:3000](http://localhost:3000) to read this README in the app. Storybook (`npm run storybook`) is the component showcase. `/prototype` redirects here; product prototypes belong in repos created from `ad-dc/appdirect-prototype-template`.
 
-### 2. Create a new page
+### 2. Optional: local prototype page in this checkout
+
+Maintainers can still scaffold a throwaway page while iterating on DS wrappers:
 
 ```bash
 npm run create-page -- --name "Settings" --template app-shell --layout single-column
@@ -109,7 +113,7 @@ Options:
 - `--icon`: Remix Icon class (e.g. `ri-settings-3-line`). Default: `ri-file-line`
 - `--description`: Short description for the manifest
 
-The CLI creates a page at `app/prototype/<slug>/page.tsx` and updates `prototype-manifest.json` pages/nav. It does not hand-edit `versions` — run `npm run fill-manifest-versions` after a kit bump.
+The CLI creates a page at `app/prototype/<slug>/page.tsx` and updates `prototype-manifest.json` pages/nav. It does not hand-edit `versions` — run `npm run fill-manifest-versions` after a kit bump. Do not land long-lived product PoCs here.
 
 ### 3. Build your page
 
