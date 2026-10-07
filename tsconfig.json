@@ -69,7 +69,6 @@
     "storybook-static",
     ".storybook",
     "tools",
-    "app/badge-test",
     "**/*.stories.*",
     "**/*.figma.*"
   ]
