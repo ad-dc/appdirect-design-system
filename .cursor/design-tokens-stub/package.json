@@ -1,0 +1,6 @@
+{
+  "name": "@appdirect/design-tokens",
+  "version": "0.0.6",
+  "private": true,
+  "description": "Cloud Agent fallback: CSS snapshot from ds-package/vendor/css when Artifactory is unavailable."
+}
