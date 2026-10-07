@@ -12,13 +12,17 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-const { main, materialize, TEMPLATE_REPO } = require('./publish-prototype-template.js');
+const { main, materialize, SOURCE_REPO, TEMPLATE_REPO } = require('./publish-prototype-template.js');
 
 const KIT_URL =
   'https://github.com/ad-dc/appdirect-design-system/releases/download/v0.2.0/appdirect-ds-prototype-kit-0.2.0.tgz';
 
 test('TEMPLATE_REPO is the shared GitHub template', () => {
   assert.equal(TEMPLATE_REPO, 'ad-dc/appdirect-prototype-template');
+});
+
+test('SOURCE_REPO is the design-system repo (must not stay a GitHub template)', () => {
+  assert.equal(SOURCE_REPO, 'ad-dc/appdirect-design-system');
 });
 
 test('materialize bakes kit URL and strips placeholders', () => {

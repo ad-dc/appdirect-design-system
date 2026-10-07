@@ -41,6 +41,6 @@ Daily work uses `/prototype-workspace` in the new repo. Shared UI: `@appdirect/d
 
 ## Do not
 
-- Do not fork or "Use this template" on `appdirect-design-system`
+- Do not fork `appdirect-design-system` to start a prototype. Self-serve UI: https://github.com/ad-dc/appdirect-prototype-template/generate
 - Do not grant write on the design-system repo
 - Do not cherry-pick DS commits into the prototype

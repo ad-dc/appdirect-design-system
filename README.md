@@ -6,19 +6,22 @@ This repository is the **design-system source of truth**. You do not need write 
 
 ## Start a prototype (self-serve)
 
-Designers, engineers, and PMs create **their own** GitHub repo from a thin template. The template is `ad-dc/appdirect-prototype-template`. It pins [`@appdirect/ds-prototype-kit`](https://github.com/ad-dc/appdirect-design-system/releases) (GitHub Release tarball) and does **not** contain DS source.
+Designers, engineers, and PMs create **their own** GitHub repo from a thin template. The template is [`ad-dc/appdirect-prototype-template`](https://github.com/ad-dc/appdirect-prototype-template). It pins [`@appdirect/ds-prototype-kit`](https://github.com/ad-dc/appdirect-design-system/releases) (GitHub Release tarball) and does **not** contain DS source.
 
-### GitHub UI
+**This repo is not a GitHub template.** Self-serve “Use this template” lives only on the thin starter above. (GitHub cannot point this repo’s button at another repo; we keep the template flag off here so the UI does not copy the whole design system.)
 
-1. Open [ad-dc/appdirect-prototype-template](https://github.com/ad-dc/appdirect-prototype-template)
-2. Click **Use this template** → **Create a new repository**
-3. Create it under **your GitHub account** (or `ad-dc` if you can create org repos)
-4. Clone, then:
+### GitHub UI (one click)
+
+1. Open **[Create a prototype from the template](https://github.com/ad-dc/appdirect-prototype-template/generate)**
+2. Name the repo, create it under **your GitHub account** (or `ad-dc` if you can create org repos)
+3. Clone, then:
 
 ```bash
 npm install
 npm run dev
 ```
+
+Or open [ad-dc/appdirect-prototype-template](https://github.com/ad-dc/appdirect-prototype-template) and click **Use this template** → **Create a new repository**.
 
 ### Terminal or Cursor agent (`/start-prototype`)
 
@@ -33,7 +36,7 @@ The kit tarball and token CSS come from GitHub Releases on this repo. Public npm
 
 Open [http://localhost:3000/prototype](http://localhost:3000/prototype).
 
-Do **not** fork or “Use this template” on **this** repo (`appdirect-design-system`). That copies DS source and forces cherry-picks.
+Do **not** fork this repo (`appdirect-design-system`) to start a prototype. That copies DS source and forces cherry-picks.
 
 ### In the prototype repo
 
@@ -55,7 +58,7 @@ npm run publish-prototype-template -- --dry-run
 npm run publish-prototype-template
 ```
 
-That updates `ad-dc/appdirect-prototype-template` (GitHub template). Cursor: `/publish-prototype-template`.
+That updates `ad-dc/appdirect-prototype-template` (GitHub template), marks it as a template, and ensures **this** repo is *not* marked as a template. Cursor: `/publish-prototype-template`.
 
 Optional local copy from this checkout (same files, no GitHub template): `npm run create-prototype -- --name my-prototype`.
 

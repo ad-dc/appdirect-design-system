@@ -26,6 +26,7 @@ const {
 
 const ROOT = path.resolve(__dirname, '..');
 const SOURCE = path.join(ROOT, 'templates', 'designer-prototype');
+const SOURCE_REPO = 'ad-dc/appdirect-design-system';
 const TEMPLATE_REPO = 'ad-dc/appdirect-prototype-template';
 const PACKAGE_NAME = 'appdirect-prototype';
 const PROTOTYPE_NAME = 'AppDirect Prototype';
@@ -93,10 +94,12 @@ function gitCommitPush(dir, message) {
   return true;
 }
 
-function markAsTemplate(repo) {
-  execFileSync('gh', ['api', '-X', 'PATCH', `repos/${repo}`, '-F', 'is_template=true'], {
-    stdio: 'pipe',
-  });
+function setTemplateFlag(repo, isTemplate) {
+  execFileSync(
+    'gh',
+    ['api', '-X', 'PATCH', `repos/${repo}`, '-F', `is_template=${isTemplate}`],
+    { stdio: 'pipe' }
+  );
 }
 
 function main(argv = process.argv) {
@@ -156,16 +159,21 @@ function main(argv = process.argv) {
         { cwd: tmp, stdio: 'inherit' }
       );
     }
-    markAsTemplate(TEMPLATE_REPO);
+    setTemplateFlag(TEMPLATE_REPO, true);
+    // This design-system repo must not be a GitHub template. "Use this template"
+    // here would copy the whole DS source; self-serve belongs on TEMPLATE_REPO only.
+    setTemplateFlag(SOURCE_REPO, false);
   } finally {
     fs.rmSync(tmp, { recursive: true, force: true });
   }
 
   console.log(`\nTemplate: https://github.com/${TEMPLATE_REPO}`);
+  console.log(`Unmarked ${SOURCE_REPO} as a GitHub template (self-serve is the thin repo).`);
   console.log('Self-serve:');
   console.log(
     `  gh repo create my-prototype --template ${TEMPLATE_REPO} --private --clone`
   );
+  console.log(`  or open https://github.com/${TEMPLATE_REPO}/generate`);
   console.log('');
   return { kitTarballUrl, exists };
 }
@@ -179,4 +187,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { main, parseArgs, TEMPLATE_REPO, materialize };
+module.exports = { main, parseArgs, SOURCE_REPO, TEMPLATE_REPO, materialize };
