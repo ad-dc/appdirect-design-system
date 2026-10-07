@@ -1,4 +1,4 @@
-# AppDirect Prototype Kit
+# AppDirect Design System
 
 Next.js 16 runtime shell with an AppDirect design system (**Mantine v9**, React 19.2+), Storybook, and Figma Code Connect.
 
