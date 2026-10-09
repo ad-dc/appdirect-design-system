@@ -3,7 +3,7 @@ import { Switch } from './Switch';
 
 figma.connect(
   Switch,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=5449-1439&t=kmCY8PcaF7gXHN6Z-11',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=6406-116&t=kmCY8PcaF7gXHN6Z-11',
   {
     props: {
       size: figma.enum('size', {

@@ -3,7 +3,7 @@ import { Chip } from './Chip';
 
 figma.connect(
   Chip,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=688-4120',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=6498-140',
   {
     props: {
       size: figma.enum('size', {

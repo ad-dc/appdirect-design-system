@@ -3,7 +3,7 @@ import { Avatar } from './Avatar';
 
 figma.connect(
   Avatar,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=1640-29&t=y0IJ175mkJJcYKZp-4',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=6341-63&t=y0IJ175mkJJcYKZp-4',
   {
     props: {
       size: figma.enum('size', {

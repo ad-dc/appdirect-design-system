@@ -3,7 +3,7 @@ import { Progress } from './Progress';
 
 figma.connect(
   Progress,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=5736-148',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=6510-57',
   {
     props: {
       size: figma.enum('size', {

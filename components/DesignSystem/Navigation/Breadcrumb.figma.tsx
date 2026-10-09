@@ -1,7 +1,7 @@
 import { figma } from '@figma/code-connect';
 import { Breadcrumb, BackBreadcrumb } from './Breadcrumb';
 
-// Component set node: 959-1668 ("Ⓜ️ Breadcrumbs")
+// Component set node: 6202-59 ("Breadcrumbs")
 // Variants live inside the set — use variant: {} to differentiate them.
 
 // ── Default breadcrumb (type=Default) ──────────────────────────────────────
@@ -13,7 +13,7 @@ import { Breadcrumb, BackBreadcrumb } from './Breadcrumb';
 //   always matches the exact number of levels the designer has configured.
 figma.connect(
   Breadcrumb,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=959-1668',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=6202-59',
   {
     variant: { type: 'Default' },
     props: {
@@ -44,7 +44,7 @@ figma.connect(
 // ── Back breadcrumb (type=back) ────────────────────────────────────────────
 figma.connect(
   BackBreadcrumb,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=959-1668',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=6202-59',
   {
     variant: { type: 'back' },
     props: {

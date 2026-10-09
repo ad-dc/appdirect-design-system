@@ -5,7 +5,7 @@ import { IconChevronRight } from '@tabler/icons-react';
 
 figma.connect(
   NavLink,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=2002-1980',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=7055-15766',
   {
     props: {
       leftSection: figma.boolean('leftSection'),
@@ -31,7 +31,7 @@ figma.connect(
 
 figma.connect(
   NavLink,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=2002-1980',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=7055-15766',
   {
     variant: { state: 'active' },
     props: {

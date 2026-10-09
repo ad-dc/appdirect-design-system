@@ -6,7 +6,7 @@ import { Drawer } from './Drawer';
 
 figma.connect(
   Drawer,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=5756-278',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=6275-59',
   {
     props: {
       title: figma.string('title'),

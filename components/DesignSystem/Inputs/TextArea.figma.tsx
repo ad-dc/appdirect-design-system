@@ -3,7 +3,7 @@ import { TextArea } from './TextArea';
 
 figma.connect(
   TextArea,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=1421-3843&t=F9hLR9eQ6A8lxsBi-4',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=7055-15240&t=F9hLR9eQ6A8lxsBi-4',
   {
     props: {
       size: figma.enum('size', { xs: 'xs', sm: 'sm', md: 'md', lg: 'lg', xl: 'xl' }),

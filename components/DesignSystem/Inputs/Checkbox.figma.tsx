@@ -3,7 +3,7 @@ import { Checkbox } from './Checkbox';
 
 figma.connect(
   Checkbox,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=1188-1605',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=6415-385',
   {
     props: {
       size: figma.enum('size', {
