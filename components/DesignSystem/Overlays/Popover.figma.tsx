@@ -4,7 +4,7 @@ import { Popover } from './Popover';
 
 figma.connect(
   Popover,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=1141-2603&t=F9hLR9eQ6A8lxsBi-4',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=6272-108&t=F9hLR9eQ6A8lxsBi-4',
   {
     props: {
       position: figma.enum('position', {

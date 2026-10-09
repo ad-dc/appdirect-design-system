@@ -3,7 +3,7 @@ import { Tooltip } from './Tooltip';
 
 figma.connect(
   Tooltip,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=1180-862&t=F9hLR9eQ6A8lxsBi-4',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=6211-44&t=F9hLR9eQ6A8lxsBi-4',
   {
     props: {
       label: figma.string('label'),

@@ -7,7 +7,7 @@ const MenuLabel = Menu.Label;
 
 figma.connect(
   Menu,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=5733-6690',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=6336-60',
   {
     props: {
       content: figma.instance('content'),
@@ -27,7 +27,7 @@ figma.connect(
 
 figma.connect(
   MenuItem,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=5711-1305',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=6277-47',
   {
     props: {
       children: figma.string('children'),
@@ -47,7 +47,7 @@ figma.connect(
 
 figma.connect(
   MenuItem,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=5711-1305',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=6277-47',
   {
     variant: { state: 'active' },
     props: {

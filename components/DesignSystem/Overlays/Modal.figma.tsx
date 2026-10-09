@@ -4,7 +4,7 @@ import { Modal } from './Modal';
 
 figma.connect(
   Modal,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=1450-3751&t=F9hLR9eQ6A8lxsBi-4',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=6274-129&t=F9hLR9eQ6A8lxsBi-4',
   {
     props: {
       title: figma.string('title'),

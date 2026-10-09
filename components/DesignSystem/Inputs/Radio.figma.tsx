@@ -3,7 +3,7 @@ import { Radio } from './Radio';
 
 figma.connect(
   Radio,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=5422-950&t=1LrRB2fT0aSOV74o-11',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=6397-125&t=1LrRB2fT0aSOV74o-11',
 
   
   {

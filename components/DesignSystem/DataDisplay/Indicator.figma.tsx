@@ -3,7 +3,7 @@ import { Indicator } from './Indicator';
 
 figma.connect(
   Indicator,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=807-601',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=6511-83',
   {
     props: {
       type: figma.enum('variant', {

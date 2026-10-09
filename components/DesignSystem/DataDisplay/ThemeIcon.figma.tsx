@@ -4,7 +4,7 @@ import { RiStarLine } from '@remixicon/react';
 
 figma.connect(
   ThemeIcon,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=1254-1094&t=y0IJ175mkJJcYKZp-4',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=6352-56&t=y0IJ175mkJJcYKZp-4',
   {
     props: {
       size: figma.enum('Size', {

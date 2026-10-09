@@ -19,7 +19,7 @@ import { Stepper } from './Stepper';
  */
 figma.connect(
   Stepper,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=2606-9394',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=7055-18403',
   {
     props: {
       orientation: figma.enum('orientation', {

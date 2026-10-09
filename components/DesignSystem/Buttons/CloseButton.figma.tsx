@@ -3,7 +3,7 @@ import { CloseButton } from './CloseButton';
 
 figma.connect(
   CloseButton,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=1298-2247&t=RcqEK5uoQUTmRFvI-11',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=6199-59&t=RcqEK5uoQUTmRFvI-11',
   {
     props: {
       // TODO: Restore bindings once the Figma close button exposes matching props

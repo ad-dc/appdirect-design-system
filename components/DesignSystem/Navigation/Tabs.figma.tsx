@@ -6,7 +6,7 @@ import { Badge } from '../DataDisplay/Badge';
 // Horizontal — default state
 figma.connect(
   Tabs.Tab,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=5575-49616',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=7055-18241',
   {
     props: {
       label: figma.string('label'),
@@ -34,7 +34,7 @@ figma.connect(
 // Horizontal — active state
 figma.connect(
   Tabs.Tab,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=5575-49616',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=7055-18241',
   {
     variant: { state: 'active' },
     props: {
@@ -63,7 +63,7 @@ figma.connect(
 // Vertical-left — default state
 figma.connect(
   Tabs.Tab,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=5575-49616',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=7055-18241',
   {
     variant: { alignment: 'vertical-left' },
     props: {
@@ -92,7 +92,7 @@ figma.connect(
 // Vertical-left — active state
 figma.connect(
   Tabs.Tab,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=5575-49616',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=7055-18241',
   {
     variant: { alignment: 'vertical-left', state: 'active' },
     props: {
@@ -121,7 +121,7 @@ figma.connect(
 // Vertical-right — default state
 figma.connect(
   Tabs.Tab,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=5575-49616',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=7055-18241',
   {
     variant: { alignment: 'vertical-right' },
     props: {
@@ -150,7 +150,7 @@ figma.connect(
 // Vertical-right — active state
 figma.connect(
   Tabs.Tab,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=5575-49616',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=7055-18241',
   {
     variant: { alignment: 'vertical-right', state: 'active' },
     props: {

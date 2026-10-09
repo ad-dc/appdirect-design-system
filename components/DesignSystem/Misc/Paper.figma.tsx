@@ -4,7 +4,7 @@ import { Paper } from './Paper';
 
 figma.connect(
   Paper,
-  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=1252-423&t=y0IJ175mkJJcYKZp-4',
+  'https://www.figma.com/design/rXvD5jPC1i02ZIma87Qcbl/ADDS-Admin-Mantine-Core?node-id=6671-52&t=y0IJ175mkJJcYKZp-4',
   {
     props: {
       shadow: figma.enum('shadow', {
