@@ -96,7 +96,7 @@ If you see a 404 or auth error on `@appdirect/design-tokens` during install, ver
    npm login --registry https://artifactory.appdirect.tools/artifactory/api/npm/npm-repo
    ```
 
-Visit [http://localhost:3000](http://localhost:3000) to read this README in the app. Storybook (`npm run storybook`) is the component showcase. `/prototype` redirects here; product prototypes belong in repos created from `ad-dc/appdirect-prototype-template`.
+Visit [http://localhost:3000](http://localhost:3000) (or `/prototype`) to read this README in the app. Storybook (`npm run storybook`) is the component showcase. Product prototypes belong in repos created from `ad-dc/appdirect-prototype-template`.
 
 ### 2. Optional: local prototype page in this checkout
 

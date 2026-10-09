@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Prototype | AppDirect Design System',
-  description: 'Prototype pages belong in ad-dc/appdirect-prototype-template',
+  title: 'AppDirect Design System',
+  description: 'Design-system source of truth for AppDirect admin UIs',
 };
 
 export default function PrototypeLayout({
